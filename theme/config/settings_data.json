@@ -2,14 +2,16 @@
   "current": "PUCKWERK",
   "presets": {
     "PUCKWERK": {
-      "color_background": "#FBF8F4",
-      "color_surface": "#F3E9DC",
-      "color_text": "#2B1D16",
-      "color_muted": "#8A817C",
-      "color_accent": "#B87333",
-      "color_on_accent": "#FBF8F4",
-      "color_dark": "#2B1D16",
-      "color_on_dark": "#FBF8F4",
+      "color_scheme": "dark",
+      "color_espresso": "#2B1D16",
+      "color_crema": "#F3E9DC",
+      "color_kupfer": "#B87333",
+      "color_grau": "#8A817C",
+      "color_offwhite": "#FBF8F4",
+      "color_espresso_deep": "#17100C",
+      "color_espresso_light": "#3A2A21",
+      "grain": true,
+      "reveal": true,
       "corner_radius": 20,
       "page_width": 1280
     }

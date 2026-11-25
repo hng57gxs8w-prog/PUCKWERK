@@ -1,32 +1,58 @@
 {%- liquid
   assign knowledge_url = blogs['werkwissen'].url | default: routes.collections_url
+  assign visual = section.settings.visual
+  if visual == 'image' and section.settings.image == blank
+    assign visual = 'animation'
+  endif
+  if visual == 'video' and section.settings.video == blank
+    assign visual = 'animation'
+  endif
+  assign words = section.settings.heading | split: ' '
 -%}
-<section class="hero hero--{{ section.settings.layout }}">
+<section class="hero hero--{{ section.settings.height }} hero--{{ visual }}{% if section.settings.layout == 'reverse' %} hero--reverse{% endif %}" data-hero>
+  <div class="hero__backdrop" aria-hidden="true"></div>
   <div class="container hero__grid">
     <div class="hero__content">
-      {%- if section.settings.kicker != blank -%}<p class="kicker">{{ section.settings.kicker }}</p>{%- endif -%}
-      {%- if section.settings.heading != blank -%}<h1 class="hero__heading">{{ section.settings.heading }}</h1>{%- endif -%}
+      {%- if section.settings.kicker != blank -%}<p class="kicker hero__kicker">{{ section.settings.kicker }}</p>{%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h1 class="hero__heading">
+          {%- for word in words -%}
+            <span class="hero__word"><span style="--i: {{ forloop.index0 }};">{{ word }}</span></span>{% unless forloop.last %} {% endunless %}
+          {%- endfor -%}
+        </h1>
+      {%- endif -%}
       {%- if section.settings.text != blank -%}<div class="hero__text rte">{{ section.settings.text }}</div>{%- endif -%}
-      <div class="btn-row">
+      <div class="btn-row hero__buttons">
         {%- if section.settings.button_label != blank -%}
-          <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn btn--accent">{{ section.settings.button_label }}</a>
+          <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn btn--accent btn--icon">{{ section.settings.button_label }}<span class="btn__icon">{% render 'icon', name: 'arrow' %}</span></a>
         {%- endif -%}
         {%- if section.settings.button2_label != blank -%}
           <a href="{{ section.settings.button2_link | default: knowledge_url }}" class="btn btn--outline">{{ section.settings.button2_label }}</a>
         {%- endif -%}
       </div>
     </div>
-    <div class="hero__media">
-      {%- if section.settings.video != blank -%}
-        {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, class: 'hero__img', image_size: '1600x' }}
-      {%- elsif section.settings.image != blank -%}
-        {{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600, 900, 1200, 1600, 2000', sizes: '(min-width: 990px) 50vw, 100vw', class: 'hero__img' }}
-      {%- else -%}
-        <span class="hero__img mood mood--light" aria-hidden="true"></span>
-      {%- endif -%}
-      <span class="hero__ring" aria-hidden="true"></span>
+
+    <div class="hero__visual">
+      {%- case visual -%}
+        {%- when 'image' -%}
+          <div class="hero__frame">
+            {{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600, 900, 1200, 1600, 2000', sizes: '(min-width: 990px) 50vw, 100vw', class: 'hero__media' }}
+          </div>
+        {%- when 'video' -%}
+          <div class="hero__frame">
+            {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, class: 'hero__media', image_size: '1600x' }}
+          </div>
+        {%- else -%}
+          {% render 'hero-puck', uid: section.id %}
+      {%- endcase -%}
     </div>
   </div>
+
+  {%- if section.settings.show_scroll -%}
+    <button type="button" class="hero__scroll" data-scroll-next aria-label="Weiter nach unten scrollen">
+      <span>Scrollen</span><i aria-hidden="true"></i>
+    </button>
+  {%- endif -%}
 </section>
 
 {% schema %}
@@ -34,11 +60,20 @@
   "name": "Hero",
   "class": "section-hero",
   "settings": [
-    { "type": "image_picker", "id": "image", "label": "Bild", "info": "CI-Bildstil: warmes Seitenlicht, dunkle Flächen, Nahaufnahme." },
-    { "type": "video", "id": "video", "label": "Video (optional)", "info": "Ersetzt das Bild. Ideal: ruhige Slow-Motion-Aufnahme, ohne Ton, 5–15 Sek." },
-    { "type": "select", "id": "layout", "label": "Layout", "options": [
-      { "value": "split", "label": "Text links, Bild rechts" },
-      { "value": "reverse", "label": "Bild links, Text rechts" }
+    { "type": "select", "id": "visual", "label": "Visual", "options": [
+      { "value": "animation", "label": "Animation: Puck entsteht (Standard)" },
+      { "value": "image", "label": "Bild" },
+      { "value": "video", "label": "Video" }
+    ], "default": "animation" },
+    { "type": "image_picker", "id": "image", "label": "Bild", "info": "Nur bei Visual „Bild“. CI-Bildstil: warmes Seitenlicht, dunkle Flächen." },
+    { "type": "video", "id": "video", "label": "Video", "info": "Nur bei Visual „Video“. Ideal: ruhige Slow-Motion-Aufnahme ohne Ton, 5–15 Sek." },
+    { "type": "select", "id": "height", "label": "Höhe", "options": [
+      { "value": "full", "label": "Bildschirmhöhe" },
+      { "value": "auto", "label": "Nach Inhalt" }
+    ], "default": "full" },
+    { "type": "select", "id": "layout", "label": "Anordnung (Desktop)", "options": [
+      { "value": "split", "label": "Text links, Visual rechts" },
+      { "value": "reverse", "label": "Visual links, Text rechts" }
     ], "default": "split" },
     { "type": "text", "id": "kicker", "label": "Dachzeile", "default": "Werkzeug für Home-Baristas" },
     { "type": "text", "id": "heading", "label": "Überschrift", "default": "Dein Espresso. Endlich so gut wie im Café." },
@@ -46,7 +81,8 @@
     { "type": "text", "id": "button_label", "label": "Button 1 Text", "default": "Zum Shop" },
     { "type": "url", "id": "button_link", "label": "Button 1 Link", "info": "Leer = alle Produkte" },
     { "type": "text", "id": "button2_label", "label": "Button 2 Text", "default": "Werkwissen" },
-    { "type": "url", "id": "button2_link", "label": "Button 2 Link", "info": "Leer = Blog mit dem Handle „werkwissen“" }
+    { "type": "url", "id": "button2_link", "label": "Button 2 Link", "info": "Leer = Blog mit dem Handle „werkwissen“" },
+    { "type": "checkbox", "id": "show_scroll", "label": "Scroll-Hinweis anzeigen", "default": true }
   ],
   "presets": [ { "name": "Hero" } ]
 }

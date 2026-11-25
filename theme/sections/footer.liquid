@@ -40,6 +40,9 @@
     {%- endfor -%}
   </div>
 
+  {%- if section.settings.show_watermark -%}
+    <div class="container footer__watermark" aria-hidden="true">{% render 'logo', variant: 'wordmark' %}</div>
+  {%- endif -%}
   <div class="container footer__bottom">
     <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | link_to: routes.root_url }}. {{ section.settings.copyright }}</p>
     {%- if section.settings.show_payment and shop.enabled_payment_types.size > 0 -%}
@@ -64,7 +67,8 @@
     ], "default": "horizontal" },
     { "type": "richtext", "id": "text", "label": "Markentext", "default": "<p>Präzises Siebträger-Zubehör für Home-Baristas. Gemacht aus Edelstahl, Holz und Kupfer – für jeden Morgen.</p>" },
     { "type": "text", "id": "copyright", "label": "Copyright-Zusatz", "default": "Alle Rechte vorbehalten." },
-    { "type": "checkbox", "id": "show_payment", "label": "Zahlungsarten anzeigen", "default": true }
+    { "type": "checkbox", "id": "show_payment", "label": "Zahlungsarten anzeigen", "default": true },
+    { "type": "checkbox", "id": "show_watermark", "label": "Große Wortmarke als Wasserzeichen", "default": true }
   ],
   "blocks": [
     {

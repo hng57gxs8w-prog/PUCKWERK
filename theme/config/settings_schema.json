@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "PUCKWERK",
-    "theme_version": "1.1.0",
+    "theme_version": "2.0.0",
     "theme_author": "PUCKWERK",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://help.shopify.com/"
@@ -11,56 +11,90 @@
     "name": "Farben",
     "settings": [
       {
+        "type": "select",
+        "id": "color_scheme",
+        "label": "Farbmodus",
+        "options": [
+          {
+            "value": "dark",
+            "label": "Dunkel – modern (Espresso)"
+          },
+          {
+            "value": "light",
+            "label": "Hell – klassisch (Off-White)"
+          }
+        ],
+        "default": "dark"
+      },
+      {
         "type": "paragraph",
-        "content": "Standardwerte entsprechen dem PUCKWERK Corporate Design."
+        "content": "Die Farben unten sind die PUCKWERK-CI-Palette. Der Farbmodus verteilt sie automatisch auf Hintergrund, Flächen, Text und Akzente."
+      },
+      {
+        "type": "header",
+        "content": "CI-Palette"
       },
       {
         "type": "color",
-        "id": "color_background",
-        "label": "Grundfläche (Off-White)",
-        "default": "#FBF8F4"
+        "id": "color_espresso",
+        "label": "Espresso-Braun (Hauptfarbe)",
+        "default": "#2B1D16"
       },
       {
         "type": "color",
-        "id": "color_surface",
-        "label": "Flächen / Karten (Crema-Beige)",
+        "id": "color_crema",
+        "label": "Crema-Beige",
         "default": "#F3E9DC"
       },
       {
         "type": "color",
-        "id": "color_text",
-        "label": "Text & Logo (Espresso-Braun)",
-        "default": "#2B1D16"
-      },
-      {
-        "type": "color",
-        "id": "color_muted",
-        "label": "Nebentext (Warmes Grau)",
-        "default": "#8A817C"
-      },
-      {
-        "type": "color",
-        "id": "color_accent",
-        "label": "Akzent & Buttons (Kupfer)",
+        "id": "color_kupfer",
+        "label": "Kupfer (Akzent, Buttons)",
         "default": "#B87333"
       },
       {
         "type": "color",
-        "id": "color_on_accent",
-        "label": "Text auf Kupfer",
-        "default": "#FBF8F4"
+        "id": "color_grau",
+        "label": "Warmes Grau (Nebentext)",
+        "default": "#8A817C"
       },
       {
         "type": "color",
-        "id": "color_dark",
-        "label": "Dunkle Bereiche (Espresso)",
-        "default": "#2B1D16"
+        "id": "color_offwhite",
+        "label": "Off-White",
+        "default": "#FBF8F4"
+      },
+      {
+        "type": "header",
+        "content": "Dunkle Stufen (aus Espresso abgeleitet)"
       },
       {
         "type": "color",
-        "id": "color_on_dark",
-        "label": "Text auf Dunkel",
-        "default": "#FBF8F4"
+        "id": "color_espresso_deep",
+        "label": "Espresso tief – Seitenhintergrund im dunklen Modus",
+        "default": "#17100C"
+      },
+      {
+        "type": "color",
+        "id": "color_espresso_light",
+        "label": "Espresso hell – Eingabefelder, Hover",
+        "default": "#3A2A21"
+      },
+      {
+        "type": "header",
+        "content": "Effekte"
+      },
+      {
+        "type": "checkbox",
+        "id": "grain",
+        "label": "Feine Körnung über der Seite (Film-Look)",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "reveal",
+        "label": "Inhalte beim Scrollen sanft einblenden",
+        "default": true
       }
     ]
   },

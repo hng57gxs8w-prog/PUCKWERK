@@ -3,6 +3,92 @@
   'use strict';
   document.documentElement.classList.remove('no-js');
 
+
+  /* ---------- Bewegung: Grundlagen ---------- */
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var designMode = !!(window.Shopify && window.Shopify.designMode);
+
+  /* ---------- Hero: Höhe unter Header, Neigen mit der Maus, Drehen beim Scrollen ---------- */
+  function setHeaderOffset() {
+    var header = document.querySelector('[data-header]');
+    var ann = document.querySelector('.announcement');
+    var h = (header ? header.offsetHeight : 0) + (ann ? ann.offsetHeight : 0);
+    document.documentElement.style.setProperty('--header-offset', h + 'px');
+  }
+
+  function initHero(scope) {
+    (scope || document).querySelectorAll('[data-hero]').forEach(function (hero) {
+      if (hero.dataset.heroReady) return;
+      hero.dataset.heroReady = '1';
+      var next = hero.querySelector('[data-scroll-next]');
+      if (next) next.addEventListener('click', function () {
+        var section = hero.closest('.shopify-section') || hero.closest('[id^="shopify-section"]') || hero;
+        var target = section.nextElementSibling || hero.nextElementSibling;
+        var header = document.querySelector('[data-header]');
+        if (!target) return;
+        var top = target.getBoundingClientRect().top + window.pageYOffset - (header ? header.offsetHeight : 0);
+        window.scrollTo({ top: top, behavior: reduceMotion ? 'auto' : 'smooth' });
+      });
+
+      var svg = hero.querySelector('.puck-anim__svg');
+      if (!svg || reduceMotion) return;
+
+      // Neigen mit der Maus (nur bei feinem Zeiger)
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        hero.addEventListener('pointermove', function (e) {
+          var r = svg.getBoundingClientRect();
+          var x = (e.clientX - (r.left + r.width / 2)) / r.width;
+          var y = (e.clientY - (r.top + r.height / 2)) / r.height;
+          svg.style.setProperty('--tilt-x', (-y * 10).toFixed(2) + 'deg');
+          svg.style.setProperty('--tilt-y', (x * 10).toFixed(2) + 'deg');
+        });
+        hero.addEventListener('pointerleave', function () {
+          svg.style.setProperty('--tilt-x', '0deg');
+          svg.style.setProperty('--tilt-y', '0deg');
+        });
+      }
+
+      // Drehen beim Scrollen, solange der Hero sichtbar ist
+      var visible = true, ticking = false;
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          visible = entries[0].isIntersecting;
+          hero.classList.toggle('is-paused', !visible); // Endlos-Animationen pausieren, wenn nicht sichtbar
+        }).observe(hero);
+      }
+      window.addEventListener('scroll', function () {
+        if (!visible || ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          svg.style.setProperty('--spin', (window.pageYOffset * 0.12).toFixed(1) + 'deg');
+          ticking = false;
+        });
+      }, { passive: true });
+    });
+  }
+
+  /* ---------- Inhalte beim Scrollen einblenden ---------- */
+  var REVEAL = '.section-head, .divider-row, .cats .divider, .cat, .card, .iwt__grid, .richtext__inner > *, .usp__item, .newsletter__box, .value, .values__heading, .values__intro, .page-hero__inner > *, .footer__grid > *, .post-card, .account__card, .product__media-item';
+  var revealObserver = null;
+  function initReveal(scope) {
+    if (!document.body.classList.contains('has-reveal') || reduceMotion || designMode || !('IntersectionObserver' in window)) return;
+    document.documentElement.classList.add('reveal-on');
+    if (!revealObserver) {
+      revealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target); }
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    }
+    (scope || document).querySelectorAll(REVEAL).forEach(function (el) {
+      if (el.closest('[data-hero]') || el.hasAttribute('data-reveal')) return;
+      var siblings = Array.prototype.filter.call(el.parentElement.children, function (c) { return c.matches(REVEAL); });
+      el.style.setProperty('--ri', Math.min(siblings.indexOf(el), 6));
+      el.setAttribute('data-reveal', '');
+      revealObserver.observe(el);
+    });
+  }
+
   /* ---------- Mobile Menü ---------- */
   function initMenu() {
     var toggle = document.querySelector('[data-menu-toggle]');
@@ -306,8 +392,13 @@
   }
 
   function init() {
+    setHeaderOffset();
     initMenu(); initSearch(); initAnnouncement(); initQty(); initSort();
     initProduct(); initRecommendations(); initRecover(); initAddresses(); initCartAutoUpdate(); initMotion();
+    initHero(); initReveal();
+    window.addEventListener('resize', setHeaderOffset);
+    // Theme-Editor: neu geladene Sektionen wieder initialisieren
+    document.addEventListener('shopify:section:load', function (e) { setHeaderOffset(); initHero(e.target); initReveal(e.target); });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();

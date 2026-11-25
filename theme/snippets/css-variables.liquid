@@ -1,9 +1,37 @@
 {%- comment -%}
-  PUCKWERK – Design-Tokens aus dem Corporate Design 1.0.
-  Schriften sind lokal im Theme gespeichert (kein Nachladen von Google-Servern):
-  Space Grotesk (c) The Space Grotesk Project Authors, Inter (c) The Inter Project Authors –
-  beide unter der SIL Open Font License 1.1 (https://openfontlicense.org).
+  PUCKWERK – Design-Tokens aus dem Corporate Design.
+  Farbmodus „Dunkel“ (Standard) oder „Hell“ verteilt die CI-Palette auf Rollen.
+  Schriften lokal im Theme: Space Grotesk (c) The Space Grotesk Project Authors,
+  Inter (c) The Inter Project Authors – SIL Open Font License 1.1 (https://openfontlicense.org).
 {%- endcomment -%}
+{%- liquid
+  assign espresso = settings.color_espresso
+  assign crema = settings.color_crema
+  assign kupfer = settings.color_kupfer
+  assign offwhite = settings.color_offwhite
+  assign deep = settings.color_espresso_deep
+  if settings.color_scheme == 'light'
+    assign c_bg = offwhite
+    assign c_surface = crema
+    assign c_surface_2 = offwhite
+    assign c_text = espresso
+    assign c_muted = settings.color_grau
+    assign c_footer = espresso
+    assign c_accent_hover = kupfer | color_darken: 8
+    assign text_2_alpha = 1
+    assign glow_alpha = 0.16
+  else
+    assign c_bg = deep
+    assign c_surface = espresso
+    assign c_surface_2 = settings.color_espresso_light
+    assign c_text = offwhite
+    assign c_muted = offwhite | color_modify: 'alpha', 0.6
+    assign c_footer = deep
+    assign c_accent_hover = kupfer | color_lighten: 7
+    assign text_2_alpha = 0.76
+    assign glow_alpha = 0.26
+  endif
+-%}
 <style>
   @font-face {
     font-family: 'Space Grotesk';
@@ -39,24 +67,40 @@
   }
 
   :root {
-    /* Farben – CI-Palette */
-    --c-bg: {{ settings.color_background }};
-    --c-surface: {{ settings.color_surface }};
-    --c-text: {{ settings.color_text }};
-    --c-text-rgb: {{ settings.color_text.red }}, {{ settings.color_text.green }}, {{ settings.color_text.blue }};
-    --c-muted: {{ settings.color_muted }};
-    --c-accent: {{ settings.color_accent }};
-    --c-accent-rgb: {{ settings.color_accent.red }}, {{ settings.color_accent.green }}, {{ settings.color_accent.blue }};
-    --c-accent-dark: {{ settings.color_accent | color_darken: 8 }};
-    --c-on-accent: {{ settings.color_on_accent }};
-    --c-dark: {{ settings.color_dark }};
-    --c-dark-rgb: {{ settings.color_dark.red }}, {{ settings.color_dark.green }}, {{ settings.color_dark.blue }};
-    --c-on-dark: {{ settings.color_on_dark }};
-    --c-on-dark-rgb: {{ settings.color_on_dark.red }}, {{ settings.color_on_dark.green }}, {{ settings.color_on_dark.blue }};
+    /* CI-Palette */
+    --c-espresso: {{ espresso }};
+    --c-crema: {{ crema }};
+    --c-offwhite: {{ offwhite }};
+    --c-offwhite-rgb: {{ offwhite | color_extract: 'red' }}, {{ offwhite | color_extract: 'green' }}, {{ offwhite | color_extract: 'blue' }};
+    --c-deep: {{ deep }};
 
-    /* Typografie – CI-Hierarchie: H1 56/1.05 · H2 40/1.1 · H3 24/1.2 · Body 17/1.65 · Klein 14 · Label 12 */
+    /* Rollen (je nach Farbmodus) */
+    --c-bg: {{ c_bg }};
+    --c-bg-rgb: {{ c_bg | color_extract: 'red' }}, {{ c_bg | color_extract: 'green' }}, {{ c_bg | color_extract: 'blue' }};
+    --c-surface: {{ c_surface }};
+    --c-surface-2: {{ c_surface_2 }};
+    --c-text: {{ c_text }};
+    --c-text-rgb: {{ c_text | color_extract: 'red' }}, {{ c_text | color_extract: 'green' }}, {{ c_text | color_extract: 'blue' }};
+    --c-text-2: rgba(var(--c-text-rgb), {{ text_2_alpha }});
+    --c-muted: {{ c_muted }};
+    --c-line: rgba(var(--c-text-rgb), .12);
+    --c-line-strong: rgba(var(--c-text-rgb), .24);
+    --c-accent: {{ kupfer }};
+    --c-accent-rgb: {{ kupfer | color_extract: 'red' }}, {{ kupfer | color_extract: 'green' }}, {{ kupfer | color_extract: 'blue' }};
+    --c-accent-hover: {{ c_accent_hover }};
+    --c-on-accent: {{ offwhite }};
+    --c-tile: {{ crema }};
+    --c-on-tile: {{ espresso }};
+    --c-panel: {{ espresso }};
+    --c-on-panel: {{ offwhite }};
+    --c-footer: {{ c_footer }};
+    --c-glow: rgba(var(--c-accent-rgb), {{ glow_alpha }});
+    --grain: url({{ 'grain.png' | asset_url }});
+
+    /* Typografie – CI: H1 56/1.05 · H2 40/1.1 · H3 24/1.2 · Body 17/1.65 · Klein 14 · Label 12 */
     --f-heading: 'Space Grotesk', system-ui, sans-serif;
     --f-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --fs-display: clamp(2.5rem, 1rem + 4.4vw, 4.75rem);
     --fs-h1: clamp(2.5rem, 1.6rem + 2.8vw, 3.5rem);
     --fs-h2: clamp(2rem, 1.5rem + 1.6vw, 2.5rem);
     --fs-h3: clamp(1.25rem, 1.1rem + .5vw, 1.5rem);
@@ -65,10 +109,11 @@
     --fs-label: .75rem;
     --ls-label: .18em;
 
-    /* Gestaltung – 8er-Raster, Ecken 20 px, Linien 1 px Kupfer */
+    /* Gestaltung – 8er-Raster, Ecken, Linien, Bewegung */
     --radius: {{ settings.corner_radius }}px;
     --page-width: {{ settings.page_width }}px;
     --space-section: clamp(4rem, 8vw, 7.5rem);
     --line: 1px solid var(--c-accent);
+    --ease: cubic-bezier(.2, .7, .2, 1);
   }
 </style>
