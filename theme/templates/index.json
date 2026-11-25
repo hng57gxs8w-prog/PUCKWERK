@@ -1,51 +1,150 @@
 {
   "sections": {
-    "hero": { "type": "hero", "settings": {} },
-    "marquee": {
-      "type": "marquee",
-      "blocks": {
-        "a": { "type": "item", "settings": { "text": "Game Ready" } },
-        "b": { "type": "item", "settings": { "text": "Pro Stock" } },
-        "c": { "type": "item", "settings": { "text": "Gratis Versand ab 79 €" } },
-        "d": { "type": "item", "settings": { "text": "Skate-Fitting" } }
-      },
-      "block_order": ["a", "b", "c", "d"],
-      "settings": { "style": "accent", "speed": 30 }
-    },
-    "tiles": {
-      "type": "collection-tiles",
-      "blocks": {
-        "t1": { "type": "tile", "settings": { "label": "Schläger" } },
-        "t2": { "type": "tile", "settings": { "label": "Schlittschuhe" } },
-        "t3": { "type": "tile", "settings": { "label": "Schutz" } }
-      },
-      "block_order": ["t1", "t2", "t3"],
+    "hero": {
+      "type": "hero",
       "settings": {}
     },
-    "featured": { "type": "featured-collection", "settings": {} },
+    "cats": {
+      "type": "collection-tiles",
+      "blocks": {
+        "t1": {
+          "type": "tile",
+          "settings": {
+            "label": "Tamper"
+          }
+        },
+        "t2": {
+          "type": "tile",
+          "settings": {
+            "label": "Verteiler"
+          }
+        },
+        "t3": {
+          "type": "tile",
+          "settings": {
+            "label": "Tassen"
+          }
+        },
+        "t4": {
+          "type": "tile",
+          "settings": {
+            "label": "Tamping-Stationen"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "settings": {
+        "heading": "Kategorien"
+      }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {}
+    },
+    "iwt": {
+      "type": "image-with-text",
+      "settings": {}
+    },
     "statement": {
       "type": "rich-text",
       "blocks": {
-        "k": { "type": "kicker", "settings": { "text": "Unser Versprechen" } },
-        "h": { "type": "heading", "settings": { "heading": "Kein Schnickschnack. Nur Eis, Stahl und Leidenschaft.", "size": "display" } },
-        "b": { "type": "button", "settings": { "label": "Zum Shop" } }
+        "k": {
+          "type": "kicker",
+          "settings": {
+            "text": "Werkwissen"
+          }
+        },
+        "h": {
+          "type": "heading",
+          "settings": {
+            "heading": "Kein Zauber. Nur gutes Werkzeug und ein bisschen Übung.",
+            "size": "h2"
+          }
+        },
+        "t": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Ein gleichmäßiger Puck ist die halbe Miete. Wir zeigen dir, wie – kurz, ehrlich, ohne Fachchinesisch.</p>"
+          }
+        },
+        "b": {
+          "type": "button",
+          "settings": {
+            "label": "Zum Werkwissen"
+          }
+        }
       },
-      "block_order": ["k", "h", "b"],
-      "settings": { "style": "dark" }
+      "block_order": [
+        "k",
+        "h",
+        "t",
+        "b"
+      ],
+      "settings": {
+        "style": "light"
+      }
     },
-    "iwt": { "type": "image-with-text", "settings": {} },
     "usp": {
       "type": "usp-bar",
       "blocks": {
-        "u1": { "type": "usp", "settings": { "icon": "truck", "title": "Schneller Versand", "text": "In 1–3 Werktagen bei dir" } },
-        "u2": { "type": "usp", "settings": { "icon": "return", "title": "30 Tage Rückgabe", "text": "Passt nicht? Kein Problem." } },
-        "u3": { "type": "usp", "settings": { "icon": "chat", "title": "Profi-Beratung", "text": "Von Spielern für Spieler" } },
-        "u4": { "type": "usp", "settings": { "icon": "shield", "title": "Sicher bezahlen", "text": "SSL & alle gängigen Zahlarten" } }
+        "u1": {
+          "type": "usp",
+          "settings": {
+            "icon": "truck",
+            "title": "Heute bestellt",
+            "text": "Morgen unterwegs"
+          }
+        },
+        "u2": {
+          "type": "usp",
+          "settings": {
+            "icon": "return",
+            "title": "30 Tage Rückgabe",
+            "text": "Ehrlich ohne Haken"
+          }
+        },
+        "u3": {
+          "type": "usp",
+          "settings": {
+            "icon": "hand",
+            "title": "Präzise gefertigt",
+            "text": "Auf den Zehntelmillimeter"
+          }
+        },
+        "u4": {
+          "type": "usp",
+          "settings": {
+            "icon": "chat",
+            "title": "Echte Beratung",
+            "text": "Von Baristas, nicht vom Bot"
+          }
+        }
       },
-      "block_order": ["u1", "u2", "u3", "u4"],
+      "block_order": [
+        "u1",
+        "u2",
+        "u3",
+        "u4"
+      ],
       "settings": {}
     },
-    "newsletter": { "type": "newsletter", "settings": {} }
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {}
+    }
   },
-  "order": ["hero", "marquee", "tiles", "featured", "statement", "iwt", "usp", "newsletter"]
+  "order": [
+    "hero",
+    "cats",
+    "featured",
+    "iwt",
+    "statement",
+    "usp",
+    "newsletter"
+  ]
 }

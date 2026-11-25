@@ -5,16 +5,16 @@
     "announcement": {
       "type": "announcement-bar",
       "blocks": {
-        "msg1": { "type": "message", "settings": { "text": "Kostenloser Versand ab 79 €" } },
-        "msg2": { "type": "message", "settings": { "text": "30 Tage Rückgabe – auch auf Schlittschuhe" } },
-        "msg3": { "type": "message", "settings": { "text": "Team-Bestellungen? Wir machen dir ein Angebot" } }
+        "msg1": { "type": "message", "settings": { "text": "Ab 49 € versandkostenfrei" } },
+        "msg2": { "type": "message", "settings": { "text": "Heute bestellt, morgen unterwegs" } },
+        "msg3": { "type": "message", "settings": { "text": "30 Tage Rückgabe – ehrlich ohne Haken" } }
       },
       "block_order": ["msg1", "msg2", "msg3"],
-      "settings": { "bg": "#00A3FF", "fg": "#0A0D12" }
+      "settings": { "bg": "#2B1D16", "fg": "#F3E9DC" }
     },
     "header": {
       "type": "header",
-      "settings": { "logo_width": 160, "logo_text_1": "PUCK", "logo_text_2": "WERK", "menu": "main-menu", "sticky": true }
+      "settings": { "logo_width": 170, "menu": "main-menu", "sticky": true }
     }
   },
   "order": ["announcement", "header"]

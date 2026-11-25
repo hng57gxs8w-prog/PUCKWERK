@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PUCKWERK – Corporate Design Handbuch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --espresso:#2B1D16; --crema:#F3E9DC; --kupfer:#B87333; --grau:#8A817C; --offwhite:#FBF8F4;
+  --kupfer-dark:#9C5F28; --line:1px solid var(--kupfer);
+  --fh:'Space Grotesk',system-ui,sans-serif; --fb:'Inter',system-ui,sans-serif;
+  --noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--offwhite);color:var(--espresso);font:400 17px/1.65 var(--fb);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--fh);font-weight:700;line-height:1.08;margin:0 0 .5em;letter-spacing:-.01em}
+p{margin:0 0 1em}
+.wrap{max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,56px)}
+section.chapter{padding:clamp(72px,10vw,140px) 0}
+.chapter--crema{background:var(--crema)}
+.chapter--dark{background:var(--espresso);color:var(--offwhite)}
+.eyebrow{display:flex;align-items:center;gap:14px;font:500 12px/1 var(--fh);letter-spacing:.22em;text-transform:uppercase;color:var(--kupfer);margin-bottom:22px}
+.eyebrow::after{content:"";flex:0 0 64px;height:1px;background:var(--kupfer)}
+.ch-title{font-size:clamp(40px,5.4vw,68px);max-width:14ch}
+.lead{font-size:clamp(18px,1.6vw,21px);max-width:60ch;color:inherit;opacity:.85}
+.muted{color:var(--grau)}
+.rule{height:1px;background:var(--kupfer);border:0;margin:56px 0}
+.sub{font-size:24px;margin-top:64px}
+.grid{display:grid;gap:24px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.card{background:var(--offwhite);border-radius:20px;padding:28px}
+.chapter--crema .card{background:var(--offwhite)}
+.label{font:500 11px/1 var(--fh);letter-spacing:.18em;text-transform:uppercase;color:var(--grau)}
+.chapter--dark .label{color:#b9aea6}
+nav.toc{position:sticky;top:0;z-index:20;background:rgba(251,248,244,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(184,115,51,.35)}
+nav.toc .wrap{display:flex;align-items:center;gap:28px;height:60px;overflow-x:auto}
+nav.toc a{font:500 13px var(--fh);letter-spacing:.06em;color:var(--espresso);text-decoration:none;white-space:nowrap}
+nav.toc a:hover{color:var(--kupfer)}
+nav.toc .mk{width:26px;height:26px;color:var(--espresso);flex:0 0 auto}
+
+/* Cover */
+.cover{min-height:100vh;background:var(--espresso);color:var(--offwhite);display:grid;place-items:center;text-align:center;position:relative;overflow:hidden}
+.cover::before{content:"";position:absolute;width:140vmin;height:140vmin;border-radius:50%;border:1px solid rgba(184,115,51,.35);top:50%;left:50%;transform:translate(-50%,-50%)}
+.cover::after{content:"";position:absolute;width:100vmin;height:100vmin;border-radius:50%;border:1px solid rgba(184,115,51,.2);top:50%;left:50%;transform:translate(-50%,-50%)}
+.cover .lk--s{width:min(340px,70vw);color:var(--offwhite);position:relative;z-index:1}
+.cover__meta{margin-top:56px;font:500 12px var(--fh);letter-spacing:.24em;text-transform:uppercase;color:var(--kupfer);position:relative;z-index:1}
+.cover__claim{font:400 20px var(--fb);opacity:.75;margin-top:14px;position:relative;z-index:1}
+
+/* Markenkern */
+.values{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;margin-top:56px}
+.value{border-top:var(--line);padding-top:24px}
+.value__dot{width:54px;height:54px;border-radius:50%;border:1px solid var(--kupfer);display:grid;place-items:center;font:700 18px var(--fh);color:var(--kupfer);margin-bottom:20px}
+.value h3{font-size:28px}
+.feel{display:flex;flex-wrap:wrap;gap:10px;margin-top:40px}
+.feel span{border:1px solid rgba(43,29,22,.2);border-radius:999px;padding:8px 18px;font:500 14px var(--fh)}
+.claimbox{margin-top:72px;border-radius:28px;background:var(--espresso);color:var(--offwhite);padding:clamp(36px,6vw,72px);display:grid;gap:12px}
+.claimbox q{font:700 clamp(30px,4.2vw,54px)/1.1 var(--fh);quotes:none;max-width:18ch}
+
+/* Logo */
+.logo-hero{background:var(--offwhite);border-radius:28px;padding:clamp(40px,7vw,96px);display:grid;place-items:center}
+.logo-hero .lk--h{width:min(620px,100%);color:var(--espresso)}
+.variants{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:24px;margin-top:24px}
+@media(max-width:860px){.variants{grid-template-columns:1fr}}
+.variant{border-radius:20px;background:var(--offwhite);min-height:260px;display:flex;flex-direction:column;justify-content:space-between;padding:24px}
+.variant__art{flex:1;display:grid;place-items:center;padding:24px 0;color:var(--espresso)}
+.variant .lk--h{width:88%}.variant .lk--s{width:54%}.variant .mk{width:38%}
+.colorways{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:24px}
+.cw{border-radius:20px;aspect-ratio:4/3;display:grid;place-items:center;position:relative}
+.cw svg{width:62%}
+.cw .label{position:absolute;left:18px;bottom:16px}
+.construct{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-top:24px}
+.construct__art{position:relative;background:var(--offwhite);border-radius:20px;aspect-ratio:1;display:grid;place-items:center}
+.construct__art svg{width:62%}
+.specs{list-style:none;padding:0;margin:0}
+.specs li{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid rgba(43,29,22,.12)}
+.specs li b{font-family:var(--fh)}
+.clearspace{position:relative;background:var(--offwhite);border-radius:20px;padding:56px;display:grid;place-items:center}
+.clearspace__box{position:relative;outline:1px dashed var(--kupfer);outline-offset:0;padding:40px}
+.clearspace__box svg{width:320px;max-width:60vw;display:block;color:var(--espresso)}
+.clearspace__x{position:absolute;font:500 12px var(--fh);color:var(--kupfer)}
+.donts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:24px}
+.dont{background:var(--offwhite);border-radius:20px;padding:20px;text-align:center}
+.dont__art{height:120px;display:grid;place-items:center;position:relative;overflow:hidden}
+.dont__art{color:var(--espresso)}.dont__art svg{width:78%}
+.dont__art::after{content:"";position:absolute;width:140%;height:2px;background:#b3412b;transform:rotate(-24deg);opacity:.85}
+.dont p{font-size:14px;margin:10px 0 0}
+
+/* Farben */
+.swatches{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+@media(max-width:1000px){.swatches{grid-template-columns:repeat(2,1fr)}}
+.swatch{border-radius:20px;overflow:hidden;background:var(--offwhite);box-shadow:0 0 0 1px rgba(43,29,22,.08)}
+.swatch__chip{aspect-ratio:1;display:flex;align-items:flex-end;padding:16px;color:var(--espresso)}
+.swatch.on-dark .swatch__chip{color:var(--offwhite)}
+.swatch__role{font:500 11px var(--fh);letter-spacing:.18em;text-transform:uppercase}
+.swatch__info{padding:18px}
+.swatch h4{font-size:18px;margin-bottom:10px}
+.swatch dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0 0 10px;font-size:13px}
+.swatch dt{color:var(--grau);font:500 11px/1.7 var(--fh);letter-spacing:.1em}
+.swatch dd{margin:0;font-variant-numeric:tabular-nums}
+.swatch p{font-size:13px;color:var(--grau);margin:0}
+.ratio{display:flex;height:72px;border-radius:999px;overflow:hidden;margin-top:24px;box-shadow:0 0 0 1px rgba(43,29,22,.1)}
+.ratio div{display:flex;align-items:center;padding:0 18px;font:500 13px var(--fh);white-space:nowrap}
+.cpairs{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-top:24px}
+.cpair{display:flex;align-items:center;gap:18px;border-radius:16px;padding:18px 22px;font-size:14px;box-shadow:0 0 0 1px rgba(43,29,22,.08)}
+.cpair__aa{font:700 36px var(--fh)}
+
+/* Typo */
+.specimen{background:var(--offwhite);border-radius:28px;padding:clamp(28px,5vw,56px);display:grid;grid-template-columns:1fr 1.2fr;gap:40px;align-items:end}
+@media(max-width:860px){.specimen{grid-template-columns:1fr}}
+.specimen__big{font-size:clamp(110px,16vw,210px);line-height:.85;margin:0}
+.specimen__chars{font-size:22px;line-height:1.5;word-break:break-all}
+.scale{margin-top:24px;background:var(--offwhite);border-radius:28px;padding:clamp(20px,4vw,48px)}
+.scale__row{display:grid;grid-template-columns:170px 1fr;gap:24px;align-items:baseline;padding:22px 0;border-bottom:1px solid rgba(43,29,22,.1)}
+.scale__row:last-child{border:0}
+@media(max-width:700px){.scale__row{grid-template-columns:1fr;gap:6px}}
+
+/* Elemente */
+.elements{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:40px}
+.el{background:var(--offwhite);border-radius:20px;padding:28px;min-height:260px;display:flex;flex-direction:column;justify-content:space-between}
+.el__art{flex:1;display:grid;place-items:center;padding:20px 0}
+.btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 28px;border-radius:999px;font:700 15px var(--fh);letter-spacing:.04em;text-decoration:none;border:1px solid transparent}
+.btn--copper{background:var(--kupfer);color:var(--offwhite)}
+.btn--copper:hover{background:var(--kupfer-dark)}
+.btn--outline{border-color:var(--espresso);color:var(--espresso)}
+.btn--light{background:var(--offwhite);color:var(--espresso)}
+.rings{position:relative;width:180px;height:180px}
+.rings i{position:absolute;inset:0;border-radius:50%;border:1px solid var(--kupfer)}
+.rings i:nth-child(2){inset:22px;opacity:.7}.rings i:nth-child(3){inset:44px;opacity:.45}
+.rings b{position:absolute;inset:66px;border-radius:50%;background:var(--espresso)}
+.divider-demo{width:100%;display:grid;gap:18px}
+.divider-demo span{display:flex;align-items:center;gap:14px;font:500 11px var(--fh);letter-spacing:.2em;text-transform:uppercase;color:var(--kupfer)}
+.divider-demo span::before,.divider-demo span::after{content:"";flex:1;height:1px;background:var(--kupfer)}
+.divider-demo hr{border:0;height:1px;background:var(--kupfer);margin:0}
+.space-demo{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;width:100%;align-items:end}
+.space-demo div{background:var(--crema);border-radius:6px;font:500 11px var(--fh);color:var(--grau);text-align:center;padding-top:4px}
+
+/* Moodboard */
+.mood{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:110px;gap:14px;margin-top:40px}
+.mood figure{margin:0;border-radius:20px;overflow:hidden;position:relative;background:#1d140f}
+.mood figcaption{position:absolute;left:14px;bottom:12px;right:14px;color:var(--offwhite);font:500 12px/1.35 var(--fh);letter-spacing:.04em;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.mood figcaption small{display:block;opacity:.7;font-family:var(--fb);font-weight:400;letter-spacing:0}
+.m1{grid-column:span 7;grid-row:span 4}.m2{grid-column:span 5;grid-row:span 2}.m3{grid-column:span 5;grid-row:span 2}
+.m4{grid-column:span 4;grid-row:span 3}.m5{grid-column:span 4;grid-row:span 3}.m6{grid-column:span 4;grid-row:span 3}
+@media(max-width:860px){.mood{grid-template-columns:1fr 1fr}.mood figure{grid-column:span 1!important;grid-row:span 2!important}.m1{grid-column:span 2!important}}
+.art{position:absolute;inset:0}
+.art--light{background:
+  linear-gradient(115deg,rgba(255,196,120,.0) 30%,rgba(255,190,110,.55) 46%,rgba(255,200,130,.0) 60%),
+  radial-gradient(ellipse at 18% 22%,rgba(255,185,105,.65),transparent 50%),
+  linear-gradient(180deg,#3a271c 0%,#1a110c 100%)}
+.art--light::before{content:"";position:absolute;left:46%;top:44%;width:30%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%,#c8a27a,#6d4a33 45%,#2a1b13 70%);box-shadow:30px 30px 60px rgba(0,0,0,.6),inset -8px -10px 20px rgba(0,0,0,.4)}
+.art--light::after{content:"";position:absolute;left:51%;top:49%;width:20%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 40% 40%,#6b4630,#2c1c13);box-shadow:inset 0 0 0 3px rgba(255,214,160,.25)}
+.art--crema{background:radial-gradient(circle at 50% 50%,
+  #d9a066 0 9%,#c17f45 14%,#a86532 20%,#8a4f26 26%,#e8d6c0 27% 31%,#fbf8f4 31.5% 34%,#2a1b13 34.5%),#2a1b13}
+.art--crema::after{content:"";position:absolute;inset:0;background:
+  radial-gradient(circle at 46% 44%,rgba(80,40,15,.55) 0 1.2%,transparent 1.6%),
+  radial-gradient(circle at 54% 52%,rgba(80,40,15,.45) 0 .9%,transparent 1.3%),
+  radial-gradient(circle at 50% 57%,rgba(80,40,15,.4) 0 1%,transparent 1.4%),
+  radial-gradient(circle at 42% 53%,rgba(255,230,190,.35) 0 3%,transparent 6%),
+  linear-gradient(100deg,rgba(255,200,130,.25),transparent 50%)}
+.art--grounds{background:var(--noise),radial-gradient(circle at 30% 25%,#7a5238,#3a2519 55%,#1e130d)}
+.art--grounds::after{content:"";position:absolute;inset:0;background:var(--noise);mix-blend-mode:multiply;opacity:.9}
+.art--wood{background:
+  repeating-linear-gradient(92deg,rgba(0,0,0,.0) 0 7px,rgba(0,0,0,.25) 8px,rgba(0,0,0,0) 10px 19px,rgba(255,190,130,.06) 20px 22px),
+  repeating-linear-gradient(88deg,#3b2417 0 40px,#2f1c12 60px,#43291a 90px),#341f14}
+.art--wood::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,180,100,.35),transparent 45%)}
+.art--stone{background:var(--noise),linear-gradient(160deg,#4a4440,#262220 70%)}
+.art--stone::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 10% 0%,rgba(255,190,120,.35),transparent 55%)}
+.art--tamp{background:radial-gradient(ellipse at 15% 10%,rgba(255,190,120,.45),transparent 50%),linear-gradient(#2e1f16,#140d09)}
+.art--tamp::before{content:"";position:absolute;left:50%;top:56%;width:58%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(circle,#5a3a28 0 58%,#2a1a12 60% 62%,#9b9792 63% 70%,#4b4744 72%,#1a120d 74%)}
+.art--tamp::after{content:"";position:absolute;left:50%;top:30%;width:34%;height:52%;transform:translateX(-50%);border-radius:18px 18px 50% 50%/18px 18px 20% 20%;
+  background:linear-gradient(90deg,#3d2416,#6a4127 40%,#4b2e1c);box-shadow:0 30px 40px rgba(0,0,0,.6)}
+.dodont{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px}
+@media(max-width:760px){.dodont{grid-template-columns:1fr}}
+.dodont .card h4{display:flex;align-items:center;gap:10px;font-size:18px}
+.dodont ul{margin:0;padding-left:20px}
+.dodont li{margin-bottom:6px}
+.tick{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:14px;color:var(--offwhite)}
+
+/* Tonalität */
+.tone{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;margin-top:40px}
+.tone .card h3{font-size:22px}
+.table{width:100%;border-collapse:collapse;margin-top:24px;background:var(--offwhite);border-radius:20px;overflow:hidden}
+.table th,.table td{text-align:left;padding:18px 22px;vertical-align:top;border-bottom:1px solid rgba(43,29,22,.08)}
+.table th{font:500 11px var(--fh);letter-spacing:.18em;text-transform:uppercase;color:var(--grau)}
+.table td:nth-child(2){color:#9b5a4a;text-decoration:line-through;text-decoration-color:rgba(155,90,74,.5)}
+.table td:nth-child(3){font-weight:500}
+.examples{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:24px}
+.ex{background:var(--offwhite);border-radius:20px;padding:24px;border-left:2px solid var(--kupfer)}
+.ex p{margin:8px 0 0;font-size:16px}
+
+/* Anwendungen */
+.app{display:grid;grid-template-columns:1fr 1.3fr;gap:clamp(24px,5vw,64px);align-items:center;margin-top:72px}
+.app:first-of-type{margin-top:40px}
+@media(max-width:900px){.app{grid-template-columns:1fr}}
+.app__copy h3{font-size:32px}
+.app__copy ul{padding-left:20px;margin:0}
+.app__stage{border-radius:28px;min-height:480px;display:grid;place-items:center;position:relative;overflow:hidden;padding:40px}
+.stage--warm{background:radial-gradient(ellipse at 20% 10%,#fff3e2,transparent 60%),linear-gradient(160deg,#e8dccd,#cbb9a5)}
+.stage--dark{background:radial-gradient(ellipse at 15% 0%,rgba(255,190,120,.35),transparent 55%),linear-gradient(#3a271c,#1b120d)}
+
+/* Box */
+.box{position:relative;width:250px;height:300px;transform-style:preserve-3d;transform:rotateX(-14deg) rotateY(-32deg);margin-right:40px}
+.box__f,.box__s,.box__t{position:absolute;backface-visibility:hidden}
+.box__f{inset:0;background:var(--crema);transform:translateZ(80px);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:26px 20px 22px;box-shadow:inset 0 0 0 1px rgba(43,29,22,.06)}
+.box__f .mk{width:118px;color:var(--espresso);filter:drop-shadow(0 1px 0 rgba(255,255,255,.7)) drop-shadow(0 -1px 0 rgba(43,29,22,.15))}
+.box__line{width:100%;height:1px;background:var(--kupfer)}
+.box__kicker{font:500 9px var(--fh);letter-spacing:.24em;text-transform:uppercase;color:var(--kupfer)}
+.box__name{font:700 20px/1 var(--fh);text-align:center}
+.box__name small{display:block;font:400 11px var(--fb);color:var(--grau);margin-top:6px}
+.box__f .lk--h{width:130px;color:var(--espresso)}
+.box__s{width:160px;height:300px;left:45px;background:var(--espresso);color:var(--offwhite);transform:rotateY(90deg) translateZ(125px);padding:26px 18px;display:flex;flex-direction:column;justify-content:space-between;filter:brightness(.82)}
+.box__s p{font:700 17px/1.2 var(--fh);margin:0}
+.box__s .lk--s{width:64px;color:var(--kupfer)}
+.box__t{width:250px;height:160px;top:70px;background:#ece0d0;transform:rotateX(90deg) translateZ(150px);display:grid;place-items:center;filter:brightness(1.04)}
+.box__t .lk--h{width:120px;color:var(--espresso);opacity:.85}
+.box-shadow{position:absolute;bottom:70px;left:50%;width:330px;height:46px;background:radial-gradient(ellipse,rgba(43,29,22,.38),transparent 70%);transform:translateX(-55%);filter:blur(6px)}
+.seal{position:absolute;right:9%;bottom:14%;width:120px;height:120px;border-radius:50%;background:var(--espresso);color:var(--offwhite);display:grid;place-items:center;box-shadow:0 18px 30px rgba(43,29,22,.35);transform:rotate(-8deg)}
+.seal svg{width:100%;height:100%;position:absolute;inset:0}
+.seal .mk{position:static;width:38px;height:38px;color:var(--kupfer)}
+
+/* Gravur */
+.tamper-top{width:300px;height:300px;border-radius:50%;position:relative;
+  background:conic-gradient(from 20deg,#d9d7d3,#a9a6a1,#eceae6,#8f8c87,#d2d0cb,#a3a09b,#ebe9e5,#96938e,#d9d7d3);
+  box-shadow:0 30px 60px rgba(0,0,0,.55),inset 0 0 0 8px rgba(0,0,0,.08),inset 0 2px 2px rgba(255,255,255,.6)}
+.tamper-top::before{content:"";position:absolute;inset:0;border-radius:50%;background:repeating-radial-gradient(circle,rgba(255,255,255,.07) 0 1px,rgba(0,0,0,.05) 2px 3px)}
+.tamper-top .mk{position:absolute;width:92px;left:50%;top:50%;transform:translate(-50%,-50%);color:#5d5a56;filter:drop-shadow(0 1px 0 rgba(255,255,255,.6)) drop-shadow(0 -1px 0 rgba(0,0,0,.35));opacity:.92}
+.tamper-top svg.ringtext{position:absolute;inset:0;width:100%;height:100%}
+.wood-handle{position:absolute;right:-30px;bottom:56px;width:420px;height:96px;border-radius:48px 14px 14px 48px;transform:rotate(-14deg);
+  background:repeating-linear-gradient(2deg,rgba(0,0,0,0) 0 9px,rgba(0,0,0,.22) 10px,rgba(0,0,0,0) 12px 23px),linear-gradient(180deg,#8b5a36,#5d3a22 60%,#3e2516);
+  box-shadow:0 24px 40px rgba(0,0,0,.55),inset 0 6px 10px rgba(255,210,160,.25);display:grid;place-items:center}
+.wood-handle .lk--h{width:200px;color:#2a160c;opacity:.82;filter:blur(.25px) drop-shadow(0 1px 0 rgba(255,220,180,.18))}
+.engrave-specs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.engrave-specs div{background:var(--offwhite);border-radius:14px;padding:14px 16px;font-size:14px}
+.engrave-specs b{display:block;font-family:var(--fh)}
+
+/* Instagram */
+.igs{display:flex;gap:28px;flex-wrap:wrap;justify-content:center}
+.ig{width:290px;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.35);font-family:-apple-system,Inter,sans-serif;color:#111}
+.ig__head{display:flex;align-items:center;gap:10px;padding:10px 12px;font-size:13px;font-weight:600}
+.ig__avatar{width:30px;height:30px;border-radius:50%;background:var(--espresso);display:grid;place-items:center}
+.ig__avatar .mk{width:20px;color:var(--offwhite)}
+.ig__img{aspect-ratio:1;position:relative;overflow:hidden}
+.ig__foot{padding:10px 12px 14px;font-size:12.5px;line-height:1.45}
+.ig__foot b{font-weight:600}
+.ig__icons{display:flex;gap:14px;margin-bottom:8px;font-size:18px}
+.post1{background:var(--espresso);color:var(--offwhite);padding:26px;display:flex;flex-direction:column;justify-content:space-between}
+.post1::before{content:"";position:absolute;right:-120px;top:-120px;width:250px;height:250px;border-radius:50%;
+  background:radial-gradient(circle,#d9a066 0 18%,#a86532 40%,#6e3f1f 58%,#e8d6c0 60% 66%,transparent 67%)}
+.post1::after{content:"";position:absolute;right:-120px;top:-120px;width:250px;height:250px;border-radius:50%;border:1px solid rgba(184,115,51,.6);transform:scale(1.18)}
+.post1 h4{font-size:28px;line-height:1.05;margin:0;position:relative;z-index:1}
+.post1 .lk--h{width:110px;color:var(--offwhite);opacity:.9}
+.post1__line{height:1px;background:var(--kupfer);width:48px;margin-bottom:14px}
+.post2{background:var(--crema);padding:24px;display:flex;flex-direction:column}
+.post2__k{font:500 9px var(--fh);letter-spacing:.24em;text-transform:uppercase;color:var(--kupfer)}
+.post2 h4{font-size:24px;margin:10px 0 14px;line-height:1.05}
+.post2 ol{list-style:none;padding:0;margin:0;display:grid;gap:10px;counter-reset:s}
+.post2 li{display:flex;gap:12px;align-items:flex-start;font-size:12.5px;line-height:1.35;counter-increment:s;color:var(--espresso)}
+.post2 li::before{content:counter(s);flex:0 0 24px;height:24px;border-radius:50%;border:1px solid var(--kupfer);color:var(--kupfer);display:grid;place-items:center;font:700 11px var(--fh)}
+.post2 .mk{width:26px;color:var(--espresso);margin-top:auto;align-self:flex-end}
+
+/* Shop */
+.browser{width:100%;max-width:1100px;margin:40px auto 0;border-radius:16px;overflow:hidden;box-shadow:0 40px 80px rgba(43,29,22,.25);background:var(--offwhite)}
+.browser__bar{height:38px;background:#e9e1d6;display:flex;align-items:center;gap:7px;padding:0 14px}
+.browser__bar i{width:11px;height:11px;border-radius:50%;background:#cfc3b4}
+.browser__url{margin-left:14px;flex:0 1 340px;height:22px;border-radius:999px;background:var(--offwhite);font:400 11px/22px var(--fb);color:var(--grau);padding:0 12px}
+.shop{font-size:14px}
+.shop__ann{background:var(--espresso);color:var(--crema);text-align:center;font:500 10.5px/30px var(--fh);letter-spacing:.16em;text-transform:uppercase}
+.shop__head{display:flex;align-items:center;gap:32px;padding:18px 40px;border-bottom:1px solid rgba(184,115,51,.35)}
+.shop__head .lk--h{width:150px;color:var(--espresso)}
+.shop__nav{display:flex;gap:24px;font:500 13px var(--fh);flex:1}
+.shop__icons{display:flex;gap:16px;color:var(--espresso)}
+.shop__icons span{width:18px;height:18px;border:1.6px solid currentColor;border-radius:50%}
+.shop__hero{display:grid;grid-template-columns:1fr 1fr;min-height:420px}
+.shop__hero-copy{padding:64px 40px;display:flex;flex-direction:column;justify-content:center}
+.shop__hero-copy h2{font-size:46px;line-height:1.02;margin:0 0 16px}
+.shop__hero-copy p{color:var(--grau);max-width:36ch}
+.shop__hero-img{position:relative;overflow:hidden}
+.shop__divider{display:flex;align-items:center;gap:16px;padding:0 40px;margin:56px 0 28px;font:500 10.5px var(--fh);letter-spacing:.22em;text-transform:uppercase;color:var(--kupfer)}
+.shop__divider::after{content:"";flex:1;height:1px;background:var(--kupfer)}
+.shop__cats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:0 40px}
+.shop__cat{text-align:center;font:700 14px var(--fh)}
+.shop__cat div{aspect-ratio:1;border-radius:50%;margin-bottom:12px;position:relative;overflow:hidden}
+.shop__products{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:0 40px}
+.shop__p{background:#fff;border-radius:18px;overflow:hidden}
+.shop__p-img{aspect-ratio:1;background:var(--crema);display:grid;place-items:center;position:relative}
+.shop__p-info{padding:14px 16px 18px}
+.shop__p-info b{display:block;font:700 14px var(--fh);margin-bottom:2px}
+.shop__p-info span{color:var(--grau);font-size:12.5px}
+.shop__p-info em{font-style:normal;display:block;margin-top:8px;font-weight:600}
+.shop__story{margin:64px 40px 0;border-radius:24px;background:var(--espresso);color:var(--offwhite);display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+.shop__story-copy{padding:48px}
+.shop__story-copy h3{font-size:32px}
+.shop__story-copy p{opacity:.75}
+.shop__foot{margin-top:64px;background:var(--espresso);color:var(--crema);padding:40px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.shop__foot .lk--h{width:140px;color:var(--offwhite)}
+.mini-tamper{width:46%;aspect-ratio:1;border-radius:50%;background:conic-gradient(from 30deg,#d6d3ce,#9e9b96,#efede9,#8d8a85,#d6d3ce);box-shadow:0 14px 24px rgba(43,29,22,.25);position:relative}
+.mini-tamper::after{content:"";position:absolute;inset:36%;border-radius:50%;border:2px solid rgba(80,76,72,.5)}
+.mini-dist{width:52%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#3b2a20 0 30%,#5c3e2c 31% 60%,#2b1d16 61%);box-shadow:0 14px 24px rgba(43,29,22,.25)}
+.mini-screen{width:46%;aspect-ratio:1;border-radius:50%;background:repeating-radial-gradient(circle,#b9b6b1 0 1px,#8f8c87 2px 3px);box-shadow:0 10px 20px rgba(43,29,22,.2)}
+.mini-cup{width:48%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#c88a52 0 30%,#8a4f26 50%,#f3e9dc 52% 66%,#fff 67%);box-shadow:0 14px 24px rgba(43,29,22,.25)}
+
+.downloads{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:40px}
+.dl{border:1px solid rgba(251,248,244,.2);border-radius:20px;padding:24px}
+.dl b{font-family:var(--fh);display:block;margin-bottom:6px}
+.dl span{opacity:.7;font-size:14px}
+footer.end{padding:48px 0;text-align:center;font-size:13px;color:var(--grau)}
+@media print{nav.toc{display:none}section.chapter{break-inside:avoid-page}}
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div>
+    {{LOGO_S}}
+    <p class="cover__meta">Corporate Design Handbuch · Version 1.0 · 2026</p>
+    <p class="cover__claim">Dein Espresso. Endlich so gut wie im Café.</p>
+  </div>
+</header>
+
+<nav class="toc"><div class="wrap">
+  {{MARK}}
+  <a href="#kern">01 Markenkern</a><a href="#logo">02 Logo</a><a href="#farben">03 Farben</a><a href="#typo">04 Typografie</a>
+  <a href="#elemente">05 Gestaltung</a><a href="#bild">06 Bildstil</a><a href="#ton">07 Tonalität</a><a href="#anwendung">08 Anwendungen</a>
+</div></nav>
+
+<!-- 01 MARKENKERN -->
+<section class="chapter" id="kern"><div class="wrap">
+  <p class="eyebrow">01 · Markenkern</p>
+  <h2 class="ch-title">Wie eine gute Espressobar am Morgen.</h2>
+  <p class="lead">PUCKWERK macht Siebträger-Zubehör für Menschen, die zuhause Espresso machen – und es richtig machen wollen. Wir sind handwerklich und präzise, aber nie verkopft. Ruhig, warm, hochwertig – und trotzdem nahbar wie der Barista, der deinen Namen kennt.</p>
+  <div class="feel"><span>handwerklich</span><span>präzise</span><span>ruhig</span><span>warm</span><span>premium</span><span>nahbar</span></div>
+  <div class="values">
+    <div class="value"><div class="value__dot">01</div><h3>Präzision</h3><p class="muted">Jedes Zehntel zählt. Wir fertigen auf den Millimeter genau und sagen dir, warum es darauf ankommt – ohne Fachchinesisch.</p></div>
+    <div class="value"><div class="value__dot">02</div><h3>Ehrlichkeit</h3><p class="muted">Keine Heilsversprechen, keine Fake-Rabatte. Wir zeigen, was ein Produkt kann – und was nicht. Ehrliche Materialien, ehrliche Preise.</p></div>
+    <div class="value"><div class="value__dot">03</div><h3>Handwerk</h3><p class="muted">Edelstahl, Holz, Kupfer. Gemacht, um jahrelang benutzt zu werden – und mit jedem Shot schöner zu werden.</p></div>
+  </div>
+  <div class="claimbox">
+    <span class="label" style="color:var(--kupfer)">Claim</span>
+    <q>Dein Espresso. Endlich so gut wie im Café.</q>
+  </div>
+</div></section>
+
+<!-- 02 LOGO -->
+<section class="chapter chapter--crema" id="logo"><div class="wrap">
+  <p class="eyebrow">02 · Logo</p>
+  <h2 class="ch-title">Ein Puck. Von oben.</h2>
+  <p class="lead">Das Bildzeichen zeigt einen getampten Kaffee-Puck in der Draufsicht: außen der Rand des Siebs, innen der Puck mit zwei Rillen als Spur des Tampers. Die Wortmarke steht in Space Grotesk Bold, in Versalien und mit 14 % Laufweite – kräftig, leicht technisch, ruhig.</p>
+
+  <div class="logo-hero" style="margin-top:40px">{{LOGO_H}}</div>
+
+  <div class="variants">
+    <div class="variant"><div class="variant__art">{{LOGO_H}}</div><span class="label">Horizontal · Standard</span></div>
+    <div class="variant"><div class="variant__art">{{LOGO_S}}</div><span class="label">Gestapelt · Verpackung, Social</span></div>
+    <div class="variant"><div class="variant__art">{{MARK}}</div><span class="label">Bildzeichen · Gravur, Favicon</span></div>
+  </div>
+
+  <h3 class="sub">Farbvarianten</h3>
+  <div class="colorways">
+    <div class="cw" style="background:var(--offwhite);color:var(--espresso)">{{LOGO_S}}<span class="label">Espresso auf Off-White</span></div>
+    <div class="cw" style="background:var(--espresso);color:var(--offwhite)">{{LOGO_S}}<span class="label" style="color:#b9aea6">Off-White auf Espresso</span></div>
+    <div class="cw" style="background:var(--kupfer);color:var(--offwhite)">{{LOGO_S}}<span class="label" style="color:var(--crema)">Off-White auf Kupfer</span></div>
+    <div class="cw" style="background:var(--espresso);color:var(--kupfer)">{{LOGO_S}}<span class="label" style="color:#b9aea6">Kupfer auf Espresso</span></div>
+  </div>
+
+  <h3 class="sub">Konstruktion & Mindestgrößen</h3>
+  <div class="construct">
+    <div class="construct__art">
+      <svg viewBox="-4 -4 158 108" style="width:92%">
+        <g fill="none" stroke="#B87333" stroke-width=".3" stroke-dasharray="1 1">
+          <circle cx="50" cy="50" r="49"/><circle cx="50" cy="50" r="38"/><circle cx="50" cy="50" r="26"/><circle cx="50" cy="50" r="14"/>
+          <path d="M0 50h100M50 0v100"/>
+        </g>
+        <g fill="#2B1D16" fill-rule="evenodd" opacity=".9"><path d="M1,50a49,49 0 1,0 98,0a49,49 0 1,0 -98,0ZM7,50a43,43 0 1,0 86,0a43,43 0 1,0 -86,0ZM12,50a38,38 0 1,0 76,0a38,38 0 1,0 -76,0ZM21,50a29,29 0 1,0 58,0a29,29 0 1,0 -58,0ZM24,50a26,26 0 1,0 52,0a26,26 0 1,0 -52,0ZM33,50a17,17 0 1,0 34,0a17,17 0 1,0 -34,0ZM36,50a14,14 0 1,0 28,0a14,14 0 1,0 -28,0Z"/></g>
+        <g font-family="Space Grotesk" font-size="3.6" fill="#B87333"><text x="101" y="3">Ø 98 – Siebrand (6)</text><text x="101" y="14">Abstand (5)</text><text x="101" y="22">Puck Ø 76</text><text x="101" y="30">Rille 1 (3)</text><text x="101" y="38">Rille 2 (3)</text><text x="101" y="46">Kern Ø 28</text></g>
+      </svg>
+    </div>
+    <div>
+      <ul class="specs">
+        <li><span>Bildzeichen – Druck / Screen</span><b>ab Ø 6 mm / 16 px</b></li>
+        <li><span>Bildzeichen – Lasergravur Metall & Holz</span><b>ab Ø 8 mm · optimal 15 mm</b></li>
+        <li><span>Bei Ø 15 mm: feinste Linie</span><b>0,45 mm (Rille)</b></li>
+        <li><span>Logo horizontal</span><b>ab 30 mm / 120 px Breite</b></li>
+        <li><span>Logo gestapelt</span><b>ab 22 mm / 90 px Breite</b></li>
+        <li><span>Unter diesen Größen</span><b>nur Bildzeichen verwenden</b></li>
+        <li><span>Farbigkeit</span><b>immer einfarbig, keine Verläufe</b></li>
+      </ul>
+      <div class="clearspace" style="margin-top:24px">
+        <div class="clearspace__box">{{LOGO_H}}<span class="clearspace__x" style="top:12px;left:50%">x</span><span class="clearspace__x" style="left:14px;top:50%">x</span></div>
+        <p class="muted" style="margin:18px 0 0;font-size:14px">Schutzraum x = ½ Durchmesser des Bildzeichens – rundum frei von Text, Kanten und Bildern.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub">Bitte nicht</h3>
+  <div class="donts">
+    <div class="dont"><div class="dont__art"><span style="display:block;width:78%;transform:scaleX(1.4)">{{LOGO_H}}</span></div><p>Verzerren oder stauchen</p></div>
+    <div class="dont"><div class="dont__art"><span style="display:block;width:78%;transform:rotate(-12deg)">{{LOGO_H}}</span></div><p>Drehen oder kippen</p></div>
+    <div class="dont"><div class="dont__art"><span style="display:block;width:78%;filter:drop-shadow(4px 6px 3px rgba(0,0,0,.5));color:#3a8f6a">{{LOGO_H}}</span></div><p>Schatten, Effekte, Fremdfarben</p></div>
+    <div class="dont"><div class="dont__art" style="font:italic 700 30px Georgia,serif;letter-spacing:0">PuckWerk</div><p>Andere Schrift oder Schreibweise</p></div>
+  </div>
+</div></section>
+
+<!-- 03 FARBEN -->
+<section class="chapter" id="farben"><div class="wrap">
+  <p class="eyebrow">03 · Farben</p>
+  <h2 class="ch-title">Kaffee, Crema, Kupfer.</h2>
+  <p class="lead">Unsere Palette kommt direkt aus der Tasse. Helle, warme Flächen tragen das Layout – Espresso gibt Halt, Kupfer setzt Akzente. Kupfer ist ein Gewürz, kein Hauptgericht.</p>
+  <div class="swatches" style="margin-top:40px">{{SWATCHES}}</div>
+  <p class="muted" style="font-size:13px;margin-top:12px">* CMYK sind rechnerische Richtwerte. Vor dem ersten Druck mit Proof bei der Druckerei abstimmen; Kupfer auf Verpackung bevorzugt als Heißfolie.</p>
+  <h3 class="sub">Mengenverhältnis</h3>
+  <div class="ratio">
+    <div style="flex:45;background:var(--offwhite)">Off-White 45 %</div>
+    <div style="flex:22;background:var(--crema)">Crema 22 %</div>
+    <div style="flex:20;background:var(--espresso);color:var(--offwhite)">Espresso 20 %</div>
+    <div style="flex:8;background:var(--grau);color:var(--offwhite)">Grau 8 %</div>
+    <div style="flex:5;background:var(--kupfer);color:var(--offwhite)">5 %</div>
+  </div>
+  <h3 class="sub">Kontraste & Barrierefreiheit</h3>
+  <div class="cpairs">{{CONTRAST}}</div>
+  <p class="muted" style="font-size:14px;margin-top:14px">Buttons in Kupfer tragen Text in Off-White ab 15 px Bold. Fließtext immer in Espresso – Grau nur für Nebentext ab 14 px.</p>
+</div></section>
+
+<!-- 04 TYPO -->
+<section class="chapter chapter--crema" id="typo"><div class="wrap">
+  <p class="eyebrow">04 · Typografie</p>
+  <h2 class="ch-title">Zwei Schriften. Klare Rollen.</h2>
+  <p class="lead">Space Grotesk Bold für Überschriften: technisch, präzise, mit Charakter. Inter Regular für alles, was gelesen wird: ruhig, neutral, sehr gut lesbar. Beide sind kostenlos über Google Fonts verfügbar (SIL Open Font License).</p>
+  <div class="specimen" style="margin-top:40px">
+    <div><p class="specimen__big" style="font-family:var(--fh);font-weight:700">Aa</p><span class="label">Überschriften · Space Grotesk Bold</span></div>
+    <div><p class="specimen__chars" style="font-family:var(--fh);font-weight:700">ABCDEFGHIJKLMNOPQRSTUVWXYZ ÄÖÜ abcdefghijklmnopqrstuvwxyz äöüß 0123456789 · 58,5 mm · 18 g → 36 g</p></div>
+  </div>
+  <div class="specimen" style="margin-top:24px">
+    <div><p class="specimen__big" style="font-family:var(--fb);font-weight:400">Aa</p><span class="label">Fließtext · Inter Regular</span></div>
+    <div><p class="specimen__chars" style="font-family:var(--fb);font-weight:400">ABCDEFGHIJKLMNOPQRSTUVWXYZ ÄÖÜ abcdefghijklmnopqrstuvwxyz äöüß 0123456789 (€ % & ?!)</p></div>
+  </div>
+  <div class="scale">
+    <div class="scale__row"><span class="label">H1 · SG Bold 56/1.05</span><span style="font:700 56px/1.05 var(--fh)">Dein Espresso.</span></div>
+    <div class="scale__row"><span class="label">H2 · SG Bold 40/1.1</span><span style="font:700 40px/1.1 var(--fh)">Gleichmäßig tampen.</span></div>
+    <div class="scale__row"><span class="label">H3 · SG Bold 24/1.2</span><span style="font:700 24px/1.2 var(--fh)">Präzisionstamper 58,5 mm</span></div>
+    <div class="scale__row"><span class="label">Label · SG Medium 12 · +18 % · Versal</span><span style="font:500 12px var(--fh);letter-spacing:.18em;text-transform:uppercase;color:var(--kupfer)">Neu im Werk</span></div>
+    <div class="scale__row"><span class="label">Body · Inter 17/1.65</span><span>Ein gleichmäßiger Puck ist die halbe Miete. Unser Tamper sitzt plan im Sieb, damit das Wasser überall gleich schnell durchläuft.</span></div>
+    <div class="scale__row"><span class="label">Klein · Inter 14 · Grau</span><span class="muted" style="font-size:14px">Edelstahl 1.4404 · Nussbaum geölt · Made in Germany</span></div>
+  </div>
+</div></section>
+
+<!-- 05 GESTALTUNG -->
+<section class="chapter" id="elemente"><div class="wrap">
+  <p class="eyebrow">05 · Gestaltungselemente</p>
+  <h2 class="ch-title">Weißraum, Linien, Kreise.</h2>
+  <p class="lead">Wir lassen Dinge atmen. Runde Formen erinnern an den Puck, dünne Kupferlinien ordnen und trennen. Nichts ist laut, alles ist genau gesetzt.</p>
+  <div class="elements">
+    <div class="el"><div class="el__art"><div class="rings"><i></i><i></i><i></i><b></b></div></div><div><b style="font-family:var(--fh)">Kreise & Ringe</b><p class="muted" style="font-size:14px;margin:4px 0 0">Bildausschnitte rund, Ringe als Hintergrundmotiv – immer 1 px Kupfer.</p></div></div>
+    <div class="el"><div class="el__art"><div class="divider-demo"><hr><span>Neu im Werk</span><hr style="width:48px"></div></div><div><b style="font-family:var(--fh)">Kupferlinien</b><p class="muted" style="font-size:14px;margin:4px 0 0">1 px, Kupfer, als Trenner und Akzent. Nie dicker, nie farbig gefüllt.</p></div></div>
+    <div class="el"><div class="el__art" style="display:flex;flex-direction:column;gap:12px;align-items:flex-start"><a class="btn btn--copper">In den Warenkorb</a><a class="btn btn--outline">Mehr erfahren</a></div><div><b style="font-family:var(--fh)">Buttons</b><p class="muted" style="font-size:14px;margin:4px 0 0">Pillenform, Space Grotesk Bold. Kupfer = Hauptaktion, Outline = Nebenaktion.</p></div></div>
+    <div class="el"><div class="el__art"><div class="space-demo"><div style="height:8px"></div><div style="height:16px">16</div><div style="height:24px">24</div><div style="height:40px">40</div><div style="height:64px">64</div><div style="height:96px">96+</div></div></div><div><b style="font-family:var(--fh)">Raster & Weißraum</b><p class="muted" style="font-size:14px;margin:4px 0 0">8er-Raster. Sektionen ab 96 px Abstand. Ecken 20 px, Bilder rund oder 20 px.</p></div></div>
+  </div>
+</div></section>
+
+<!-- 06 BILDSTIL -->
+<section class="chapter chapter--dark" id="bild"><div class="wrap">
+  <p class="eyebrow">06 · Bildstil & Moodboard</p>
+  <h2 class="ch-title" style="color:var(--offwhite)">Morgenlicht von der Seite.</h2>
+  <p class="lead">Warmes, seitliches Licht. Dunkle Holz- und Steinflächen. Nahaufnahmen von Händen, Kaffeemehl und Crema – ruhig, echt, ein bisschen Zeitlupe. Die Kacheln unten sind gezeichnete Art-Direction-Skizzen als Briefing für das Fotoshooting, keine finalen Fotos.</p>
+  <div class="mood">
+    <figure class="m1"><div class="art art--light"></div><figcaption>Seitliches Morgenlicht<small>Fensterlicht 45°, lange Schatten, warme 3200–4000 K</small></figcaption></figure>
+    <figure class="m2"><div class="art art--crema"></div><figcaption>Crema von oben<small>Tigerung, Tassenrand, Off-White-Keramik</small></figcaption></figure>
+    <figure class="m3"><div class="art art--grounds"></div><figcaption>Kaffeemehl<small>Makro, Textur, Staubkörner im Licht</small></figcaption></figure>
+    <figure class="m4"><div class="art art--tamp"></div><figcaption>Hände beim Tampen<small>Echte Hände, Unterarm, kein Gesicht nötig</small></figcaption></figure>
+    <figure class="m5"><div class="art art--wood"></div><figcaption>Dunkles Holz<small>Nussbaum, Eiche geräuchert, geölt</small></figcaption></figure>
+    <figure class="m6"><div class="art art--stone"></div><figcaption>Stein & Schiefer<small>matt, dunkel, mit Gebrauchsspuren</small></figcaption></figure>
+  </div>
+  <div class="dodont">
+    <div class="card" style="background:#3a2a21;color:var(--offwhite)"><h4><span class="tick" style="background:#6f8f5a">✓</span>So fotografieren wir</h4><ul>
+      <li>Natürliches Seitenlicht am Morgen, gern mit Dampf und Gegenlicht</li><li>Nahaufnahmen: Hände, Puck, Crema, Mahlgrad, Werkzeug</li>
+      <li>Dunkle, warme Untergründe: Holz, Stein, Leinen</li><li>Slow-Motion-Video: Extraktion, Tampen, Distribution</li><li>Leichte Körnung, warme Farben, natürliche Hauttöne</li></ul></div>
+    <div class="card" style="background:#3a2a21;color:var(--offwhite)"><h4><span class="tick" style="background:#a2493a">✕</span>Das vermeiden wir</h4><ul>
+      <li>Kalte Studiofotos auf weißem Hintergrund (Ausnahme: Shop-Freisteller auf Crema)</li><li>Stockfoto-Menschen mit Dauergrinsen</li>
+      <li>Blitzlicht, harte Spiegelungen, Blaustich</li><li>Überladene Szenen mit Deko-Kaffeebohnen</li><li>Starke Filter, HDR, Sättigung</li></ul></div>
+  </div>
+</div></section>
+
+<!-- 07 TON -->
+<section class="chapter chapter--crema" id="ton"><div class="wrap">
+  <p class="eyebrow">07 · Tonalität</p>
+  <h2 class="ch-title">Wir reden wie ein guter Barista.</h2>
+  <p class="lead">Wir sagen Du. Wir schreiben kurz und direkt. Wir wissen viel, aber wir geben nicht damit an. Fachbegriffe nur, wenn sie helfen – und dann erklärt.</p>
+  <div class="tone">
+    <div class="card"><h3>Kurz.</h3><p class="muted">Ein Gedanke pro Satz. Lieber zwei Sätze als ein Komma-Marathon.</p></div>
+    <div class="card"><h3>Direkt.</h3><p class="muted">Du-Ansprache, aktive Verben, klare Ansage. Keine Floskeln.</p></div>
+    <div class="card"><h3>Kompetent.</h3><p class="muted">Wir erklären das Warum – in Worten, die jeder versteht.</p></div>
+    <div class="card"><h3>Warm.</h3><p class="muted">Gelassen, freundlich, mit einem Augenzwinkern. Nie arrogant.</p></div>
+  </div>
+  <table class="table">
+    <thead><tr><th>Situation</th><th>So nicht</th><th>So schon</th></tr></thead>
+    <tbody>
+      <tr><td>Produkt</td><td>Unser innovativer High-End-Tamper revolutioniert Ihr Espresso-Erlebnis.</td><td>Sitzt plan, drückt gleichmäßig. Für einen Puck ohne Kanäle.</td></tr>
+      <tr><td>Fachwissen</td><td>Optimiert die Channeling-Prävention durch homogene Puck-Densität.</td><td>Gleich fest gedrückt heißt: Das Wasser findet keine Abkürzung.</td></tr>
+      <tr><td>Button</td><td>Jetzt zum Warenkorb hinzufügen!!!</td><td>In den Warenkorb</td></tr>
+      <tr><td>Fehler</td><td>Ein unerwarteter Fehler ist aufgetreten (Code 500).</td><td>Da ist was schiefgelaufen. Probier’s bitte gleich noch mal.</td></tr>
+      <tr><td>Rabatt</td><td>MEGA SALE – NUR HEUTE – 70 % AUF ALLES!</td><td>Ehrlich günstiger: 15 % auf Restposten, solange sie da sind.</td></tr>
+    </tbody>
+  </table>
+  <div class="examples">
+    <div class="ex"><span class="label">Claim</span><p style="font:700 22px/1.2 var(--fh)">Dein Espresso. Endlich so gut wie im Café.</p></div>
+    <div class="ex"><span class="label">Produktkurztext</span><p>Präzisionstamper aus Edelstahl, 58,5 mm. Liegt schwer in der Hand, sitzt plan im Sieb. Griff aus geöltem Nussbaum.</p></div>
+    <div class="ex"><span class="label">Newsletter</span><p>Einmal im Monat: ein Tipp für bessere Shots, neue Werkzeuge und nichts, was du nicht lesen willst.</p></div>
+    <div class="ex"><span class="label">Versand</span><p>Heute bestellt, morgen unterwegs. Ab 49 € versandkostenfrei.</p></div>
+  </div>
+</div></section>
+
+<!-- 08 ANWENDUNGEN -->
+<section class="chapter" id="anwendung"><div class="wrap">
+  <p class="eyebrow">08 · Anwendungen</p>
+  <h2 class="ch-title">Die Marke im Einsatz.</h2>
+
+  <div class="app">
+    <div class="app__copy">
+      <span class="label">Verpackung</span>
+      <h3>Faltschachtel & Siegel</h3>
+      <ul class="muted">
+        <li>Ungestrichener Naturkarton in Crema, 1-farbig Espresso</li>
+        <li>Bildzeichen als Blindprägung, Kupferlinie als Heißfolie</li>
+        <li>Seitenflächen Espresso mit einem kurzen Satz</li>
+        <li>Rundes Siegel-Etikett (Ø 40 mm) als Verschluss</li>
+        <li>Kein Kunststoff, kein Sichtfenster</li>
+      </ul>
+    </div>
+    <div class="app__stage stage--warm">
+      <div class="box-shadow"></div>
+      <div class="box">
+        <div class="box__t">{{LOGO_H}}</div>
+        <div class="box__s"><p>Für Menschen, die ihren Morgen ernst nehmen.</p>{{LOGO_S}}</div>
+        <div class="box__f">
+          <span class="box__kicker">Präzisionswerkzeug</span>
+          {{MARK}}
+          <div class="box__name">Tamper 58,5<small>Edelstahl · Nussbaum</small></div>
+          <div class="box__line"></div>
+          {{LOGO_H}}
+        </div>
+      </div>
+      <div class="seal">
+        <svg viewBox="0 0 120 120"><defs><path id="sealc" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs>
+          <text font-family="Space Grotesk" font-weight="700" font-size="9.5" letter-spacing="3.2" fill="#F3E9DC"><textPath href="#sealc">PRÄZISION · EHRLICHKEIT · HANDWERK ·</textPath></text></svg>
+        {{MARK}}
+      </div>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="app__copy">
+      <span class="label">Produktgravur</span>
+      <h3>Metall & Holz</h3>
+      <p class="muted">Auf Metall: Bildzeichen mittig auf der Tamperoberseite, Umschrift auf der Kante. Auf Holz: horizontales Logo, eingebrannt. Immer einfarbig, immer aus den Gravur-Dateien (Schrift in Pfade umgewandelt).</p>
+      <div class="engrave-specs">
+        <div><b>Metall</b>Faserlaser, Annealing (schwarz) oder Tiefengravur 0,1 mm</div>
+        <div><b>Holz</b>CO₂-Laser, Brandgravur, Linien ≥ 0,3 mm</div>
+        <div><b>Größe</b>Bildzeichen Ø 15 mm auf 58-mm-Tamper</div>
+        <div><b>Datei</b>…-gravur-schwarz.svg</div>
+      </div>
+    </div>
+    <div class="app__stage stage--dark">
+      <div class="tamper-top">
+        <svg class="ringtext" viewBox="0 0 300 300"><defs><path id="tc" d="M150,150 m-122,0 a122,122 0 1,1 244,0 a122,122 0 1,1 -244,0"/></defs>
+          <text font-family="Space Grotesk" font-weight="700" font-size="13" letter-spacing="7" fill="#5d5a56" opacity=".85"><textPath href="#tc">PUCKWERK · TAMPER 58,5 MM · NR. 0042 ·</textPath></text></svg>
+        {{MARK}}
+      </div>
+      <div class="wood-handle">{{LOGO_H}}</div>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="app__copy">
+      <span class="label">Instagram</span>
+      <h3>Feed-Posts</h3>
+      <ul class="muted">
+        <li>Wechsel aus Foto-Posts (Bildstil) und ruhigen Typo-Posts</li>
+        <li>Typo-Posts: Espresso oder Crema, ein Gedanke, viel Raum</li>
+        <li>Carousels für Wissen: „3 Fehler beim Tampen“</li>
+        <li>Logo klein, unten links – nie mittig groß</li>
+      </ul>
+    </div>
+    <div class="app__stage stage--warm">
+      <div class="igs">
+        <div class="ig">
+          <div class="ig__head"><span class="ig__avatar">{{MARK}}</span>puckwerk</div>
+          <div class="ig__img post1">
+            <span></span>
+            <div style="position:relative;z-index:1"><div class="post1__line"></div><h4>Dein Espresso.<br>Endlich so gut<br>wie im Café.</h4></div>
+            <div style="position:relative;z-index:1">{{LOGO_H}}</div>
+          </div>
+          <div class="ig__foot"><div class="ig__icons">♡ ◯ ➤</div><b>puckwerk</b> Kein Zauber. Nur gutes Werkzeug und ein bisschen Übung. ☕️ Link in Bio.</div>
+        </div>
+        <div class="ig">
+          <div class="ig__head"><span class="ig__avatar">{{MARK}}</span>puckwerk</div>
+          <div class="ig__img post2">
+            <span class="post2__k">Werkwissen · 1/4</span>
+            <h4>3 Fehler beim Tampen</h4>
+            <ol><li>Schräg gedrückt – das Wasser nimmt die Abkürzung.</li><li>Zu fest gedrückt – mehr Kraft bringt nichts, gleichmäßig schon.</li><li>Nicht verteilt – erst verteilen, dann tampen.</li></ol>
+            {{MARK}}
+          </div>
+          <div class="ig__foot"><div class="ig__icons">♡ ◯ ➤</div><b>puckwerk</b> Speichern für den nächsten Morgen. Welcher Fehler war deiner?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:96px">
+    <span class="label">Shop-Startseite</span>
+    <h3 style="font-size:32px;margin-top:10px">Online-Shop</h3>
+    <p class="muted" style="max-width:60ch">Viel Weißraum, ein ruhiger Hero mit Claim, runde Kategorie-Bilder, Produktkarten auf Crema, Kupfer nur für Kaufaktionen. Umgesetzt im Shopify-Theme „PUCKWERK“.</p>
+    <div class="browser">
+      <div class="browser__bar"><i></i><i></i><i></i><span class="browser__url">puckwerk.de</span></div>
+      <div class="shop">
+        <div class="shop__ann">Ab 49 € versandkostenfrei · Heute bestellt, morgen unterwegs</div>
+        <div class="shop__head">{{LOGO_H}}<nav class="shop__nav"><span>Tamper</span><span>Verteiler</span><span>Siebe</span><span>Zubehör</span><span>Werkwissen</span></nav><div class="shop__icons"><span></span><span></span><span></span></div></div>
+        <div class="shop__hero">
+          <div class="shop__hero-copy">
+            <p class="eyebrow" style="margin-bottom:18px">Werkzeug für Home-Baristas</p>
+            <h2>Dein Espresso. Endlich so gut wie im Café.</h2>
+            <p>Präzises Siebträger-Zubehör aus Edelstahl, Holz und Kupfer. Gemacht für jeden Morgen.</p>
+            <div style="display:flex;gap:12px;margin-top:12px"><a class="btn btn--copper">Zum Shop</a><a class="btn btn--outline">Werkwissen</a></div>
+          </div>
+          <div class="shop__hero-img"><div class="art art--light"></div></div>
+        </div>
+        <div class="shop__divider">Kategorien</div>
+        <div class="shop__cats">
+          <div class="shop__cat"><div><span class="art art--tamp"></span></div>Tamper</div>
+          <div class="shop__cat"><div><span class="art art--grounds"></span></div>Verteiler</div>
+          <div class="shop__cat"><div><span class="art art--crema"></span></div>Tassen</div>
+          <div class="shop__cat"><div><span class="art art--wood"></span></div>Tamping-Stationen</div>
+        </div>
+        <div class="shop__divider">Beliebt im Werk</div>
+        <div class="shop__products">
+          <div class="shop__p"><div class="shop__p-img"><div class="mini-tamper"></div></div><div class="shop__p-info"><b>Tamper 58,5</b><span>Edelstahl · Nussbaum</span><em>89,00 €</em></div></div>
+          <div class="shop__p"><div class="shop__p-img"><div class="mini-dist"></div></div><div class="shop__p-info"><b>WDT-Verteiler</b><span>0,3 mm Nadeln</span><em>34,00 €</em></div></div>
+          <div class="shop__p"><div class="shop__p-img"><div class="mini-screen"></div></div><div class="shop__p-info"><b>Puck Screen</b><span>1,7 mm · 58 mm</span><em>19,00 €</em></div></div>
+          <div class="shop__p"><div class="shop__p-img"><div class="mini-cup"></div></div><div class="shop__p-info"><b>Espressotasse</b><span>Steinzeug · 80 ml</span><em>24,00 €</em></div></div>
+        </div>
+        <div class="shop__story">
+          <div class="shop__story-copy"><p class="eyebrow">Das Werk</p><h3>Präzision, die man in der Hand spürt.</h3><p>Wir testen jedes Werkzeug jeden Morgen selbst. Was nicht besser macht, kommt nicht ins Sortiment.</p><a class="btn btn--light">Über uns</a></div>
+          <div style="position:relative;min-height:300px"><div class="art art--wood"></div></div>
+        </div>
+        <div class="shop__foot">{{LOGO_H}}<span>Impressum · Datenschutz · Versand · Kontakt</span></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section class="chapter chapter--dark"><div class="wrap">
+  <p class="eyebrow">Dateien</p>
+  <h2 class="ch-title" style="color:var(--offwhite)">Alles, was du brauchst.</h2>
+  <div class="downloads">
+    <div class="dl"><b>Logos (SVG)</b><span>Horizontal, gestapelt, Bildzeichen, Wortmarke – je in Espresso, Kupfer, Off-White</span></div>
+    <div class="dl"><b>Gravur-Dateien</b><span>Reines Schwarz, Schrift in Pfade umgewandelt, für Laser auf Metall & Holz</span></div>
+    <div class="dl"><b>Schriften</b><span>Space Grotesk & Inter – Google Fonts, SIL Open Font License</span></div>
+    <div class="dl"><b>Shopify-Theme</b><span>puckwerk-theme.zip – Farben, Schriften und Tonalität nach dieser CI</span></div>
+  </div>
+</div></section>
+<footer class="end">PUCKWERK · Corporate Design Handbuch 1.0 · 2026</footer>
+</body>
+</html>

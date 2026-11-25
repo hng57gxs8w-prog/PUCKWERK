@@ -13,7 +13,7 @@
         <div class="newsletter-form__row newsletter-form__row--lg">
           <label for="NewsletterEmail" class="visually-hidden">E-Mail</label>
           <input id="NewsletterEmail" type="email" name="contact[email]" required placeholder="Deine E-Mail-Adresse" autocomplete="email">
-          <button type="submit" class="btn btn--dark">{{ section.settings.button }}</button>
+          <button type="submit" class="btn btn--accent">{{ section.settings.button }}</button>
         </div>
         {%- if form.errors -%}<p class="form-error">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>{%- endif -%}
       {%- endif -%}
@@ -26,9 +26,9 @@
   "name": "Newsletter",
   "class": "section-newsletter",
   "settings": [
-    { "type": "text", "id": "kicker", "label": "Dachzeile", "default": "Join the Line-up" },
-    { "type": "text", "id": "heading", "label": "Überschrift", "default": "10 % auf deine erste Bestellung" },
-    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Melde dich an und erfahre als Erstes von neuen Drops und Restocks.</p>" },
+    { "type": "text", "id": "kicker", "label": "Dachzeile", "default": "Newsletter" },
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Ein Tipp pro Monat. Für bessere Shots." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Werkwissen, neue Werkzeuge und nichts, was du nicht lesen willst. Abmelden geht jederzeit.</p>" },
     { "type": "text", "id": "button", "label": "Button-Text", "default": "Anmelden" }
   ],
   "presets": [ { "name": "Newsletter" } ]

@@ -4,7 +4,7 @@
       {%- if section.settings.image != blank -%}
         {{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 50vw, 100vw', class: 'iwt__img' }}
       {%- else -%}
-        {{ 'lifestyle-1' | placeholder_svg_tag: 'iwt__img placeholder' }}
+        <div class="iwt__img mood mood--wood" aria-hidden="true"></div>
       {%- endif -%}
       {%- if section.settings.badge != blank -%}<span class="iwt__badge">{{ section.settings.badge }}</span>{%- endif -%}
     </div>
@@ -13,7 +13,7 @@
       <h2 class="h2">{{ section.settings.heading }}</h2>
       <div class="rte">{{ section.settings.text }}</div>
       {%- if section.settings.button_label != blank -%}
-        <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn {% if section.settings.dark %}btn--accent{% else %}btn--dark{% endif %}">{{ section.settings.button_label }} {% render 'icon', name: 'arrow' %}</a>
+        <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn {% if section.settings.dark %}btn--light{% else %}btn--accent{% endif %}">{{ section.settings.button_label }}</a>
       {%- endif -%}
     </div>
   </div>
@@ -27,10 +27,10 @@
     { "type": "image_picker", "id": "image", "label": "Bild" },
     { "type": "checkbox", "id": "image_right", "label": "Bild rechts", "default": false },
     { "type": "checkbox", "id": "dark", "label": "Dunkler Hintergrund", "default": true },
-    { "type": "text", "id": "badge", "label": "Badge auf Bild", "default": "Since 2026" },
+    { "type": "text", "id": "badge", "label": "Badge auf Bild", "default": "Made in Germany" },
     { "type": "text", "id": "kicker", "label": "Dachzeile", "default": "Das Werk" },
-    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Ausrüstung, die mitspielt." },
-    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Wir stehen selbst auf dem Eis. Jedes Produkt im PUCKWERK wird von Spielern getestet, bevor es in den Shop kommt – vom Bambini bis zur Herrenmannschaft.</p>" },
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Präzision, die man in der Hand spürt." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Wir testen jedes Werkzeug jeden Morgen selbst. Was deinen Espresso nicht besser macht, kommt nicht ins Sortiment. Ehrliche Materialien, ehrliche Preise.</p>" },
     { "type": "text", "id": "button_label", "label": "Button-Text", "default": "Über uns" },
     { "type": "url", "id": "button_link", "label": "Button-Link" }
   ],

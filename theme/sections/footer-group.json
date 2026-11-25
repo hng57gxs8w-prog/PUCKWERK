@@ -7,7 +7,7 @@
       "blocks": {
         "menu1": { "type": "menu", "settings": { "heading": "Shop", "menu": "main-menu" } },
         "menu2": { "type": "menu", "settings": { "heading": "Service", "menu": "footer" } },
-        "news": { "type": "newsletter", "settings": { "heading": "Newsletter", "text": "<p>Drops, Restocks und Team-Deals zuerst.</p>" } }
+        "news": { "type": "newsletter", "settings": { "heading": "Newsletter", "text": "<p>Einmal im Monat: ein Tipp für bessere Shots und neue Werkzeuge.</p>" } }
       },
       "block_order": ["menu1", "menu2", "news"],
       "settings": {}

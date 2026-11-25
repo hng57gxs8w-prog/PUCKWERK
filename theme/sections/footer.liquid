@@ -1,11 +1,7 @@
 <footer class="footer">
-  <div class="footer__slash" aria-hidden="true"></div>
-  <div class="container footer__grid">
+    <div class="container footer__grid">
     <div class="footer__brand">
-      <a href="{{ routes.root_url }}" class="wordmark wordmark--lg">
-        {% render 'icon', name: 'puck' %}
-        <span class="wordmark__text"><span class="wordmark__a">{{ section.settings.logo_text_1 }}</span><span class="wordmark__b">{{ section.settings.logo_text_2 }}</span></span>
-      </a>
+      <a href="{{ routes.root_url }}" class="footer__logo" aria-label="{{ shop.name }}">{% render 'logo', variant: 'stacked' %}</a>
       {%- if section.settings.text != blank -%}<div class="footer__text rte">{{ section.settings.text }}</div>{%- endif -%}
       {% render 'social-icons' %}
     </div>
@@ -62,9 +58,7 @@
   "class": "section-footer",
   "max_blocks": 4,
   "settings": [
-    { "type": "text", "id": "logo_text_1", "label": "Logo Teil 1", "default": "PUCK" },
-    { "type": "text", "id": "logo_text_2", "label": "Logo Teil 2", "default": "WERK" },
-    { "type": "richtext", "id": "text", "label": "Markentext", "default": "<p>Ausrüstung für alle, die das Eis lieben. Geprüft von Spielern, gebaut für das nächste Drittel.</p>" },
+    { "type": "richtext", "id": "text", "label": "Markentext", "default": "<p>Präzises Siebträger-Zubehör für Home-Baristas. Gemacht aus Edelstahl, Holz und Kupfer – für jeden Morgen.</p>" },
     { "type": "text", "id": "copyright", "label": "Copyright-Zusatz", "default": "Alle Rechte vorbehalten." },
     { "type": "checkbox", "id": "show_payment", "label": "Zahlungsarten anzeigen", "default": true }
   ],
@@ -82,7 +76,7 @@
       "name": "Text",
       "settings": [
         { "type": "text", "id": "heading", "label": "Überschrift", "default": "Kontakt" },
-        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Fragen zu Größe oder Flex? Schreib uns – wir antworten innerhalb von 24 Stunden.</p>" }
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Fragen zu Siebgröße oder Mahlgrad? Schreib uns – wir antworten innerhalb von 24 Stunden.</p>" }
       ]
     },
     {
@@ -91,7 +85,7 @@
       "limit": 1,
       "settings": [
         { "type": "text", "id": "heading", "label": "Überschrift", "default": "Newsletter" },
-        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Drops, Restocks und Team-Deals zuerst.</p>" }
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Einmal im Monat: ein Tipp für bessere Shots und neue Werkzeuge.</p>" }
       ]
     }
   ]

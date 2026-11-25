@@ -57,7 +57,7 @@
               <textarea id="CartNote" name="note" rows="3">{{ cart.note }}</textarea>
             {%- endif -%}
             <button type="submit" name="checkout" class="btn btn--accent btn--lg btn--block">Zur Kasse {% render 'icon', name: 'arrow' %}</button>
-            <button type="submit" name="update" class="btn btn--ghost-dark btn--block">Warenkorb aktualisieren</button>
+            <button type="submit" name="update" class="btn btn--outline btn--block">Warenkorb aktualisieren</button>
             {%- if additional_checkout_buttons -%}
               <div class="cart__dynamic">{{ content_for_additional_checkout_buttons }}</div>
             {%- endif -%}

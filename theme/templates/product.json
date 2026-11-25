@@ -3,29 +3,61 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "vendor": { "type": "vendor" },
-        "title": { "type": "title" },
-        "price": { "type": "price" },
-        "buy": { "type": "buy", "settings": { "show_dynamic_checkout": true } },
-        "usps": { "type": "usps" },
-        "description": { "type": "description" },
-        "sizing": { "type": "collapsible", "settings": { "heading": "Größenberatung", "content": "<p>Unsicher bei der Größe? Schreib uns – wir helfen dir beim Fitting.</p>" } },
-        "shipping": { "type": "collapsible", "settings": { "heading": "Versand & Rückgabe", "content": "<p>Versand in 1–3 Werktagen. Kostenlos ab 79 €. 30 Tage Rückgaberecht.</p>" } }
+        "vendor": {
+          "type": "vendor"
+        },
+        "title": {
+          "type": "title"
+        },
+        "price": {
+          "type": "price"
+        },
+        "buy": {
+          "type": "buy",
+          "settings": {
+            "show_dynamic_checkout": true
+          }
+        },
+        "usps": {
+          "type": "usps"
+        },
+        "description": {
+          "type": "description"
+        },
+        "sizing": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Welche Größe passt?",
+            "content": "<p>Miss den Innendurchmesser deines Siebs – die meisten Siebträger haben 58 mm. Unsicher? Schreib uns, wir helfen dir.</p>"
+          }
+        },
+        "shipping": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Versand & Rückgabe",
+            "content": "<p>Heute bestellt, morgen unterwegs. Ab 49 € versandkostenfrei. 30 Tage Rückgabe – ehrlich ohne Haken.</p>"
+          }
+        }
       },
-      "block_order": ["vendor", "title", "price", "buy", "usps", "description", "sizing", "shipping"],
+      "block_order": [
+        "vendor",
+        "title",
+        "price",
+        "buy",
+        "usps",
+        "description",
+        "sizing",
+        "shipping"
+      ],
       "settings": {}
     },
-    "recommendations": { "type": "product-recommendations", "settings": {} },
-    "marquee": {
-      "type": "marquee",
-      "blocks": {
-        "a": { "type": "item", "settings": { "text": "Game Ready" } },
-        "b": { "type": "item", "settings": { "text": "Gratis Versand ab 79 €" } },
-        "c": { "type": "item", "settings": { "text": "30 Tage Rückgabe" } }
-      },
-      "block_order": ["a", "b", "c"],
-      "settings": { "style": "dark" }
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {}
     }
   },
-  "order": ["main", "recommendations", "marquee"]
+  "order": [
+    "main",
+    "recommendations"
+  ]
 }

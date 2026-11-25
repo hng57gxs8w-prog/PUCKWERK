@@ -1,64 +1,47 @@
-{%- liquid
-  assign overlay = section.settings.overlay | divided_by: 100.0
--%}
-<section class="hero hero--{{ section.settings.height }} hero--{{ section.settings.align }}" style="--overlay: {{ overlay }};">
-  <div class="hero__media">
-    {%- if section.settings.image != blank -%}
-      {{ section.settings.image | image_url: width: 3000 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '750, 1100, 1500, 2000, 3000', sizes: '100vw', class: 'hero__img' }}
-    {%- else -%}
-      <div class="hero__placeholder" aria-hidden="true">
-        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
-          <defs>
-            <radialGradient id="rink" cx="70%" cy="40%" r="80%"><stop offset="0" stop-color="#1b2a3a"/><stop offset="1" stop-color="#05070a"/></radialGradient>
-          </defs>
-          <rect width="1600" height="900" fill="url(#rink)"/>
-          <g fill="none" stroke="#ffffff" stroke-opacity=".07" stroke-width="2">
-            <circle cx="1150" cy="450" r="260"/><circle cx="1150" cy="450" r="12" fill="#ffffff" fill-opacity=".1"/>
-            <path d="M1150 0v900"/><path d="M0 120c400 60 900 40 1600-80M0 760c500-90 1100-60 1600 40M-50 400c300 120 700 160 1000 80" stroke-opacity=".05"/>
-          </g>
-          <g fill="none" stroke="#00A3FF" stroke-opacity=".5" stroke-width="3"><path d="M820 0 700 900"/></g>
-          <g transform="translate(1040 560) rotate(-8)"><ellipse cx="110" cy="40" rx="110" ry="34" fill="#000"/><rect y="0" width="220" height="40" fill="#0d0d0d"/><ellipse cx="110" cy="0" rx="110" ry="34" fill="#1a1a1a"/></g>
-        </svg>
+<section class="hero hero--{{ section.settings.layout }}">
+  <div class="container hero__grid">
+    <div class="hero__content">
+      {%- if section.settings.kicker != blank -%}<p class="kicker">{{ section.settings.kicker }}</p>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h1 class="hero__heading">{{ section.settings.heading }}</h1>{%- endif -%}
+      {%- if section.settings.text != blank -%}<div class="hero__text rte">{{ section.settings.text }}</div>{%- endif -%}
+      <div class="btn-row">
+        {%- if section.settings.button_label != blank -%}
+          <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn btn--accent">{{ section.settings.button_label }}</a>
+        {%- endif -%}
+        {%- if section.settings.button2_label != blank -%}
+          <a href="{{ section.settings.button2_link | default: routes.collections_url }}" class="btn btn--outline">{{ section.settings.button2_label }}</a>
+        {%- endif -%}
       </div>
-    {%- endif -%}
-  </div>
-  <div class="container hero__content">
-    {%- if section.settings.kicker != blank -%}<p class="kicker">{{ section.settings.kicker }}</p>{%- endif -%}
-    {%- if section.settings.heading != blank -%}<h1 class="hero__heading display">{{ section.settings.heading }}</h1>{%- endif -%}
-    {%- if section.settings.text != blank -%}<div class="hero__text rte">{{ section.settings.text }}</div>{%- endif -%}
-    <div class="btn-row">
-      {%- if section.settings.button_label != blank -%}
-        <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn btn--accent btn--lg">{{ section.settings.button_label }} {% render 'icon', name: 'arrow' %}</a>
+    </div>
+    <div class="hero__media">
+      {%- if section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600, 900, 1200, 1600, 2000', sizes: '(min-width: 990px) 50vw, 100vw', class: 'hero__img' }}
+      {%- else -%}
+        <div class="hero__placeholder mood mood--light" aria-hidden="true"></div>
       {%- endif -%}
-      {%- if section.settings.button2_label != blank -%}
-        <a href="{{ section.settings.button2_link | default: routes.collections_url }}" class="btn btn--ghost btn--lg">{{ section.settings.button2_label }}</a>
-      {%- endif -%}
+      <span class="hero__ring" aria-hidden="true"></span>
     </div>
   </div>
-  <div class="hero__stripe" aria-hidden="true"></div>
 </section>
 
 {% schema %}
 {
-  "name": "Hero-Banner",
+  "name": "Hero",
   "class": "section-hero",
   "settings": [
-    { "type": "image_picker", "id": "image", "label": "Bild" },
-    { "type": "range", "id": "overlay", "label": "Abdunklung", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 45 },
-    { "type": "select", "id": "height", "label": "Höhe", "options": [
-      { "value": "md", "label": "Mittel" }, { "value": "lg", "label": "Groß" }, { "value": "full", "label": "Bildschirmhöhe" }
-    ], "default": "lg" },
-    { "type": "select", "id": "align", "label": "Ausrichtung", "options": [
-      { "value": "left", "label": "Links" }, { "value": "center", "label": "Mitte" }
-    ], "default": "left" },
-    { "type": "text", "id": "kicker", "label": "Dachzeile", "default": "Neue Saison · Drop 01" },
-    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Gebaut für das Eis." },
-    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Schläger, Skates und Schutzausrüstung, die mitspielen – vom ersten Bully bis zur Schlusssirene.</p>" },
-    { "type": "text", "id": "button_label", "label": "Button 1 Text", "default": "Jetzt shoppen" },
+    { "type": "image_picker", "id": "image", "label": "Bild", "info": "Warmes Seitenlicht, dunkle Flächen, Nahaufnahme – siehe CI-Bildstil." },
+    { "type": "select", "id": "layout", "label": "Layout", "options": [
+      { "value": "split", "label": "Text links, Bild rechts" },
+      { "value": "reverse", "label": "Bild links, Text rechts" }
+    ], "default": "split" },
+    { "type": "text", "id": "kicker", "label": "Dachzeile", "default": "Werkzeug für Home-Baristas" },
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Dein Espresso. Endlich so gut wie im Café." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Präzises Siebträger-Zubehör aus Edelstahl, Holz und Kupfer. Gemacht für jeden Morgen.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button 1 Text", "default": "Zum Shop" },
     { "type": "url", "id": "button_link", "label": "Button 1 Link" },
-    { "type": "text", "id": "button2_label", "label": "Button 2 Text", "default": "Kategorien" },
+    { "type": "text", "id": "button2_label", "label": "Button 2 Text", "default": "Werkwissen" },
     { "type": "url", "id": "button2_link", "label": "Button 2 Link" }
   ],
-  "presets": [ { "name": "Hero-Banner" } ]
+  "presets": [ { "name": "Hero" } ]
 }
 {% endschema %}

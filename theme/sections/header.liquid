@@ -10,10 +10,8 @@
         {%- assign logo_style = 'width: ' | append: section.settings.logo_width | append: 'px' -%}
         {{ section.settings.logo | image_url: width: logo_w2 | image_tag: alt: shop.name, style: logo_style, class: 'header__logo-img', loading: 'eager' }}
       {%- else -%}
-        <span class="wordmark">
-          {% render 'icon', name: 'puck' %}
-          <span class="wordmark__text"><span class="wordmark__a">{{ section.settings.logo_text_1 }}</span><span class="wordmark__b">{{ section.settings.logo_text_2 }}</span></span>
-        </span>
+        {% render 'logo', variant: 'horizontal', class: 'header__logo-svg' %}
+        <span class="visually-hidden">{{ shop.name }}</span>
       {%- endif -%}
     </a>
 
@@ -50,7 +48,7 @@
     <form action="{{ routes.search_url }}" method="get" role="search" class="container search-form">
       <input type="hidden" name="type" value="product">
       <label for="HeaderSearch" class="visually-hidden">Suche</label>
-      <input id="HeaderSearch" type="search" name="q" value="{{ search.terms | escape }}" placeholder="Schläger, Schlittschuhe, Pucks …" autocomplete="off">
+      <input id="HeaderSearch" type="search" name="q" value="{{ search.terms | escape }}" placeholder="Tamper, Verteiler, Siebe …" autocomplete="off">
       <button type="submit" class="btn btn--accent">Suchen</button>
       <button type="button" class="header__icon" aria-label="Suche schließen" data-search-toggle>{% render 'icon', name: 'close' %}</button>
     </form>
@@ -63,10 +61,8 @@
   "class": "section-header",
   "settings": [
     { "type": "image_picker", "id": "logo", "label": "Logo" },
-    { "type": "range", "id": "logo_width", "label": "Logo-Breite", "min": 60, "max": 300, "step": 10, "unit": "px", "default": 160 },
-    { "type": "header", "content": "Text-Logo (wenn kein Bild gewählt)" },
-    { "type": "text", "id": "logo_text_1", "label": "Teil 1 (weiß)", "default": "PUCK" },
-    { "type": "text", "id": "logo_text_2", "label": "Teil 2 (Akzentfarbe)", "default": "WERK" },
+    { "type": "range", "id": "logo_width", "label": "Logo-Breite", "min": 60, "max": 300, "step": 10, "unit": "px", "default": 170 },
+    { "type": "paragraph", "content": "Ohne Bild wird das PUCKWERK-Logo als Vektor angezeigt." },
     { "type": "header", "content": "Navigation" },
     { "type": "link_list", "id": "menu", "label": "Menü", "default": "main-menu" },
     { "type": "checkbox", "id": "sticky", "label": "Header beim Scrollen fixieren", "default": true }

@@ -8,7 +8,7 @@
     <meta name="robots" content="noindex">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,800;1,900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     {% render 'css-variables' %}
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ content_for_header }}
@@ -16,7 +16,7 @@
   <body class="template-gift-card">
     <main class="password">
       <div class="password__inner giftcard">
-        <span class="wordmark wordmark--xl">{% render 'icon', name: 'puck' %}<span class="wordmark__text"><span class="wordmark__a">{{ shop.name }}</span></span></span>
+        <span class="password__logo">{% render 'logo', variant: 'stacked' %}</span>
         <p class="kicker">Deine Geschenkkarte</p>
         <p class="display giftcard__amount">{{ gift_card.initial_value | money }}</p>
         {%- if gift_card.balance != gift_card.initial_value -%}
@@ -32,7 +32,7 @@
         <div id="QrCode" class="giftcard__qr"></div>
         <div class="btn-row">
           <a href="{{ shop.url }}" class="btn btn--accent">Jetzt einlösen</a>
-          <button type="button" class="btn btn--light" onclick="window.print()">Drucken</button>
+          <button type="button" class="btn btn--outline-light" onclick="window.print()">Drucken</button>
         </div>
         {%- if gift_card.pass_url -%}
           <a href="{{ gift_card.pass_url }}"><img src="{{ 'gift-card/add-to-apple-wallet.svg' | shopify_asset_url }}" width="120" height="40" alt="Zu Apple Wallet hinzufügen" loading="lazy"></a>
