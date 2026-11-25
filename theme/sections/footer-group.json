@@ -1,0 +1,17 @@
+{
+  "type": "footer",
+  "name": "Footer-Gruppe",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "menu1": { "type": "menu", "settings": { "heading": "Shop", "menu": "main-menu" } },
+        "menu2": { "type": "menu", "settings": { "heading": "Service", "menu": "footer" } },
+        "news": { "type": "newsletter", "settings": { "heading": "Newsletter", "text": "<p>Drops, Restocks und Team-Deals zuerst.</p>" } }
+      },
+      "block_order": ["menu1", "menu2", "news"],
+      "settings": {}
+    }
+  },
+  "order": ["footer"]
+}

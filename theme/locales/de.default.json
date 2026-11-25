@@ -1,0 +1,12 @@
+{
+  "general": {
+    "password_page": {
+      "login_form_heading": "Mit Passwort eintreten",
+      "login_form_password_label": "Passwort",
+      "login_form_submit": "Eintreten"
+    },
+    "404": {
+      "title": "Seite nicht gefunden"
+    }
+  }
+}

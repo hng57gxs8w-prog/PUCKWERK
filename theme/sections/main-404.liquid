@@ -1,0 +1,15 @@
+<section class="section-pad notfound">
+  <div class="container container--narrow">
+    <p class="notfound__code">404</p>
+    <h1 class="display">Abseits!</h1>
+    <p>Diese Seite gibt es nicht (mehr). Zurück ins Spiel?</p>
+    <div class="btn-row">
+      <a href="{{ routes.root_url }}" class="btn btn--accent">Zur Startseite</a>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn--ghost-dark">Alle Produkte</a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "404", "class": "section-404" }
+{% endschema %}

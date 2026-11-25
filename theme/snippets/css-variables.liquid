@@ -1,0 +1,27 @@
+{%- liquid
+  if settings.heading_font == 'condensed'
+    assign heading_family = "'Barlow Condensed', 'Arial Narrow', sans-serif"
+  else
+    assign heading_family = "'Inter', system-ui, sans-serif"
+  endif
+-%}
+<style>
+  :root {
+    --c-bg: {{ settings.color_background }};
+    --c-surface: {{ settings.color_surface }};
+    --c-text: {{ settings.color_text }};
+    --c-text-rgb: {{ settings.color_text.red }}, {{ settings.color_text.green }}, {{ settings.color_text.blue }};
+    --c-dark: {{ settings.color_dark }};
+    --c-dark-rgb: {{ settings.color_dark.red }}, {{ settings.color_dark.green }}, {{ settings.color_dark.blue }};
+    --c-on-dark: {{ settings.color_on_dark }};
+    --c-accent: {{ settings.color_accent }};
+    --c-accent-rgb: {{ settings.color_accent.red }}, {{ settings.color_accent.green }}, {{ settings.color_accent.blue }};
+    --c-on-accent: {{ settings.color_on_accent }};
+    --c-sale: {{ settings.color_sale }};
+    --f-heading: {{ heading_family }};
+    --f-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --heading-style: {% if settings.heading_italic %}italic{% else %}normal{% endif %};
+    --radius: {{ settings.corner_radius }}px;
+    --page-width: {{ settings.page_width }}px;
+  }
+</style>

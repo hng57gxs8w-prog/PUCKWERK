@@ -1,0 +1,42 @@
+<section class="section-pad account">
+  <div class="container container--xs">
+    <div data-login-panel>
+      <h1 class="display">Login</h1>
+      {%- form 'customer_login', class: 'form' -%}
+        {%- if form.errors -%}<div class="form-error">{{ form.errors | default_errors }}</div>{%- endif -%}
+        <div class="field"><label for="LoginEmail">E-Mail</label><input id="LoginEmail" type="email" name="customer[email]" autocomplete="email" required></div>
+        {%- if form.password_needed -%}
+          <div class="field"><label for="LoginPassword">Passwort</label><input id="LoginPassword" type="password" name="customer[password]" autocomplete="current-password" required></div>
+          <a href="#recover" class="link-small" data-recover-toggle>Passwort vergessen?</a>
+        {%- endif -%}
+        <button type="submit" class="btn btn--accent btn--block">Einloggen</button>
+      {%- endform -%}
+      <p class="account__switch">Neu hier? <a href="{{ routes.account_register_url }}">Konto erstellen</a></p>
+    </div>
+
+    <div id="recover" class="account__recover">
+      <h2 class="h2">Passwort zurücksetzen</h2>
+      {%- form 'recover_customer_password', class: 'form' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="form-success">Wir haben dir eine E-Mail mit einem Link geschickt.</p>
+        {%- endif -%}
+        {%- if form.errors -%}<div class="form-error">{{ form.errors | default_errors }}</div>{%- endif -%}
+        <div class="field"><label for="RecoverEmail">E-Mail</label><input id="RecoverEmail" type="email" name="email" autocomplete="email" required></div>
+        <button type="submit" class="btn btn--dark btn--block">Link senden</button>
+      {%- endform -%}
+    </div>
+
+    {%- if shop.checkout.guest_login -%}
+      <div class="account__guest">
+        <h2 class="h3">Als Gast fortfahren</h2>
+        {%- form 'guest_login' -%}
+          <button type="submit" class="btn btn--ghost-dark btn--block">Weiter als Gast</button>
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Login", "class": "section-login" }
+{% endschema %}

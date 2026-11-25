@@ -1,0 +1,18 @@
+<section class="section-pad account">
+  <div class="container container--xs">
+    <h1 class="display">Konto erstellen</h1>
+    {%- form 'create_customer', class: 'form' -%}
+      {%- if form.errors -%}<div class="form-error">{{ form.errors | default_errors }}</div>{%- endif -%}
+      <div class="field"><label for="RegFirst">Vorname</label><input id="RegFirst" type="text" name="customer[first_name]" autocomplete="given-name"></div>
+      <div class="field"><label for="RegLast">Nachname</label><input id="RegLast" type="text" name="customer[last_name]" autocomplete="family-name"></div>
+      <div class="field"><label for="RegEmail">E-Mail</label><input id="RegEmail" type="email" name="customer[email]" autocomplete="email" required></div>
+      <div class="field"><label for="RegPassword">Passwort</label><input id="RegPassword" type="password" name="customer[password]" autocomplete="new-password" required></div>
+      <button type="submit" class="btn btn--accent btn--block">Registrieren</button>
+    {%- endform -%}
+    <p class="account__switch">Schon dabei? <a href="{{ routes.account_login_url }}">Einloggen</a></p>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Registrierung", "class": "section-register" }
+{% endschema %}

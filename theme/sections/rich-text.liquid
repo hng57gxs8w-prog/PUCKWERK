@@ -1,0 +1,42 @@
+<section class="section-pad richtext richtext--{{ section.settings.style }}">
+  <div class="container container--narrow richtext__inner">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'kicker' -%}<p class="kicker" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+        {%- when 'heading' -%}<h2 class="{{ block.settings.size }}" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h2>
+        {%- when 'text' -%}<div class="rte" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+        {%- when 'button' -%}
+          <a href="{{ block.settings.link | default: routes.all_products_collection_url }}" class="btn btn--accent" {{ block.shopify_attributes }}>{{ block.settings.label }} {% render 'icon', name: 'arrow' %}</a>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Text-Statement",
+  "class": "section-richtext",
+  "settings": [
+    { "type": "select", "id": "style", "label": "Stil", "options": [
+      { "value": "light", "label": "Hell" }, { "value": "dark", "label": "Dunkel" }, { "value": "accent", "label": "Akzent" }
+    ], "default": "light" }
+  ],
+  "blocks": [
+    { "type": "kicker", "name": "Dachzeile", "limit": 1, "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "Unser Versprechen" } ] },
+    { "type": "heading", "name": "Überschrift", "settings": [
+      { "type": "text", "id": "heading", "label": "Überschrift", "default": "Kein Schnickschnack. Nur Eis, Stahl und Leidenschaft." },
+      { "type": "select", "id": "size", "label": "Größe", "options": [
+        { "value": "h2", "label": "Normal" }, { "value": "display", "label": "Riesig" }
+      ], "default": "display" }
+    ] },
+    { "type": "text", "name": "Text", "settings": [ { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Teile deiner Community, wofür deine Marke steht.</p>" } ] },
+    { "type": "button", "name": "Button", "limit": 1, "settings": [
+      { "type": "text", "id": "label", "label": "Text", "default": "Zum Shop" },
+      { "type": "url", "id": "link", "label": "Link" }
+    ] }
+  ],
+  "presets": [
+    { "name": "Text-Statement", "blocks": [ { "type": "kicker" }, { "type": "heading" }, { "type": "text" } ] }
+  ]
+}
+{% endschema %}

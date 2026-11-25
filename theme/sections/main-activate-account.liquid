@@ -1,0 +1,17 @@
+<section class="section-pad account">
+  <div class="container container--xs">
+    <h1 class="display">Konto aktivieren</h1>
+    <p>Lege ein Passwort fest, um dein Konto zu aktivieren.</p>
+    {%- form 'activate_customer_password', class: 'form' -%}
+      {%- if form.errors -%}<div class="form-error">{{ form.errors | default_errors }}</div>{%- endif -%}
+      <div class="field"><label for="ActPassword">Passwort</label><input id="ActPassword" type="password" name="customer[password]" autocomplete="new-password" required></div>
+      <div class="field"><label for="ActPasswordConfirm">Passwort bestätigen</label><input id="ActPasswordConfirm" type="password" name="customer[password_confirmation]" autocomplete="new-password" required></div>
+      <button type="submit" class="btn btn--accent btn--block">Konto aktivieren</button>
+      <button type="submit" name="decline" class="btn btn--ghost-dark btn--block">Ablehnen</button>
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Konto aktivieren", "class": "section-activate" }
+{% endschema %}

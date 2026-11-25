@@ -1,0 +1,20 @@
+<div class="form__row">
+  <div class="field"><label for="AddrFirst-{{ form.id }}">Vorname</label><input id="AddrFirst-{{ form.id }}" type="text" name="address[first_name]" value="{{ form.first_name }}" autocomplete="given-name"></div>
+  <div class="field"><label for="AddrLast-{{ form.id }}">Nachname</label><input id="AddrLast-{{ form.id }}" type="text" name="address[last_name]" value="{{ form.last_name }}" autocomplete="family-name"></div>
+</div>
+<div class="field"><label for="AddrCompany-{{ form.id }}">Firma</label><input id="AddrCompany-{{ form.id }}" type="text" name="address[company]" value="{{ form.company }}" autocomplete="organization"></div>
+<div class="field"><label for="AddrAddress1-{{ form.id }}">Straße & Hausnummer</label><input id="AddrAddress1-{{ form.id }}" type="text" name="address[address1]" value="{{ form.address1 }}" autocomplete="address-line1"></div>
+<div class="field"><label for="AddrAddress2-{{ form.id }}">Adresszusatz</label><input id="AddrAddress2-{{ form.id }}" type="text" name="address[address2]" value="{{ form.address2 }}" autocomplete="address-line2"></div>
+<div class="form__row">
+  <div class="field"><label for="AddrZip-{{ form.id }}">PLZ</label><input id="AddrZip-{{ form.id }}" type="text" name="address[zip]" value="{{ form.zip }}" autocomplete="postal-code"></div>
+  <div class="field"><label for="AddrCity-{{ form.id }}">Ort</label><input id="AddrCity-{{ form.id }}" type="text" name="address[city]" value="{{ form.city }}" autocomplete="address-level2"></div>
+</div>
+<div class="form__row">
+  <div class="field">
+    <label for="AddrCountry-{{ form.id }}">Land</label>
+    <select id="AddrCountry-{{ form.id }}" name="address[country]" data-default="{{ form.country }}" autocomplete="country">{{ all_country_option_tags }}</select>
+  </div>
+  <div class="field"><label for="AddrProvince-{{ form.id }}">Bundesland / Region</label><input id="AddrProvince-{{ form.id }}" type="text" name="address[province]" value="{{ form.province }}" autocomplete="address-level1"></div>
+</div>
+<div class="field"><label for="AddrPhone-{{ form.id }}">Telefon</label><input id="AddrPhone-{{ form.id }}" type="tel" name="address[phone]" value="{{ form.phone }}" autocomplete="tel"></div>
+<label class="checkbox"><input type="checkbox" name="address[default]" value="1"{% if form.set_as_default_checkbox contains 'checked' %} checked{% endif %}> Als Standardadresse festlegen</label>

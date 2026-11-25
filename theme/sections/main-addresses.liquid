@@ -1,0 +1,41 @@
+<section class="section-pad account">
+  <div class="container container--narrow">
+    <a href="{{ routes.account_url }}" class="link-back">← Zurück zum Konto</a>
+    <h1 class="display">Adressen</h1>
+
+    {%- paginate customer.addresses by 10 -%}
+      <div class="address-list">
+        {%- for address in customer.addresses -%}
+          <div class="account__card">
+            {%- if address == customer.default_address -%}<p class="kicker">Standard</p>{%- endif -%}
+            {{ address | format_address }}
+            <details class="accordion">
+              <summary>Bearbeiten</summary>
+              {%- form 'customer_address', address, class: 'form' -%}
+                {% render 'address-fields', form: form %}
+                <button type="submit" class="btn btn--accent">Speichern</button>
+              {%- endform -%}
+            </details>
+            <form method="post" action="{{ routes.account_addresses_url }}/{{ address.id }}" class="address-delete" data-confirm="Adresse wirklich löschen?">
+              <input type="hidden" name="_method" value="delete">
+              <button type="submit" class="link-small">Löschen</button>
+            </form>
+          </div>
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}<nav class="pagination">{{ paginate | default_pagination }}</nav>{%- endif -%}
+    {%- endpaginate -%}
+
+    <details class="accordion account__new"{% if customer.addresses_count == 0 %} open{% endif %}>
+      <summary>Neue Adresse hinzufügen</summary>
+      {%- form 'customer_address', customer.new_address, class: 'form' -%}
+        {% render 'address-fields', form: form %}
+        <button type="submit" class="btn btn--accent">Adresse hinzufügen</button>
+      {%- endform -%}
+    </details>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Adressen", "class": "section-addresses" }
+{% endschema %}

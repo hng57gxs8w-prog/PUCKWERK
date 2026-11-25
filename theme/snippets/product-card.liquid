@@ -1,0 +1,31 @@
+{%- liquid
+  assign ratio_class = 'ratio--' | append: settings.card_ratio
+-%}
+<article class="card">
+  <a href="{{ product.url | default: '#' }}" class="card__media {{ ratio_class }}">
+    {%- if product.featured_media -%}
+      {{ product.featured_media | image_url: width: 900 | image_tag: loading: 'lazy', widths: '300, 450, 600, 900', sizes: '(min-width: 990px) 25vw, 50vw', class: 'card__img' }}
+      {%- if settings.card_hover_image and product.media[1] -%}
+        {{ product.media[1] | image_url: width: 900 | image_tag: loading: 'lazy', widths: '300, 450, 600, 900', sizes: '(min-width: 990px) 25vw, 50vw', class: 'card__img card__img--hover' }}
+      {%- endif -%}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'card__img placeholder' }}
+    {%- endif -%}
+    <div class="card__badges">
+      {%- if product.compare_at_price > product.price -%}<span class="badge badge--sale">Sale</span>{%- endif -%}
+      {%- if product.available == false and product.title != blank -%}<span class="badge badge--dark">Ausverkauft</span>{%- endif -%}
+    </div>
+    <span class="card__cta">Ansehen {% render 'icon', name: 'arrow' %}</span>
+  </a>
+  <div class="card__info">
+    {%- if settings.card_show_vendor and product.vendor != blank -%}
+      <p class="card__vendor">{{ product.vendor }}</p>
+    {%- endif -%}
+    <h3 class="card__title"><a href="{{ product.url | default: '#' }}">{{ product.title | default: 'Produktname' }}</a></h3>
+    {%- if product.title != blank -%}
+      {% render 'price', product: product %}
+    {%- else -%}
+      <div class="price"><span class="price__current">49,99 €</span></div>
+    {%- endif -%}
+  </div>
+</article>

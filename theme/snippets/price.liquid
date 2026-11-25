@@ -1,0 +1,16 @@
+{%- liquid
+  if variant
+    assign p_price = variant.price
+    assign p_compare = variant.compare_at_price
+  else
+    assign p_price = product.price
+    assign p_compare = product.compare_at_price
+  endif
+-%}
+<div class="price{% if p_compare > p_price %} price--sale{% endif %}">
+  {%- if variant == blank and product.price_varies -%}<span class="price__from">ab</span> {% endif -%}
+  <span class="price__current" data-price>{{ p_price | money }}</span>
+  <s class="price__compare" data-compare-price{% unless p_compare > p_price %} hidden{% endunless %}>
+    {%- if p_compare > p_price %}{{ p_compare | money }}{% endif -%}
+  </s>
+</div>

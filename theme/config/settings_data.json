@@ -1,0 +1,25 @@
+{
+  "current": "PUCKWERK",
+  "presets": {
+    "PUCKWERK": {
+      "color_background": "#F2F5F8",
+      "color_surface": "#FFFFFF",
+      "color_text": "#0A0D12",
+      "color_dark": "#0A0D12",
+      "color_on_dark": "#FFFFFF",
+      "color_accent": "#00A3FF",
+      "color_on_accent": "#0A0D12",
+      "color_sale": "#FF3B1F"
+    },
+    "PUCKWERK Rot": {
+      "color_background": "#F4F4F2",
+      "color_surface": "#FFFFFF",
+      "color_text": "#111111",
+      "color_dark": "#111111",
+      "color_on_dark": "#FFFFFF",
+      "color_accent": "#E10600",
+      "color_on_accent": "#FFFFFF",
+      "color_sale": "#E10600"
+    }
+  }
+}

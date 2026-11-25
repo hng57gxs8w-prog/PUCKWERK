@@ -1,0 +1,74 @@
+{%- paginate collection.products by section.settings.per_page -%}
+<section class="collection">
+  <div class="page-hero">
+    {%- if section.settings.show_image and collection.image -%}
+      {{ collection.image | image_url: width: 2400 | image_tag: widths: '750, 1200, 1800, 2400', sizes: '100vw', class: 'page-hero__img', loading: 'eager' }}
+    {%- endif -%}
+    <div class="container page-hero__inner">
+      <p class="kicker">{{ collection.products_count }} Produkte</p>
+      <h1 class="display">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}<div class="rte page-hero__text">{{ collection.description }}</div>{%- endif -%}
+    </div>
+  </div>
+
+  <div class="container section-pad-sm">
+    <div class="toolbar">
+      {%- if collection.all_tags.size > 0 and section.settings.show_tags -%}
+        <ul class="tag-filter">
+          <li><a href="{{ collection.url }}" class="pill{% if current_tags == blank %} is-active{% endif %}">Alle</a></li>
+          {%- for tag in collection.all_tags limit: 12 -%}
+            <li>
+              {%- if current_tags contains tag -%}
+                <a href="{{ collection.url }}" class="pill is-active">{{ tag }}</a>
+              {%- else -%}
+                {{ tag | link_to_tag: tag | replace: '<a ', '<a class="pill" ' }}
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+      <div class="sort">
+        <label for="SortBy">Sortieren</label>
+        {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+        <select id="SortBy" data-sort>
+          {%- for option in collection.sort_options -%}
+            <option value="{{ option.value | escape }}"{% if option.value == sort_by %} selected{% endif %}>{{ option.name | escape }}</option>
+          {%- endfor -%}
+        </select>
+      </div>
+    </div>
+
+    {%- if collection.products.size > 0 -%}
+      <div class="grid grid--{{ section.settings.columns }}">
+        {%- for product in collection.products -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="empty">
+        <p class="h3">Hier ist das Eis noch leer.</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn--dark">Alle Produkte</a>
+      </div>
+    {%- endif -%}
+
+    {%- if paginate.pages > 1 -%}
+      <nav class="pagination" aria-label="Seiten">{{ paginate | default_pagination: next: '→', previous: '←' }}</nav>
+    {%- endif -%}
+  </div>
+</section>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Kollektion",
+  "class": "section-main-collection",
+  "settings": [
+    { "type": "range", "id": "per_page", "label": "Produkte pro Seite", "min": 8, "max": 48, "step": 4, "default": 24 },
+    { "type": "select", "id": "columns", "label": "Spalten (Desktop)", "options": [
+      { "value": "3", "label": "3" }, { "value": "4", "label": "4" }
+    ], "default": "4" },
+    { "type": "checkbox", "id": "show_image", "label": "Kollektionsbild im Kopfbereich", "default": true },
+    { "type": "checkbox", "id": "show_tags", "label": "Tag-Filter anzeigen", "default": true }
+  ]
+}
+{% endschema %}

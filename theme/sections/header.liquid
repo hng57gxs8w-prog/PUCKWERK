@@ -1,0 +1,75 @@
+<header class="header{% if section.settings.sticky %} header--sticky{% endif %}" data-header>
+  <div class="container header__inner">
+    <button type="button" class="header__burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="HeaderNav" data-menu-toggle>
+      <span></span><span></span><span></span>
+    </button>
+
+    <a href="{{ routes.root_url }}" class="header__logo">
+      {%- if section.settings.logo != blank -%}
+        {%- assign logo_w2 = section.settings.logo_width | times: 2 -%}
+        {%- assign logo_style = 'width: ' | append: section.settings.logo_width | append: 'px' -%}
+        {{ section.settings.logo | image_url: width: logo_w2 | image_tag: alt: shop.name, style: logo_style, class: 'header__logo-img', loading: 'eager' }}
+      {%- else -%}
+        <span class="wordmark">
+          {% render 'icon', name: 'puck' %}
+          <span class="wordmark__text"><span class="wordmark__a">{{ section.settings.logo_text_1 }}</span><span class="wordmark__b">{{ section.settings.logo_text_2 }}</span></span>
+        </span>
+      {%- endif -%}
+    </a>
+
+    <nav class="header__nav" id="HeaderNav" aria-label="Hauptnavigation" data-menu>
+      <ul class="nav">
+        {%- for link in section.settings.menu.links -%}
+          <li class="nav__item{% if link.links != blank %} nav__item--has-sub{% endif %}">
+            <a href="{{ link.url }}" class="nav__link"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a>
+            {%- if link.links != blank -%}
+              <ul class="nav__sub">
+                {%- for child in link.links -%}
+                  <li><a href="{{ child.url }}"{% if child.current %} aria-current="page"{% endif %}>{{ child.title }}</a></li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="header__icons">
+      <button type="button" class="header__icon" aria-label="Suche öffnen" data-search-toggle>{% render 'icon', name: 'search' %}</button>
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="header__icon header__icon--account" aria-label="Konto">{% render 'icon', name: 'account' %}</a>
+      {%- endif -%}
+      <a href="{{ routes.cart_url }}" class="header__icon header__cart" aria-label="Warenkorb">
+        {% render 'icon', name: 'cart' %}
+        <span class="header__count{% if cart.item_count == 0 %} is-empty{% endif %}" data-cart-count>{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="header__search" hidden data-search>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="container search-form">
+      <input type="hidden" name="type" value="product">
+      <label for="HeaderSearch" class="visually-hidden">Suche</label>
+      <input id="HeaderSearch" type="search" name="q" value="{{ search.terms | escape }}" placeholder="Schläger, Schlittschuhe, Pucks …" autocomplete="off">
+      <button type="submit" class="btn btn--accent">Suchen</button>
+      <button type="button" class="header__icon" aria-label="Suche schließen" data-search-toggle>{% render 'icon', name: 'close' %}</button>
+    </form>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "section-header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    { "type": "range", "id": "logo_width", "label": "Logo-Breite", "min": 60, "max": 300, "step": 10, "unit": "px", "default": 160 },
+    { "type": "header", "content": "Text-Logo (wenn kein Bild gewählt)" },
+    { "type": "text", "id": "logo_text_1", "label": "Teil 1 (weiß)", "default": "PUCK" },
+    { "type": "text", "id": "logo_text_2", "label": "Teil 2 (Akzentfarbe)", "default": "WERK" },
+    { "type": "header", "content": "Navigation" },
+    { "type": "link_list", "id": "menu", "label": "Menü", "default": "main-menu" },
+    { "type": "checkbox", "id": "sticky", "label": "Header beim Scrollen fixieren", "default": true }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,43 @@
+<article class="section-pad article">
+  <div class="container container--narrow">
+    <a href="{{ blog.url }}" class="link-back">← {{ blog.title }}</a>
+    <p class="kicker">{{ article.published_at | date: '%d.%m.%Y' }}{% if article.author != blank %} · {{ article.author }}{% endif %}</p>
+    <h1 class="display">{{ article.title }}</h1>
+  </div>
+  {%- if article.image -%}
+    <div class="container article__image">
+      {{ article.image | image_url: width: 2000 | image_tag: widths: '750, 1200, 1600, 2000', sizes: '100vw', loading: 'eager' }}
+    </div>
+  {%- endif -%}
+  <div class="container container--narrow">
+    <div class="rte">{{ article.content }}</div>
+    {%- if article.tags.size > 0 -%}
+      <ul class="tag-filter">{%- for tag in article.tags -%}<li><a class="pill" href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a></li>{%- endfor -%}</ul>
+    {%- endif -%}
+
+    {%- if blog.comments_enabled? -%}
+      <div class="comments">
+        <h2 class="h3">{{ article.comments_count }} Kommentare</h2>
+        {%- for comment in article.comments -%}
+          <div class="comment"><div class="rte">{{ comment.content }}</div><p class="card__vendor">{{ comment.author }} · {{ comment.created_at | date: '%d.%m.%Y' }}</p></div>
+        {%- endfor -%}
+        {%- form 'new_comment', article, class: 'form' -%}
+          {%- if form.posted_successfully? -%}
+            <p class="form-success">{% if blog.moderated? %}Danke! Dein Kommentar wird nach Prüfung veröffentlicht.{% else %}Danke für deinen Kommentar!{% endif %}</p>
+          {%- endif -%}
+          {%- if form.errors -%}<div class="form-error">{{ form.errors | default_errors }}</div>{%- endif -%}
+          <div class="form__row">
+            <div class="field"><label for="CommentAuthor">Name</label><input id="CommentAuthor" type="text" name="comment[author]" value="{{ form.author }}" required></div>
+            <div class="field"><label for="CommentEmail">E-Mail</label><input id="CommentEmail" type="email" name="comment[email]" value="{{ form.email }}" required></div>
+          </div>
+          <div class="field"><label for="CommentBody">Kommentar</label><textarea id="CommentBody" name="comment[body]" rows="5" required>{{ form.body }}</textarea></div>
+          <button type="submit" class="btn btn--accent">Kommentar senden</button>
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+  </div>
+</article>
+
+{% schema %}
+{ "name": "Blogbeitrag", "class": "section-main-article" }
+{% endschema %}

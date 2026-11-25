@@ -1,0 +1,32 @@
+{%- paginate blog.articles by 9 -%}
+<section class="section-pad">
+  <div class="container">
+    <p class="kicker">Blog</p>
+    <h1 class="display">{{ blog.title }}</h1>
+    <div class="grid grid--3 blog-grid">
+      {%- for article in blog.articles -%}
+        <article class="post-card">
+          <a href="{{ article.url }}" class="post-card__media">
+            {%- if article.image -%}
+              {{ article.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '400, 600, 900', sizes: '(min-width: 990px) 33vw, 100vw' }}
+            {%- else -%}
+              {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder' }}
+            {%- endif -%}
+          </a>
+          <p class="card__vendor">{{ article.published_at | date: '%d.%m.%Y' }}</p>
+          <h2 class="h3"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+          <p>{{ article.excerpt_or_content | strip_html | truncatewords: 26 }}</p>
+          <a href="{{ article.url }}" class="link-arrow">Weiterlesen {% render 'icon', name: 'arrow' %}</a>
+        </article>
+      {%- endfor -%}
+    </div>
+    {%- if paginate.pages > 1 -%}
+      <nav class="pagination" aria-label="Seiten">{{ paginate | default_pagination: next: '→', previous: '←' }}</nav>
+    {%- endif -%}
+  </div>
+</section>
+{%- endpaginate -%}
+
+{% schema %}
+{ "name": "Blog", "class": "section-main-blog" }
+{% endschema %}

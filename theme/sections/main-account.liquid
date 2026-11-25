@@ -1,0 +1,52 @@
+<section class="section-pad account">
+  <div class="container">
+    <div class="account__head">
+      <div>
+        <p class="kicker">Mein Konto</p>
+        <h1 class="display">Hi {{ customer.first_name | default: customer.name }}!</h1>
+      </div>
+      <a href="{{ routes.account_logout_url }}" class="btn btn--ghost-dark">Ausloggen</a>
+    </div>
+    <div class="account__grid">
+      <div>
+        <h2 class="h3">Bestellungen</h2>
+        {%- paginate customer.orders by 20 -%}
+          {%- if customer.orders.size > 0 -%}
+            <div class="table-wrap">
+              <table class="table">
+                <thead><tr><th>Bestellung</th><th>Datum</th><th>Zahlung</th><th>Versand</th><th>Summe</th></tr></thead>
+                <tbody>
+                  {%- for order in customer.orders -%}
+                    <tr>
+                      <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
+                      <td>{{ order.created_at | date: '%d.%m.%Y' }}</td>
+                      <td>{{ order.financial_status_label }}</td>
+                      <td>{{ order.fulfillment_status_label }}</td>
+                      <td>{{ order.total_price | money }}</td>
+                    </tr>
+                  {%- endfor -%}
+                </tbody>
+              </table>
+            </div>
+          {%- else -%}
+            <p>Du hast noch keine Bestellungen aufgegeben.</p>
+          {%- endif -%}
+          {%- if paginate.pages > 1 -%}<nav class="pagination">{{ paginate | default_pagination }}</nav>{%- endif -%}
+        {%- endpaginate -%}
+      </div>
+      <aside class="account__card">
+        <h2 class="h3">Standardadresse</h2>
+        {%- if customer.default_address -%}
+          {{ customer.default_address | format_address }}
+        {%- else -%}
+          <p>Keine Adresse hinterlegt.</p>
+        {%- endif -%}
+        <a href="{{ routes.account_addresses_url }}" class="link-arrow">Adressen verwalten ({{ customer.addresses_count }}) {% render 'icon', name: 'arrow' %}</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Konto", "class": "section-account" }
+{% endschema %}

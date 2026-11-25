@@ -1,0 +1,39 @@
+<section class="section-pad iwt{% if section.settings.dark %} is-dark{% endif %}">
+  <div class="container iwt__grid{% if section.settings.image_right %} iwt__grid--reverse{% endif %}">
+    <div class="iwt__media">
+      {%- if section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 50vw, 100vw', class: 'iwt__img' }}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'iwt__img placeholder' }}
+      {%- endif -%}
+      {%- if section.settings.badge != blank -%}<span class="iwt__badge">{{ section.settings.badge }}</span>{%- endif -%}
+    </div>
+    <div class="iwt__content">
+      {%- if section.settings.kicker != blank -%}<p class="kicker">{{ section.settings.kicker }}</p>{%- endif -%}
+      <h2 class="h2">{{ section.settings.heading }}</h2>
+      <div class="rte">{{ section.settings.text }}</div>
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn {% if section.settings.dark %}btn--accent{% else %}btn--dark{% endif %}">{{ section.settings.button_label }} {% render 'icon', name: 'arrow' %}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Bild mit Text",
+  "class": "section-iwt",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Bild" },
+    { "type": "checkbox", "id": "image_right", "label": "Bild rechts", "default": false },
+    { "type": "checkbox", "id": "dark", "label": "Dunkler Hintergrund", "default": true },
+    { "type": "text", "id": "badge", "label": "Badge auf Bild", "default": "Since 2026" },
+    { "type": "text", "id": "kicker", "label": "Dachzeile", "default": "Das Werk" },
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Ausrüstung, die mitspielt." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Wir stehen selbst auf dem Eis. Jedes Produkt im PUCKWERK wird von Spielern getestet, bevor es in den Shop kommt – vom Bambini bis zur Herrenmannschaft.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button-Text", "default": "Über uns" },
+    { "type": "url", "id": "button_link", "label": "Button-Link" }
+  ],
+  "presets": [ { "name": "Bild mit Text" } ]
+}
+{% endschema %}

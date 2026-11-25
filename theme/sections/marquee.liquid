@@ -1,0 +1,39 @@
+<div class="marquee marquee--{{ section.settings.style }}" style="--speed: {{ section.settings.speed }}s;">
+  <div class="marquee__track">
+    {%- for i in (1..4) -%}
+      <div class="marquee__group"{% if i > 1 %} aria-hidden="true"{% endif %}>
+        {%- for block in section.blocks -%}
+          <span class="marquee__item" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+          <span class="marquee__sep" aria-hidden="true">{% render 'icon', name: 'bolt' %}</span>
+        {%- endfor -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Laufband",
+  "class": "section-marquee",
+  "settings": [
+    { "type": "select", "id": "style", "label": "Stil", "options": [
+      { "value": "accent", "label": "Akzentfarbe" }, { "value": "dark", "label": "Dunkel" }, { "value": "light", "label": "Hell" }
+    ], "default": "accent" },
+    { "type": "range", "id": "speed", "label": "Dauer pro Durchlauf", "min": 10, "max": 80, "step": 5, "unit": "s", "default": 30 }
+  ],
+  "blocks": [
+    { "type": "item", "name": "Text", "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "Game Ready" } ] }
+  ],
+  "presets": [
+    {
+      "name": "Laufband",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Game Ready" } },
+        { "type": "item", "settings": { "text": "Pro Stock" } },
+        { "type": "item", "settings": { "text": "Gratis Versand ab 79 €" } },
+        { "type": "item", "settings": { "text": "Skate-Fitting" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

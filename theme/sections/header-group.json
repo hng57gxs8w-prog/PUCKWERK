@@ -1,0 +1,21 @@
+{
+  "type": "header",
+  "name": "Header-Gruppe",
+  "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "blocks": {
+        "msg1": { "type": "message", "settings": { "text": "Kostenloser Versand ab 79 €" } },
+        "msg2": { "type": "message", "settings": { "text": "30 Tage Rückgabe – auch auf Schlittschuhe" } },
+        "msg3": { "type": "message", "settings": { "text": "Team-Bestellungen? Wir machen dir ein Angebot" } }
+      },
+      "block_order": ["msg1", "msg2", "msg3"],
+      "settings": { "bg": "#00A3FF", "fg": "#0A0D12" }
+    },
+    "header": {
+      "type": "header",
+      "settings": { "logo_width": 160, "logo_text_1": "PUCK", "logo_text_2": "WERK", "menu": "main-menu", "sticky": true }
+    }
+  },
+  "order": ["announcement", "header"]
+}
