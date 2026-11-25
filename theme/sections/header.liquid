@@ -4,7 +4,7 @@
       <span></span><span></span><span></span>
     </button>
 
-    <a href="{{ routes.root_url }}" class="header__logo">
+    <a href="{{ routes.root_url }}" class="header__logo" style="--logo-w: {{ section.settings.logo_width }}px;">
       {%- if section.settings.logo != blank -%}
         {%- assign logo_w2 = section.settings.logo_width | times: 2 -%}
         {%- assign logo_style = 'width: ' | append: section.settings.logo_width | append: 'px' -%}
@@ -61,8 +61,8 @@
   "class": "section-header",
   "settings": [
     { "type": "image_picker", "id": "logo", "label": "Logo" },
-    { "type": "range", "id": "logo_width", "label": "Logo-Breite", "min": 60, "max": 300, "step": 10, "unit": "px", "default": 170 },
-    { "type": "paragraph", "content": "Ohne Bild wird das PUCKWERK-Logo als Vektor angezeigt." },
+    { "type": "paragraph", "content": "Ohne eigenes Bild wird das PUCKWERK-Logo (horizontal) als Vektor angezeigt." },
+    { "type": "range", "id": "logo_width", "label": "Logo-Breite", "min": 120, "max": 260, "step": 10, "unit": "px", "default": 170, "info": "CI-Mindestbreite horizontal: 120 px" },
     { "type": "header", "content": "Navigation" },
     { "type": "link_list", "id": "menu", "label": "Menü", "default": "main-menu" },
     { "type": "checkbox", "id": "sticky", "label": "Header beim Scrollen fixieren", "default": true }

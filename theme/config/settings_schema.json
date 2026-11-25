@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "PUCKWERK",
-    "theme_version": "1.0.0",
+    "theme_version": "1.1.0",
     "theme_author": "PUCKWERK",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://help.shopify.com/"
@@ -81,9 +81,9 @@
         "type": "range",
         "id": "page_width",
         "label": "Seitenbreite",
-        "min": 1000,
+        "min": 1040,
         "max": 1600,
-        "step": 50,
+        "step": 40,
         "unit": "px",
         "default": 1280
       }
@@ -104,18 +104,6 @@
     "name": "Produktkarten",
     "settings": [
       {
-        "type": "checkbox",
-        "id": "card_show_vendor",
-        "label": "Hersteller anzeigen",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "card_hover_image",
-        "label": "Zweites Bild beim Hover zeigen",
-        "default": true
-      },
-      {
         "type": "select",
         "id": "card_ratio",
         "label": "Bildformat",
@@ -134,6 +122,25 @@
           }
         ],
         "default": "square"
+      },
+      {
+        "type": "checkbox",
+        "id": "card_hover_image",
+        "label": "Zweites Bild beim Hover zeigen",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_type",
+        "label": "Produkttyp unter dem Namen zeigen",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_vendor",
+        "label": "Hersteller anzeigen",
+        "info": "Bei reinen PUCKWERK-Produkten nicht nötig.",
+        "default": false
       }
     ]
   },

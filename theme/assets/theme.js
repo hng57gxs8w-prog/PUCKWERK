@@ -71,6 +71,24 @@
     });
   }
 
+  /* ---------- Warenkorb: Mengen automatisch übernehmen ---------- */
+  function initCartAutoUpdate() {
+    var form = document.querySelector('[data-cart-form]');
+    if (!form) return;
+    var timer;
+    form.addEventListener('change', function (e) {
+      if (!e.target.matches('[data-cart-qty]')) return;
+      clearTimeout(timer);
+      timer = setTimeout(function () { form.submit(); }, 700);
+    });
+  }
+
+  /* ---------- Videos: Rücksicht auf „Bewegung reduzieren“ ---------- */
+  function initMotion() {
+    if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.querySelectorAll('video[autoplay]').forEach(function (v) { v.removeAttribute('autoplay'); v.pause(); v.controls = true; });
+  }
+
   /* ---------- Sortierung ---------- */
   function initSort() {
     var select = document.querySelector('[data-sort]');
@@ -197,24 +215,34 @@
       fieldsets.forEach(function (fs) { fs.addEventListener('change', update); });
       if (fieldsets.length) markAvailability(selected());
 
-      // Ajax Add-to-Cart
+      // Ajax Add-to-Cart – Rückmeldung im CI-Ton direkt am Button
       var form = root.querySelector('form[action*="/cart/add"]');
+      var msg = root.querySelector('[data-form-message]');
+      function say(text, isError) {
+        if (!msg) return;
+        msg.hidden = !text;
+        msg.textContent = text || '';
+        msg.classList.toggle('form-message--error', !!isError);
+      }
       if (form && window.fetch) {
         form.addEventListener('submit', function (e) {
           e.preventDefault();
           if (addBtn) addBtn.disabled = true;
           var prev = addLabel ? addLabel.textContent : '';
-          if (addLabel) addLabel.textContent = 'Wird hinzugefügt …';
-          fetch((window.Shopify && Shopify.routes ? Shopify.routes.root : '/') + 'cart/add.js', {
-            method: 'POST',
-            headers: { 'Accept': 'application/json' },
-            body: new FormData(form)
-          })
+          if (addLabel) addLabel.textContent = 'Kommt in den Warenkorb …';
+          say('');
+          var root_url = (window.Shopify && Shopify.routes && Shopify.routes.root) || '/';
+          fetch(root_url + 'cart/add.js', { method: 'POST', headers: { 'Accept': 'application/json' }, body: new FormData(form) })
             .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); })
             .then(function (res) {
-              if (!res.ok) throw new Error(res.data.description || res.data.message || 'Fehler');
-              if (addLabel) addLabel.textContent = '✓ Im Warenkorb';
-              return fetch((window.Shopify && Shopify.routes ? Shopify.routes.root : '/') + 'cart.js').then(function (r) { return r.json(); });
+              if (!res.ok) {
+                var err = new Error(res.data.description || res.data.message || '');
+                err.userFacing = !!res.data.description;
+                throw err;
+              }
+              if (addLabel) addLabel.textContent = 'Liegt im Warenkorb';
+              say('Liegt im Warenkorb. Weiter stöbern oder direkt zur Kasse.');
+              return fetch(root_url + 'cart.js').then(function (r) { return r.json(); });
             })
             .then(function (cart) {
               document.querySelectorAll('[data-cart-count]').forEach(function (el) {
@@ -224,12 +252,12 @@
               setTimeout(function () {
                 if (addLabel) addLabel.textContent = prev;
                 if (addBtn) addBtn.disabled = false;
-              }, 1800);
+              }, 2000);
             })
             .catch(function (err) {
               if (addLabel) addLabel.textContent = prev;
               if (addBtn) addBtn.disabled = false;
-              window.alert(err.message);
+              say(err.userFacing ? err.message : 'Da ist was schiefgelaufen. Probier’s bitte gleich noch mal.', true);
             });
         });
       }
@@ -279,7 +307,7 @@
 
   function init() {
     initMenu(); initSearch(); initAnnouncement(); initQty(); initSort();
-    initProduct(); initRecommendations(); initRecover(); initAddresses();
+    initProduct(); initRecommendations(); initRecover(); initAddresses(); initCartAutoUpdate(); initMotion();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();

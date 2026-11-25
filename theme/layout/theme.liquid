@@ -8,7 +8,11 @@
     <link rel="canonical" href="{{ canonical_url }}">
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64, height: 64 }}">
+    {%- else -%}
+      <link rel="icon" type="image/png" sizes="32x32" href="{{ 'favicon-32.png' | asset_url }}">
+      <link rel="icon" type="image/svg+xml" href="{{ 'favicon.svg' | asset_url }}">
     {%- endif -%}
+    <link rel="apple-touch-icon" href="{{ 'apple-touch-icon.png' | asset_url }}">
     <title>
       {{ page_title }}
       {%- if current_tags %} – {{ current_tags | join: ', ' }}{% endif -%}
@@ -19,9 +23,8 @@
       <meta name="description" content="{{ page_description | escape }}">
     {%- endif -%}
     {% render 'meta-tags' %}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    {{ 'space-grotesk-latin.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+    {{ 'inter-latin.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
     {% render 'css-variables' %}
     {{ 'base.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>

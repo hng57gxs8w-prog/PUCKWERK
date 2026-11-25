@@ -31,7 +31,7 @@
           {%- else -%}
             <p>Du hast noch keine Bestellungen aufgegeben.</p>
           {%- endif -%}
-          {%- if paginate.pages > 1 -%}<nav class="pagination">{{ paginate | default_pagination }}</nav>{%- endif -%}
+          {%- if paginate.pages > 1 -%}<nav class="pagination">{{ paginate | default_pagination: next: '›', previous: '‹' }}</nav>{%- endif -%}
         {%- endpaginate -%}
       </div>
       <aside class="account__card">

@@ -27,7 +27,7 @@
           <div class="empty"><p class="h3">Nichts gefunden. Versuch’s mit einem anderen Begriff.</p></div>
         {%- endif -%}
         {%- if paginate.pages > 1 -%}
-          <nav class="pagination" aria-label="Seiten">{{ paginate | default_pagination: next: '→', previous: '←' }}</nav>
+          <nav class="pagination" aria-label="Seiten">{{ paginate | default_pagination: next: '›', previous: '‹' }}</nav>
         {%- endif -%}
       {%- endpaginate -%}
     {%- endif -%}

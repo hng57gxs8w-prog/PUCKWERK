@@ -1,10 +1,19 @@
-<section class="section-pad">
-  <div class="container container--narrow">
-    <h1 class="display">{{ page.title }}</h1>
-    <div class="rte">{{ page.content }}</div>
+<section class="section-pad page-main page-main--{{ section.settings.width }}">
+  <div class="container{% if section.settings.width == 'narrow' %} container--narrow{% endif %}">
+    <h1>{{ page.title }}</h1>
+    {%- if page.content != blank -%}<div class="rte page-main__content">{{ page.content }}</div>{%- endif -%}
   </div>
 </section>
 
 {% schema %}
-{ "name": "Seite", "class": "section-main-page" }
+{
+  "name": "Seite",
+  "class": "section-main-page",
+  "settings": [
+    { "type": "select", "id": "width", "label": "Breite", "options": [
+      { "value": "narrow", "label": "Schmal – für lange Texte (Impressum, AGB …)" },
+      { "value": "wide", "label": "Breit – bündig mit den Sektionen darunter" }
+    ], "default": "narrow" }
+  ]
+}
 {% endschema %}

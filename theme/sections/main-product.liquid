@@ -2,9 +2,9 @@
 <section class="section-pad-sm product" data-product data-money-format="{{ shop.money_format | escape }}">
   <div class="container">
     <nav class="breadcrumbs" aria-label="Brotkrumen">
-      <a href="{{ routes.root_url }}">Start</a> /
-      {%- if collection -%} <a href="{{ collection.url }}">{{ collection.title }}</a> /{%- endif -%}
-      <span>{{ product.title }}</span>
+      <a href="{{ routes.root_url }}">Start</a>
+      {%- if collection -%}<span aria-hidden="true">·</span><a href="{{ collection.url }}">{{ collection.title }}</a>{%- endif -%}
+      <span aria-hidden="true">·</span><span aria-current="page">{{ product.title }}</span>
     </nav>
     <div class="product__grid">
       <div class="product__media">
@@ -36,7 +36,8 @@
           {%- for block in section.blocks -%}
             {%- case block.type -%}
               {%- when 'vendor' -%}
-                <p class="kicker" {{ block.shopify_attributes }}>{{ product.vendor }}</p>
+                {%- assign kicker_text = product.type | default: collection.title | default: product.vendor -%}
+                {%- if kicker_text != blank -%}<p class="kicker" {{ block.shopify_attributes }}>{{ kicker_text }}</p>{%- endif -%}
               {%- when 'title' -%}
                 <h1 class="product__title" {{ block.shopify_attributes }}>{{ product.title }}</h1>
               {%- when 'price' -%}
@@ -77,6 +78,7 @@
                         <span data-add-label>{% if current_variant.available %}In den Warenkorb{% else %}Ausverkauft{% endif %}</span>
                       </button>
                     </div>
+                    <p class="form-message" data-form-message role="status" aria-live="polite" hidden></p>
                     {%- if block.settings.show_dynamic_checkout -%}
                       <div class="product-form__dynamic">{{ form | payment_button }}</div>
                     {%- endif -%}
@@ -118,7 +120,7 @@
   "class": "section-main-product",
   "blocks": [
     { "type": "@app" },
-    { "type": "vendor", "name": "Hersteller", "limit": 1 },
+    { "type": "vendor", "name": "Dachzeile (Produkttyp)", "limit": 1 },
     { "type": "title", "name": "Titel", "limit": 1 },
     { "type": "price", "name": "Preis", "limit": 1 },
     { "type": "text", "name": "Text", "settings": [ { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Heute bestellt, morgen unterwegs.</p>" } ] },

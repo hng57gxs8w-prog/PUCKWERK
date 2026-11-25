@@ -44,11 +44,24 @@
     },
     "featured": {
       "type": "featured-collection",
-      "settings": {}
+      "settings": {
+        "heading_style": "divider",
+        "kicker": "Beliebt im Werk",
+        "limit": 4,
+        "columns": "4",
+        "show_link": true
+      }
     },
     "iwt": {
       "type": "image-with-text",
-      "settings": {}
+      "settings": {
+        "style": "box",
+        "image_right": true,
+        "kicker": "Das Werk",
+        "heading": "Präzision, die man in der Hand spürt.",
+        "text": "<p>Wir testen jedes Werkzeug jeden Morgen selbst. Was nicht besser macht, kommt nicht ins Sortiment.</p>",
+        "button_label": "Über uns"
+      }
     },
     "statement": {
       "type": "rich-text",

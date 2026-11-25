@@ -1,3 +1,6 @@
+{%- liquid
+  assign knowledge_url = blogs['werkwissen'].url | default: routes.collections_url
+-%}
 <section class="hero hero--{{ section.settings.layout }}">
   <div class="container hero__grid">
     <div class="hero__content">
@@ -9,15 +12,17 @@
           <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn btn--accent">{{ section.settings.button_label }}</a>
         {%- endif -%}
         {%- if section.settings.button2_label != blank -%}
-          <a href="{{ section.settings.button2_link | default: routes.collections_url }}" class="btn btn--outline">{{ section.settings.button2_label }}</a>
+          <a href="{{ section.settings.button2_link | default: knowledge_url }}" class="btn btn--outline">{{ section.settings.button2_label }}</a>
         {%- endif -%}
       </div>
     </div>
     <div class="hero__media">
-      {%- if section.settings.image != blank -%}
+      {%- if section.settings.video != blank -%}
+        {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, class: 'hero__img', image_size: '1600x' }}
+      {%- elsif section.settings.image != blank -%}
         {{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600, 900, 1200, 1600, 2000', sizes: '(min-width: 990px) 50vw, 100vw', class: 'hero__img' }}
       {%- else -%}
-        <div class="hero__placeholder mood mood--light" aria-hidden="true"></div>
+        <span class="hero__img mood mood--light" aria-hidden="true"></span>
       {%- endif -%}
       <span class="hero__ring" aria-hidden="true"></span>
     </div>
@@ -29,7 +34,8 @@
   "name": "Hero",
   "class": "section-hero",
   "settings": [
-    { "type": "image_picker", "id": "image", "label": "Bild", "info": "Warmes Seitenlicht, dunkle Flächen, Nahaufnahme – siehe CI-Bildstil." },
+    { "type": "image_picker", "id": "image", "label": "Bild", "info": "CI-Bildstil: warmes Seitenlicht, dunkle Flächen, Nahaufnahme." },
+    { "type": "video", "id": "video", "label": "Video (optional)", "info": "Ersetzt das Bild. Ideal: ruhige Slow-Motion-Aufnahme, ohne Ton, 5–15 Sek." },
     { "type": "select", "id": "layout", "label": "Layout", "options": [
       { "value": "split", "label": "Text links, Bild rechts" },
       { "value": "reverse", "label": "Bild links, Text rechts" }
@@ -38,9 +44,9 @@
     { "type": "text", "id": "heading", "label": "Überschrift", "default": "Dein Espresso. Endlich so gut wie im Café." },
     { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Präzises Siebträger-Zubehör aus Edelstahl, Holz und Kupfer. Gemacht für jeden Morgen.</p>" },
     { "type": "text", "id": "button_label", "label": "Button 1 Text", "default": "Zum Shop" },
-    { "type": "url", "id": "button_link", "label": "Button 1 Link" },
+    { "type": "url", "id": "button_link", "label": "Button 1 Link", "info": "Leer = alle Produkte" },
     { "type": "text", "id": "button2_label", "label": "Button 2 Text", "default": "Werkwissen" },
-    { "type": "url", "id": "button2_link", "label": "Button 2 Link" }
+    { "type": "url", "id": "button2_link", "label": "Button 2 Link", "info": "Leer = Blog mit dem Handle „werkwissen“" }
   ],
   "presets": [ { "name": "Hero" } ]
 }

@@ -1,0 +1,52 @@
+<section class="section-pad values{% if section.settings.style == 'crema' %} values--crema{% endif %}">
+  <div class="container">
+    {%- if section.settings.kicker != blank -%}<p class="kicker">{{ section.settings.kicker }}</p>{%- endif -%}
+    {%- if section.settings.heading != blank -%}<h2 class="h2 values__heading">{{ section.settings.heading }}</h2>{%- endif -%}
+    {%- if section.settings.text != blank -%}<div class="rte values__intro">{{ section.settings.text }}</div>{%- endif -%}
+    <div class="values__grid">
+      {%- for block in section.blocks -%}
+        <div class="value" {{ block.shopify_attributes }}>
+          <span class="value__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          <h3 class="h3">{{ block.settings.title }}</h3>
+          <div class="rte">{{ block.settings.text }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Werte",
+  "class": "section-values",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "select", "id": "style", "label": "Hintergrund", "options": [
+      { "value": "offwhite", "label": "Off-White" }, { "value": "crema", "label": "Crema" }
+    ], "default": "offwhite" },
+    { "type": "text", "id": "kicker", "label": "Dachzeile", "default": "Wofür wir stehen" },
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Wie eine gute Espressobar am Morgen." },
+    { "type": "richtext", "id": "text", "label": "Einleitung", "default": "<p>Handwerklich und präzise, aber nie verkopft. Ruhig, warm, hochwertig – und trotzdem nahbar wie der Barista, der deinen Namen kennt.</p>" }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Wert",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titel", "default": "Präzision" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Jedes Zehntel zählt. Wir sagen dir, warum es darauf ankommt – ohne Fachchinesisch.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Werte",
+      "blocks": [
+        { "type": "value", "settings": { "title": "Präzision", "text": "<p>Jedes Zehntel zählt. Wir fertigen genau und sagen dir, warum es darauf ankommt – ohne Fachchinesisch.</p>" } },
+        { "type": "value", "settings": { "title": "Ehrlichkeit", "text": "<p>Keine Heilsversprechen, keine Fake-Rabatte. Wir zeigen, was ein Produkt kann – und was nicht.</p>" } },
+        { "type": "value", "settings": { "title": "Handwerk", "text": "<p>Edelstahl, Holz, Kupfer. Gemacht, um jahrelang benutzt zu werden – und mit jedem Shot schöner zu werden.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

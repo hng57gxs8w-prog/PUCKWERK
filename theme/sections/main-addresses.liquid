@@ -1,6 +1,6 @@
 <section class="section-pad account">
   <div class="container container--narrow">
-    <a href="{{ routes.account_url }}" class="link-back">← Zurück zum Konto</a>
+    <a href="{{ routes.account_url }}" class="link-back">‹ Zurück zum Konto</a>
     <h1 class="display">Adressen</h1>
 
     {%- paginate customer.addresses by 10 -%}
@@ -23,7 +23,7 @@
           </div>
         {%- endfor -%}
       </div>
-      {%- if paginate.pages > 1 -%}<nav class="pagination">{{ paginate | default_pagination }}</nav>{%- endif -%}
+      {%- if paginate.pages > 1 -%}<nav class="pagination">{{ paginate | default_pagination: next: '›', previous: '‹' }}</nav>{%- endif -%}
     {%- endpaginate -%}
 
     <details class="accordion account__new"{% if customer.addresses_count == 0 %} open{% endif %}>

@@ -1,5 +1,6 @@
 <section class="section-pad newsletter">
-  <div class="container newsletter__box">
+  <div class="container">
+  <div class="newsletter__box">
     <div class="newsletter__copy">
       {%- if section.settings.kicker != blank -%}<p class="kicker">{{ section.settings.kicker }}</p>{%- endif -%}
       <h2 class="h2">{{ section.settings.heading }}</h2>
@@ -18,6 +19,7 @@
         {%- if form.errors -%}<p class="form-error">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>{%- endif -%}
       {%- endif -%}
     {%- endform -%}
+  </div>
   </div>
 </section>
 
