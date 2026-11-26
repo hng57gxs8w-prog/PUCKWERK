@@ -5,11 +5,12 @@
       "settings": {
         "layout": "background",
         "visual": "animation",
-        "bg_strength": 60,
+        "bg_strength": 70,
         "height": "full",
         "show_scroll": true,
         "heading": "Dein Espresso.",
-        "heading_accent": "Endlich so gut wie im Café."
+        "heading_accent": "Endlich so gut wie im Café.",
+        "bg_style": "noise"
       }
     },
     "cats": {

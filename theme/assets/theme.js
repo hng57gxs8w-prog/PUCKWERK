@@ -16,6 +16,124 @@
     document.documentElement.style.setProperty('--header-offset', h + 'px');
   }
 
+  /* ---------- Hero-Hintergrund „Braunes Rauschen“ (WebGL) ---------- */
+  var NOISE_FS = [
+    '#ifdef GL_FRAGMENT_PRECISION_HIGH', 'precision highp float;', '#else', 'precision mediump float;', '#endif',
+    'uniform vec2 u_res; uniform float u_time; uniform vec2 u_mouse; uniform float u_strength;',
+    'uniform vec3 u_c0; uniform vec3 u_c1; uniform vec3 u_c2; uniform vec3 u_c3; uniform vec3 u_c4;',
+    'float hash(vec2 p){ p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }',
+    'float noise(vec2 p){ vec2 i = floor(p); vec2 f = fract(p); vec2 u = f * f * (3.0 - 2.0 * f);',
+    '  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y); }',
+    'float fbm(vec2 p){ float v = 0.0; float a = 0.5; mat2 m = mat2(1.6, 1.2, -1.2, 1.6);',
+    '  for (int i = 0; i < 5; i++) { v += a * noise(p); p = m * p; a *= 0.5; } return v; }',
+    'void main(){',
+    '  vec2 p = (gl_FragCoord.xy - 0.5 * u_res) / u_res.y;',
+    '  float t = u_time * 0.075;',
+    '  p += u_mouse * 0.05;',
+    // Domain Warping: Rauschen wird durch Rauschen verschoben → fließende Schwaden
+    '  vec2 q = vec2(fbm(p * 1.5 + vec2(0.0, t)), fbm(p * 1.5 + vec2(5.2, 1.3) - t * 0.8));',
+    '  vec2 r = vec2(fbm(p * 1.5 + 3.0 * q + vec2(1.7, 9.2) + t * 0.6), fbm(p * 1.5 + 3.0 * q + vec2(8.3, 2.8) - t * 0.5));',
+    '  float f = fbm(p * 1.5 + 3.2 * r);',
+    '  vec3 col = mix(u_c0, u_c1, smoothstep(0.06, 0.42, f));',
+    '  col = mix(col, u_c2, smoothstep(0.32, 0.74, f));',
+    '  col = mix(col, u_c3, smoothstep(0.62, 0.98, f * (0.8 + 0.4 * length(q))) * 0.6);',
+    '  col = mix(col, u_c4, smoothstep(0.92, 1.15, f + 0.25 * length(r)) * 0.14);',
+    '  float vig = smoothstep(1.35, 0.15, length(p * vec2(0.85, 1.1)));',
+    '  col = mix(u_c0, col, mix(0.6, 1.0, vig));',
+    '  col = mix(u_c0, col, u_strength);',
+    '  col += (hash(gl_FragCoord.xy + fract(u_time * 7.0) * 113.0) - 0.5) * 0.035;',
+    '  gl_FragColor = vec4(col, 1.0);',
+    '}'
+  ].join('\n');
+
+  function hexToRgb(v) {
+    v = (v || '').trim().replace('#', '');
+    if (v.length === 3) v = v.replace(/(.)/g, '$1$1');
+    var n = parseInt(v.slice(0, 6), 16);
+    if (isNaN(n)) return [0, 0, 0];
+    return [(n >> 16 & 255) / 255, (n >> 8 & 255) / 255, (n & 255) / 255];
+  }
+
+  function initNoise(hero, wrap) {
+    if (wrap.dataset.noiseReady) return;
+    wrap.dataset.noiseReady = '1';
+    var canvas = wrap.querySelector('canvas');
+    if (!canvas) return;
+    var gl = canvas.getContext('webgl', { alpha: false, antialias: false, depth: false, stencil: false, powerPreference: 'low-power' });
+    if (!gl) return; // CSS-Rückfallebene bleibt sichtbar
+
+    function shader(type, src) {
+      var sh = gl.createShader(type);
+      gl.shaderSource(sh, src); gl.compileShader(sh);
+      return gl.getShaderParameter(sh, gl.COMPILE_STATUS) ? sh : null;
+    }
+    var vs = shader(gl.VERTEX_SHADER, 'attribute vec2 a; void main(){ gl_Position = vec4(a, 0.0, 1.0); }');
+    var fs = shader(gl.FRAGMENT_SHADER, NOISE_FS);
+    if (!vs || !fs) return;
+    var prog = gl.createProgram();
+    gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+    gl.useProgram(prog);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    var aLoc = gl.getAttribLocation(prog, 'a');
+    gl.enableVertexAttribArray(aLoc);
+    gl.vertexAttribPointer(aLoc, 2, gl.FLOAT, false, 0, 0);
+    var U = {};
+    ['u_res', 'u_time', 'u_mouse', 'u_strength', 'u_c0', 'u_c1', 'u_c2', 'u_c3', 'u_c4'].forEach(function (n) { U[n] = gl.getUniformLocation(prog, n); });
+
+    // Farben aus der CI (Farbmodus-abhängig): Grund → Fläche → Kaffeebraun → Kupfer → seltene Lichter
+    var cs = getComputedStyle(document.documentElement);
+    var c0 = hexToRgb(cs.getPropertyValue('--c-bg'));
+    var c1 = hexToRgb(cs.getPropertyValue('--c-surface'));
+    var acc = hexToRgb(cs.getPropertyValue('--c-accent'));
+    var c4 = hexToRgb(cs.getPropertyValue('--c-text'));
+    var c2 = [0, 1, 2].map(function (i) { return c1[i] * 0.62 + acc[i] * 0.38; });
+    gl.uniform3fv(U.u_c0, c0); gl.uniform3fv(U.u_c1, c1); gl.uniform3fv(U.u_c2, c2);
+    gl.uniform3fv(U.u_c3, acc); gl.uniform3fv(U.u_c4, c4);
+    var strength = parseFloat(getComputedStyle(hero).getPropertyValue('--bg-strength')) || 0.7;
+    gl.uniform1f(U.u_strength, Math.max(0.2, Math.min(1, strength)));
+
+    var scale = window.innerWidth < 750 ? 0.45 : 0.6; // weiches Rauschen braucht keine volle Auflösung
+    function resize() {
+      var w = Math.max(1, Math.round(wrap.clientWidth * scale));
+      var h = Math.max(1, Math.round(wrap.clientHeight * scale));
+      if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; gl.viewport(0, 0, w, h); }
+      gl.uniform2f(U.u_res, w, h);
+    }
+    var mx = 0, my = 0, tx = 0, ty = 0;
+    if (!reduceMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      hero.addEventListener('pointermove', function (e) {
+        var r = hero.getBoundingClientRect();
+        tx = (e.clientX - r.left) / r.width * 2 - 1;
+        ty = (e.clientY - r.top) / r.height * 2 - 1;
+      });
+      hero.addEventListener('pointerleave', function () { tx = 0; ty = 0; });
+    }
+    function render(t) {
+      resize();
+      mx += (tx - mx) * 0.05; my += (ty - my) * 0.05;
+      gl.uniform2f(U.u_mouse, mx, -my);
+      gl.uniform1f(U.u_time, t);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
+    canvas.__pwRender = render; // für Vorschau und Tests
+    canvas.addEventListener('webglcontextlost', function (e) { e.preventDefault(); wrap.classList.remove('is-live'); });
+
+    render(0);
+    wrap.classList.add('is-live');
+    if (reduceMotion) return; // Standbild
+
+    var start = performance.now(), last = 0;
+    (function loop(now) {
+      if (!canvas.isConnected) return;          // Sektion entfernt (Theme-Editor)
+      requestAnimationFrame(loop);
+      if (hero.classList.contains('is-paused') || now - last < 33) return; // max. ~30 fps, Pause außer Sicht
+      last = now;
+      render((now - start) / 1000);
+    })(start);
+  }
+
   function initHero(scope) {
     (scope || document).querySelectorAll('[data-hero]').forEach(function (hero) {
       if (hero.dataset.heroReady) return;
@@ -29,25 +147,33 @@
         var top = target.getBoundingClientRect().top + window.pageYOffset - (header ? header.offsetHeight : 0);
         window.scrollTo({ top: top, behavior: reduceMotion ? 'auto' : 'smooth' });
       });
-      if (reduceMotion) return;
 
-      var puck = hero.querySelector('.puck-anim__svg');      // Layout „Geteilt“
-      var rings = hero.querySelector('.hero-bg__svg');        // Layout „Hintergrund“
-      if (!puck && !rings) return;
-      var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      var puck = hero.querySelector('.puck-anim__svg');        // Layout „Geteilt“
+      var rings = hero.querySelector('.hero-bg__svg');          // Hintergrund: Linien
+      var noise = hero.querySelector('[data-hero-noise]');      // Hintergrund: Rauschen
+      var layers = hero.querySelectorAll('[data-hero-bg]');
+      if (noise) initNoise(hero, noise);
+      if (reduceMotion || (!puck && !layers.length)) return;
 
-      // Maus: Puck neigt sich bzw. Hintergrund-Ringe verschieben sich leicht (Tiefe)
-      if (finePointer) {
+      // Außer Sicht: Endlos-Animationen und Shader pausieren
+      var visible = true, ticking = false;
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          visible = entries[0].isIntersecting;
+          hero.classList.toggle('is-paused', !visible);
+        }).observe(hero);
+      }
+
+      // Maus: Puck neigt sich, Linien verschieben sich leicht (das Rauschen reagiert selbst)
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && (puck || rings)) {
         hero.addEventListener('pointermove', function (e) {
           var r = hero.getBoundingClientRect();
           var x = (e.clientX - (r.left + r.width / 2)) / r.width;
           var y = (e.clientY - (r.top + r.height / 2)) / r.height;
           if (puck) {
             var pr = puck.getBoundingClientRect();
-            var px = (e.clientX - (pr.left + pr.width / 2)) / pr.width;
-            var py = (e.clientY - (pr.top + pr.height / 2)) / pr.height;
-            puck.style.setProperty('--tilt-x', (-py * 10).toFixed(2) + 'deg');
-            puck.style.setProperty('--tilt-y', (px * 10).toFixed(2) + 'deg');
+            puck.style.setProperty('--tilt-x', (-(e.clientY - (pr.top + pr.height / 2)) / pr.height * 10).toFixed(2) + 'deg');
+            puck.style.setProperty('--tilt-y', ((e.clientX - (pr.left + pr.width / 2)) / pr.width * 10).toFixed(2) + 'deg');
           }
           if (rings) {
             rings.style.setProperty('--px', (-x * 28).toFixed(1) + 'px');
@@ -60,23 +186,18 @@
         });
       }
 
-      // Scrollen: Puck dreht sich; Ringe drehen, wachsen und blenden aus, Überschrift gleitet mit
-      var visible = true, ticking = false;
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (entries) {
-          visible = entries[0].isIntersecting;
-          hero.classList.toggle('is-paused', !visible); // Endlos-Animationen pausieren, wenn nicht sichtbar
-        }).observe(hero);
-      }
+      // Scrollen: Puck dreht sich; Hintergrund blendet aus, Linien drehen/wachsen, Überschrift gleitet mit
       function update() {
         var y = window.pageYOffset;
         if (puck) puck.style.setProperty('--spin', (y * 0.12).toFixed(1) + 'deg');
-        if (rings) {
+        if (layers.length) {
           var p = Math.max(0, Math.min(1, y / Math.max(1, hero.offsetHeight)));
           hero.style.setProperty('--hp', p.toFixed(3));
-          rings.style.setProperty('--hb-rot', (p * 30).toFixed(2) + 'deg');
-          rings.style.setProperty('--hb-scale', (1 + p * 0.12).toFixed(3));
-          rings.style.setProperty('--hb-fade', (1 - p * 0.6).toFixed(3));
+          layers.forEach(function (l) { l.style.setProperty('--hb-fade', (1 - p * 0.6).toFixed(3)); });
+          if (rings) {
+            rings.style.setProperty('--hb-rot', (p * 30).toFixed(2) + 'deg');
+            rings.style.setProperty('--hb-scale', (1 + p * 0.12).toFixed(3));
+          }
         }
         ticking = false;
       }

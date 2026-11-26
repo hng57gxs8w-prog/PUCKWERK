@@ -1,0 +1,11 @@
+{%- comment -%}
+  Hintergrund „Braunes Rauschen“ für den Hero: fließende, organische Schwaden in Espresso-,
+  Kaffee- und Kupfertönen (WebGL-Shader in assets/theme.js) plus flimmerndes Filmkorn.
+  Ohne WebGL/JavaScript zeigt die CSS-Rückfallebene weiche braune Verläufe mit Korn.
+  Bei „Bewegung reduzieren“ steht das Bild still.
+{%- endcomment -%}
+<div class="hero-bg hero-bg--noise" data-hero-bg data-hero-noise aria-hidden="true">
+  <span class="hero-noise__fallback"></span>
+  <canvas class="hero-noise__canvas"></canvas>
+  <span class="hero-noise__grain"></span>
+</div>

@@ -3,9 +3,9 @@
   sehr groß und zurückhaltend hinter der Überschrift. Ringe zeichnen sich, die Messskala dreht
   ganz langsam, Wellen laufen wie auf einer Crema nach außen, Partikel schweben im Licht.
   Reines SVG + CSS. Bei „Bewegung reduzieren“ steht die Zeichnung still.
-  Parameter: uid (eindeutige ID, z. B. section.id)
+  Parameter: uid (eindeutige ID, z. B. section.id), over_noise (true = dezent über dem Rauschen)
 {%- endcomment -%}
-<div class="hero-bg" data-hero-bg aria-hidden="true">
+<div class="hero-bg{% if over_noise %} hero-bg--over{% endif %}" data-hero-bg aria-hidden="true">
   <span class="hero-bg__glow"></span>
   <svg class="hero-bg__svg" viewBox="0 0 1000 1000" focusable="false">
     <defs>

@@ -26,7 +26,14 @@
           {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, class: 'hero-bg__media', image_size: '1600x' }}
         </div>
       {%- else -%}
-        {% render 'hero-rings', uid: section.id %}
+        {%- if section.settings.bg_style != 'rings' -%}
+          {% render 'hero-noise' %}
+        {%- endif -%}
+        {%- if section.settings.bg_style != 'noise' -%}
+          {%- assign over_noise = false -%}
+          {%- if section.settings.bg_style == 'noise_rings' -%}{%- assign over_noise = true -%}{%- endif -%}
+          {% render 'hero-rings', uid: section.id, over_noise: over_noise %}
+        {%- endif -%}
     {%- endcase -%}
   {%- else -%}
     <div class="hero__backdrop" aria-hidden="true"></div>
@@ -100,7 +107,12 @@
       { "value": "image", "label": "Bild" },
       { "value": "video", "label": "Video" }
     ], "default": "animation" },
-    { "type": "range", "id": "bg_strength", "label": "Stärke der Hintergrund-Animation", "min": 20, "max": 100, "step": 10, "unit": "%", "default": 60, "info": "Nur bei Layout „Hintergrund“ mit Animation." },
+    { "type": "select", "id": "bg_style", "label": "Hintergrund-Animation", "options": [
+      { "value": "noise", "label": "Braunes Rauschen" },
+      { "value": "noise_rings", "label": "Braunes Rauschen + feine Linien" },
+      { "value": "rings", "label": "Feine Linien (Bildzeichen)" }
+    ], "default": "noise", "info": "Nur bei Layout „Hintergrund“ mit Visual „Animation“." },
+    { "type": "range", "id": "bg_strength", "label": "Stärke der Hintergrund-Animation", "min": 20, "max": 100, "step": 10, "unit": "%", "default": 70 },
     { "type": "image_picker", "id": "image", "label": "Bild", "info": "CI-Bildstil: warmes Seitenlicht, dunkle Flächen." },
     { "type": "video", "id": "video", "label": "Video", "info": "Ideal: ruhige Slow-Motion-Aufnahme ohne Ton, 5–15 Sek." },
     { "type": "range", "id": "overlay", "label": "Abdunklung über Bild/Video", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 55, "info": "Nur bei Layout „Hintergrund“ – hält die Überschrift lesbar." },

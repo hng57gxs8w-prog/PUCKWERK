@@ -6,7 +6,8 @@ Siebträger-Zubehör für Home-Baristas. *Dein Espresso. Endlich so gut wie im C
 | Datei / Ordner | Was |
 |---|---|
 | `PUCKWERK-Shopify-Theme.zip` | Shopify-Theme 2.0 (dunkel & modern, mit Hero-Animation), fertig zum Hochladen |
-| `ci/puckwerk-hero-hintergrund.mp4` | Video: Startseite mit Animation im Hintergrund (Standard ab 2.1) |
+| `ci/puckwerk-hero-rauschen.mp4` | Video: Startseite mit braunem Rauschen im Hintergrund (Standard ab 2.2) |
+| `ci/puckwerk-hero-hintergrund.mp4` | Video: Hintergrund mit feinen Linien (Option) |
 | `ci/puckwerk-hero-animation.mp4` | Video: Layout „Geteilt“ mit großem Puck (Option) |
 | `theme/` | Quellcode des Themes (Online Store 2.0) |
 | `PUCKWERK-CI.zip` | CI-Handbuch + alle Logo-Dateien zum Weitergeben |
@@ -21,6 +22,12 @@ Siebträger-Zubehör für Home-Baristas. *Dein Espresso. Endlich so gut wie im C
 4. **Seite „Über uns“** mit dem Handle `ueber-uns` anlegen und als Vorlage `page.ueber-uns` wählen.
 5. Im Theme-Editor: Kollektionen für die vier runden Kategorien und „Beliebt im Werk“ auswählen, Fotos/Slow-Motion-Video im CI-Bildstil einsetzen.
 6. **Beispieltexte prüfen:** Versandgrenze (49 €), „Heute bestellt, morgen unterwegs“, 30 Tage Rückgabe usw. sind Platzhalter – an die echten Shop-Bedingungen anpassen.
+
+## Neu in Version 2.2
+- **Hintergrund „Braunes Rauschen“ (Standard):** fließende, körnige Schwaden in Espresso-, Kaffee- und Kupfertönen (WebGL-Shader, Farben automatisch aus der CI) mit flimmerndem Filmkorn – wie Crema oder Dampf im Morgenlicht
+- Wählbar: *Braunes Rauschen*, *Rauschen + feine Linien*, *Feine Linien*; Stärke per Regler
+- Läuft mit max. 30 Bildern/s in reduzierter Auflösung, pausiert außer Sicht; ohne WebGL weiche braune CSS-Verläufe mit Korn; bei „Bewegung reduzieren“ Standbild
+- Kupferton der Überschrift im hellen Modus dunkler (Kontrast 4,7 : 1)
 
 ## Neu in Version 2.1
 - **Hero-Layout „Hintergrund“ (Standard):** Das Bildzeichen liegt als große, feine Linienzeichnung im Hintergrund – Ringe zeichnen sich, die Messskala dreht ganz langsam, Wellen laufen wie auf einer Crema nach außen, Partikel schweben im Licht. Die Überschrift steht mittig darüber.
