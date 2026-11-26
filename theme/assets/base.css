@@ -38,7 +38,7 @@ button { cursor: pointer; }
 .section-pad-sm { padding: clamp(2rem, 4vw, 3.5rem) 0; }
 
 /* ---------- Typografie ---------- */
-h1, h2, h3, h4, .h1, .h2, .h3, .display { font-family: var(--f-heading); font-weight: 700; letter-spacing: -.02em; margin: 0 0 .5em; }
+h1, h2, h3, h4, .h1, .h2, .h3, .display { font-family: var(--f-heading); font-weight: 700; letter-spacing: -.02em; margin: 0 0 .5em; overflow-wrap: break-word; }
 h1, .h1, .display { font-size: var(--fs-h1); line-height: 1.05; font-weight: var(--fw-display); letter-spacing: -.03em; }
 h2, .h2 { font-size: var(--fs-h2); line-height: 1.08; font-weight: var(--fw-display); letter-spacing: -.025em; }
 h3, .h3 { font-size: var(--fs-h3); line-height: 1.2; letter-spacing: -.01em; }
@@ -198,7 +198,7 @@ p { margin: 0 0 1em; }
 .hero__pill:hover { background: rgba(var(--paper-rgb), .12); border-color: rgba(var(--paper-rgb), .3); color: var(--paper); }
 .hero__pill .icon { width: 16px; height: 16px; opacity: .8; }
 .hero__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--copper); animation: dot-pulse 2.8s ease-out infinite; }
-.hero__title { margin: 0 0 28px; font: var(--fw-display) var(--fs-display)/1.02 var(--f-heading); letter-spacing: -.04em; text-wrap: balance; }
+.hero__title { margin: 0 0 28px; max-width: 100%; font: var(--fw-display) var(--fs-display)/1.02 var(--f-heading); letter-spacing: -.04em; text-wrap: balance; overflow-wrap: break-word; }
 .hero__w { display: inline-block; animation: blur-in 1.5s var(--ease) both; animation-delay: calc(.2s + var(--i) * 85ms); }
 .hero__accent { display: block; color: var(--accent-soft); }
 .hero__text { max-width: 46ch; font-size: 1.125rem; color: var(--on-dark-2); animation: soft-in 1.3s var(--ease) 1s both; }
@@ -324,7 +324,7 @@ p { margin: 0 0 1em; }
 .richtext__inner .rte { margin: 0 auto 32px; max-width: 58ch; }
 .richtext--dark .rte { color: var(--on-dark-2); }
 .richtext--dark .kicker { color: var(--accent-soft); }
-.statement { font-size: clamp(2rem, 1.2rem + 2.8vw, 3.5rem); line-height: 1.12; }
+.statement { font-size: clamp(2rem, 1.2rem + 2.8vw, 3.5rem); line-height: 1.12; overflow-wrap: break-word; text-wrap: balance; }
 .statement__w { transition: opacity .7s var(--ease); }
 .statement-on .statement__w { opacity: .18; }
 .statement-on .statement__w.is-lit { opacity: 1; }

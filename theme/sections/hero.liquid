@@ -29,12 +29,13 @@
     {%- if section.settings.heading != blank or section.settings.heading_accent != blank -%}
       <h1 class="hero__title">
         {%- for word in words -%}
-          <span class="hero__w" style="--i: {{ forloop.index0 }};">{{ word }}</span>{% unless forloop.last %} {% endunless %}
+          <span class="hero__w" style="--i: {{ forloop.index0 }};">{{ word }}</span>{% unless forloop.last %}{{ " " }}{% endunless %}
         {%- endfor -%}
         {%- if section.settings.heading_accent != blank -%}
+          {%- if words.size > 0 -%}{{ ' ' }}{%- endif -%}
           <span class="hero__accent">
             {%- for word in accent_words -%}
-              <span class="hero__w" style="--i: {{ forloop.index0 | plus: word_count }};">{{ word }}</span>{% unless forloop.last %} {% endunless %}
+              <span class="hero__w" style="--i: {{ forloop.index0 | plus: word_count }};">{{ word }}</span>{% unless forloop.last %}{{ " " }}{% endunless %}
             {%- endfor -%}
           </span>
         {%- endif -%}
