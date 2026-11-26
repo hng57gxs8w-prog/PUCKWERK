@@ -58,6 +58,7 @@
     --copper-rgb: {{ copper | color_extract: 'red' }}, {{ copper | color_extract: 'green' }}, {{ copper | color_extract: 'blue' }};
     --copper-deep: {{ copper | color_darken: 10 }};
     --stone: {{ settings.color_grau }};
+    --logo: {{ settings.color_logo | default: '#FFFFFF' }};
 
     /* Rollen */
     --text: var(--ink);

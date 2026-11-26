@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "PUCKWERK",
-    "theme_version": "3.0.0",
+    "theme_version": "3.0.1",
     "theme_author": "PUCKWERK",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://help.shopify.com/"
@@ -13,6 +13,13 @@
       {
         "type": "paragraph",
         "content": "PUCKWERK-CI-Palette. Das Design „Morgenlicht“ legt helle Karten auf einen dunklen Espresso-Rahmen; Navigation und Footer bleiben dunkel, damit das Logo weiß steht."
+      },
+      {
+        "type": "color",
+        "id": "color_logo",
+        "label": "Logo-Farbe (Navigation, Footer, Passwortseite)",
+        "default": "#FFFFFF",
+        "info": "Standard: reines Weiß."
       },
       {
         "type": "color",

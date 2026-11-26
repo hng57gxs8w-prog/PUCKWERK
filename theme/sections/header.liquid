@@ -3,8 +3,13 @@
     <a href="{{ routes.root_url }}" class="navbar__logo" style="--logo-w: {{ section.settings.logo_width }}px;">
       {%- if section.settings.logo != blank -%}
         {%- assign logo_w2 = section.settings.logo_width | times: 2 -%}
-        {%- assign logo_style = 'width: ' | append: section.settings.logo_width | append: 'px' -%}
-        {{ section.settings.logo | image_url: width: logo_w2 | image_tag: alt: shop.name, style: logo_style, class: 'navbar__logo-img', loading: 'eager' }}
+        {%- liquid
+          assign logo_class = 'navbar__logo-img'
+          if section.settings.logo_tint
+            assign logo_class = 'navbar__logo-img is-tinted'
+          endif
+        -%}
+        {{ section.settings.logo | image_url: width: logo_w2 | image_tag: alt: shop.name, class: logo_class, loading: 'eager' }}
       {%- else -%}
         {% render 'logo', variant: 'horizontal', class: 'navbar__logo-svg' %}
         <span class="visually-hidden">{{ shop.name }}</span>
@@ -81,7 +86,8 @@
   "class": "section-header",
   "settings": [
     { "type": "paragraph", "content": "Die Navigation schwebt als dunkle Leiste über der Seite – das PUCKWERK-Logo steht dort immer weiß." },
-    { "type": "image_picker", "id": "logo", "label": "Eigenes Logo (optional)", "info": "Leer = PUCKWERK-Logo als Vektor in Weiß. Eigene Datei bitte in Weiß/hell hochladen." },
+    { "type": "image_picker", "id": "logo", "label": "Eigenes Logo-Bild (optional)", "info": "Leer = PUCKWERK-Logo als Vektor in der Logo-Farbe (Standard: Weiß). Empfohlen: leer lassen." },
+    { "type": "checkbox", "id": "logo_tint", "label": "Eigenes Logo-Bild weiß einfärben", "default": true, "info": "Macht auch eine dunkle Logo-Datei (z. B. Espresso) auf der dunklen Navigation weiß." },
     { "type": "range", "id": "logo_width", "label": "Logo-Breite", "min": 120, "max": 220, "step": 10, "unit": "px", "default": 150, "info": "CI-Mindestbreite horizontal: 120 px" },
     { "type": "link_list", "id": "menu", "label": "Menü", "default": "main-menu" }
   ]
