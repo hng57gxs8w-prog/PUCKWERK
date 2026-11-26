@@ -6,7 +6,8 @@ Siebträger-Zubehör für Home-Baristas. *Dein Espresso. Endlich so gut wie im C
 | Datei / Ordner | Was |
 |---|---|
 | `PUCKWERK-Shopify-Theme.zip` | Shopify-Theme 2.0 (dunkel & modern, mit Hero-Animation), fertig zum Hochladen |
-| `ci/puckwerk-hero-animation.mp4` | Video der Startseiten-Animation (8 Sek.) |
+| `ci/puckwerk-hero-hintergrund.mp4` | Video: Startseite mit Animation im Hintergrund (Standard ab 2.1) |
+| `ci/puckwerk-hero-animation.mp4` | Video: Layout „Geteilt“ mit großem Puck (Option) |
 | `theme/` | Quellcode des Themes (Online Store 2.0) |
 | `PUCKWERK-CI.zip` | CI-Handbuch + alle Logo-Dateien zum Weitergeben |
 | `ci/PUCKWERK-CI-Handbuch.html` | Corporate-Design-Handbuch (im Browser öffnen, als PDF druckbar) |
@@ -20,6 +21,13 @@ Siebträger-Zubehör für Home-Baristas. *Dein Espresso. Endlich so gut wie im C
 4. **Seite „Über uns“** mit dem Handle `ueber-uns` anlegen und als Vorlage `page.ueber-uns` wählen.
 5. Im Theme-Editor: Kollektionen für die vier runden Kategorien und „Beliebt im Werk“ auswählen, Fotos/Slow-Motion-Video im CI-Bildstil einsetzen.
 6. **Beispieltexte prüfen:** Versandgrenze (49 €), „Heute bestellt, morgen unterwegs“, 30 Tage Rückgabe usw. sind Platzhalter – an die echten Shop-Bedingungen anpassen.
+
+## Neu in Version 2.1
+- **Hero-Layout „Hintergrund“ (Standard):** Das Bildzeichen liegt als große, feine Linienzeichnung im Hintergrund – Ringe zeichnen sich, die Messskala dreht ganz langsam, Wellen laufen wie auf einer Crema nach außen, Partikel schweben im Licht. Die Überschrift steht mittig darüber.
+- Regler **„Stärke der Hintergrund-Animation“** (20–100 %), Bild oder Video als Hintergrund mit einstellbarer Abdunklung
+- Überschrift zweiteilig: erste Zeile Off-White, Fortsetzung im weichen Kupferton
+- Ringe bewegen sich leicht gegen die Maus (Tiefe); beim Scrollen drehen sie sich und blenden aus, die Überschrift gleitet mit
+- Das bisherige Layout mit großem Puck bleibt wählbar („Geteilt“)
 
 ## Neu in Version 2.0
 - **Farbmodus** (Theme-Einstellungen → Farben): *Dunkel – modern* (Standard) oder *Hell – klassisch* (Version 1.1)

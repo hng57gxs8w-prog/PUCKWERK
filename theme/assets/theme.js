@@ -29,26 +29,38 @@
         var top = target.getBoundingClientRect().top + window.pageYOffset - (header ? header.offsetHeight : 0);
         window.scrollTo({ top: top, behavior: reduceMotion ? 'auto' : 'smooth' });
       });
+      if (reduceMotion) return;
 
-      var svg = hero.querySelector('.puck-anim__svg');
-      if (!svg || reduceMotion) return;
+      var puck = hero.querySelector('.puck-anim__svg');      // Layout „Geteilt“
+      var rings = hero.querySelector('.hero-bg__svg');        // Layout „Hintergrund“
+      if (!puck && !rings) return;
+      var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-      // Neigen mit der Maus (nur bei feinem Zeiger)
-      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      // Maus: Puck neigt sich bzw. Hintergrund-Ringe verschieben sich leicht (Tiefe)
+      if (finePointer) {
         hero.addEventListener('pointermove', function (e) {
-          var r = svg.getBoundingClientRect();
+          var r = hero.getBoundingClientRect();
           var x = (e.clientX - (r.left + r.width / 2)) / r.width;
           var y = (e.clientY - (r.top + r.height / 2)) / r.height;
-          svg.style.setProperty('--tilt-x', (-y * 10).toFixed(2) + 'deg');
-          svg.style.setProperty('--tilt-y', (x * 10).toFixed(2) + 'deg');
+          if (puck) {
+            var pr = puck.getBoundingClientRect();
+            var px = (e.clientX - (pr.left + pr.width / 2)) / pr.width;
+            var py = (e.clientY - (pr.top + pr.height / 2)) / pr.height;
+            puck.style.setProperty('--tilt-x', (-py * 10).toFixed(2) + 'deg');
+            puck.style.setProperty('--tilt-y', (px * 10).toFixed(2) + 'deg');
+          }
+          if (rings) {
+            rings.style.setProperty('--px', (-x * 28).toFixed(1) + 'px');
+            rings.style.setProperty('--py', (-y * 28).toFixed(1) + 'px');
+          }
         });
         hero.addEventListener('pointerleave', function () {
-          svg.style.setProperty('--tilt-x', '0deg');
-          svg.style.setProperty('--tilt-y', '0deg');
+          if (puck) { puck.style.setProperty('--tilt-x', '0deg'); puck.style.setProperty('--tilt-y', '0deg'); }
+          if (rings) { rings.style.setProperty('--px', '0px'); rings.style.setProperty('--py', '0px'); }
         });
       }
 
-      // Drehen beim Scrollen, solange der Hero sichtbar ist
+      // Scrollen: Puck dreht sich; Ringe drehen, wachsen und blenden aus, Überschrift gleitet mit
       var visible = true, ticking = false;
       if ('IntersectionObserver' in window) {
         new IntersectionObserver(function (entries) {
@@ -56,13 +68,22 @@
           hero.classList.toggle('is-paused', !visible); // Endlos-Animationen pausieren, wenn nicht sichtbar
         }).observe(hero);
       }
+      function update() {
+        var y = window.pageYOffset;
+        if (puck) puck.style.setProperty('--spin', (y * 0.12).toFixed(1) + 'deg');
+        if (rings) {
+          var p = Math.max(0, Math.min(1, y / Math.max(1, hero.offsetHeight)));
+          hero.style.setProperty('--hp', p.toFixed(3));
+          rings.style.setProperty('--hb-rot', (p * 30).toFixed(2) + 'deg');
+          rings.style.setProperty('--hb-scale', (1 + p * 0.12).toFixed(3));
+          rings.style.setProperty('--hb-fade', (1 - p * 0.6).toFixed(3));
+        }
+        ticking = false;
+      }
       window.addEventListener('scroll', function () {
         if (!visible || ticking) return;
         ticking = true;
-        requestAnimationFrame(function () {
-          svg.style.setProperty('--spin', (window.pageYOffset * 0.12).toFixed(1) + 'deg');
-          ticking = false;
-        });
+        requestAnimationFrame(update);
       }, { passive: true });
     });
   }

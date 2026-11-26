@@ -1,5 +1,6 @@
 {%- liquid
   assign knowledge_url = blogs['werkwissen'].url | default: routes.collections_url
+  assign layout = section.settings.layout
   assign visual = section.settings.visual
   if visual == 'image' and section.settings.image == blank
     assign visual = 'animation'
@@ -8,17 +9,44 @@
     assign visual = 'animation'
   endif
   assign words = section.settings.heading | split: ' '
+  assign accent_words = section.settings.heading_accent | split: ' '
+  assign word_count = words.size
+  assign strength = section.settings.bg_strength | divided_by: 100.0
+  assign overlay = section.settings.overlay | divided_by: 100.0
 -%}
-<section class="hero hero--{{ section.settings.height }} hero--{{ visual }}{% if section.settings.layout == 'reverse' %} hero--reverse{% endif %}" data-hero>
-  <div class="hero__backdrop" aria-hidden="true"></div>
+<section class="hero hero--{{ section.settings.height }} hero--{{ visual }} hero--{{ layout }}" style="--bg-strength: {{ strength }}; --overlay: {{ overlay }};" data-hero>
+  {%- if layout == 'background' -%}
+    {%- case visual -%}
+      {%- when 'image' -%}
+        <div class="hero-bg hero-bg--media" aria-hidden="true">
+          {{ section.settings.image | image_url: width: 2800 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '750, 1100, 1500, 2000, 2800', sizes: '100vw', class: 'hero-bg__media', alt: '' }}
+        </div>
+      {%- when 'video' -%}
+        <div class="hero-bg hero-bg--media" aria-hidden="true">
+          {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, class: 'hero-bg__media', image_size: '1600x' }}
+        </div>
+      {%- else -%}
+        {% render 'hero-rings', uid: section.id %}
+    {%- endcase -%}
+  {%- else -%}
+    <div class="hero__backdrop" aria-hidden="true"></div>
+  {%- endif -%}
+
   <div class="container hero__grid">
     <div class="hero__content">
       {%- if section.settings.kicker != blank -%}<p class="kicker hero__kicker">{{ section.settings.kicker }}</p>{%- endif -%}
-      {%- if section.settings.heading != blank -%}
+      {%- if section.settings.heading != blank or section.settings.heading_accent != blank -%}
         <h1 class="hero__heading">
           {%- for word in words -%}
             <span class="hero__word"><span style="--i: {{ forloop.index0 }};">{{ word }}</span></span>{% unless forloop.last %} {% endunless %}
           {%- endfor -%}
+          {%- if section.settings.heading_accent != blank -%}
+            <span class="hero__accent">
+              {%- for word in accent_words -%}
+                <span class="hero__word"><span style="--i: {{ forloop.index0 | plus: word_count }};">{{ word }}</span></span>{% unless forloop.last %} {% endunless %}
+              {%- endfor -%}
+            </span>
+          {%- endif -%}
         </h1>
       {%- endif -%}
       {%- if section.settings.text != blank -%}<div class="hero__text rte">{{ section.settings.text }}</div>{%- endif -%}
@@ -32,20 +60,22 @@
       </div>
     </div>
 
-    <div class="hero__visual">
-      {%- case visual -%}
-        {%- when 'image' -%}
-          <div class="hero__frame">
-            {{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600, 900, 1200, 1600, 2000', sizes: '(min-width: 990px) 50vw, 100vw', class: 'hero__media' }}
-          </div>
-        {%- when 'video' -%}
-          <div class="hero__frame">
-            {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, class: 'hero__media', image_size: '1600x' }}
-          </div>
-        {%- else -%}
-          {% render 'hero-puck', uid: section.id %}
-      {%- endcase -%}
-    </div>
+    {%- unless layout == 'background' -%}
+      <div class="hero__visual">
+        {%- case visual -%}
+          {%- when 'image' -%}
+            <div class="hero__frame">
+              {{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600, 900, 1200, 1600, 2000', sizes: '(min-width: 990px) 50vw, 100vw', class: 'hero__media' }}
+            </div>
+          {%- when 'video' -%}
+            <div class="hero__frame">
+              {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, class: 'hero__media', image_size: '1600x' }}
+            </div>
+          {%- else -%}
+            {% render 'hero-puck', uid: section.id %}
+        {%- endcase -%}
+      </div>
+    {%- endunless -%}
   </div>
 
   {%- if section.settings.show_scroll -%}
@@ -60,23 +90,28 @@
   "name": "Hero",
   "class": "section-hero",
   "settings": [
+    { "type": "select", "id": "layout", "label": "Layout", "options": [
+      { "value": "background", "label": "Hintergrund – Überschrift mittig darüber" },
+      { "value": "split", "label": "Geteilt – Text links, Visual rechts" },
+      { "value": "split-reverse", "label": "Geteilt – Visual links, Text rechts" }
+    ], "default": "background" },
     { "type": "select", "id": "visual", "label": "Visual", "options": [
-      { "value": "animation", "label": "Animation: Puck entsteht (Standard)" },
+      { "value": "animation", "label": "Animation (Puck)" },
       { "value": "image", "label": "Bild" },
       { "value": "video", "label": "Video" }
     ], "default": "animation" },
-    { "type": "image_picker", "id": "image", "label": "Bild", "info": "Nur bei Visual „Bild“. CI-Bildstil: warmes Seitenlicht, dunkle Flächen." },
-    { "type": "video", "id": "video", "label": "Video", "info": "Nur bei Visual „Video“. Ideal: ruhige Slow-Motion-Aufnahme ohne Ton, 5–15 Sek." },
+    { "type": "range", "id": "bg_strength", "label": "Stärke der Hintergrund-Animation", "min": 20, "max": 100, "step": 10, "unit": "%", "default": 60, "info": "Nur bei Layout „Hintergrund“ mit Animation." },
+    { "type": "image_picker", "id": "image", "label": "Bild", "info": "CI-Bildstil: warmes Seitenlicht, dunkle Flächen." },
+    { "type": "video", "id": "video", "label": "Video", "info": "Ideal: ruhige Slow-Motion-Aufnahme ohne Ton, 5–15 Sek." },
+    { "type": "range", "id": "overlay", "label": "Abdunklung über Bild/Video", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 55, "info": "Nur bei Layout „Hintergrund“ – hält die Überschrift lesbar." },
     { "type": "select", "id": "height", "label": "Höhe", "options": [
       { "value": "full", "label": "Bildschirmhöhe" },
       { "value": "auto", "label": "Nach Inhalt" }
     ], "default": "full" },
-    { "type": "select", "id": "layout", "label": "Anordnung (Desktop)", "options": [
-      { "value": "split", "label": "Text links, Visual rechts" },
-      { "value": "reverse", "label": "Visual links, Text rechts" }
-    ], "default": "split" },
+    { "type": "header", "content": "Text" },
     { "type": "text", "id": "kicker", "label": "Dachzeile", "default": "Werkzeug für Home-Baristas" },
-    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Dein Espresso. Endlich so gut wie im Café." },
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Dein Espresso." },
+    { "type": "text", "id": "heading_accent", "label": "Überschrift – Fortsetzung (Kupferton)", "default": "Endlich so gut wie im Café." },
     { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Präzises Siebträger-Zubehör aus Edelstahl, Holz und Kupfer. Gemacht für jeden Morgen.</p>" },
     { "type": "text", "id": "button_label", "label": "Button 1 Text", "default": "Zum Shop" },
     { "type": "url", "id": "button_link", "label": "Button 1 Link", "info": "Leer = alle Produkte" },

@@ -3,9 +3,13 @@
     "hero": {
       "type": "hero",
       "settings": {
+        "layout": "background",
         "visual": "animation",
+        "bg_strength": 60,
         "height": "full",
-        "show_scroll": true
+        "show_scroll": true,
+        "heading": "Dein Espresso.",
+        "heading_accent": "Endlich so gut wie im Café."
       }
     },
     "cats": {
