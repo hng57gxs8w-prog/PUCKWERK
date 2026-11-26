@@ -1,36 +1,14 @@
 {%- comment -%}
-  PUCKWERK – Design-Tokens aus dem Corporate Design.
-  Farbmodus „Dunkel“ (Standard) oder „Hell“ verteilt die CI-Palette auf Rollen.
+  PUCKWERK „Morgenlicht“ – Design-Tokens aus der CI-Palette.
   Schriften lokal im Theme: Space Grotesk (c) The Space Grotesk Project Authors,
   Inter (c) The Inter Project Authors – SIL Open Font License 1.1 (https://openfontlicense.org).
 {%- endcomment -%}
 {%- liquid
-  assign espresso = settings.color_espresso
-  assign crema = settings.color_crema
-  assign kupfer = settings.color_kupfer
-  assign offwhite = settings.color_offwhite
-  assign deep = settings.color_espresso_deep
-  if settings.color_scheme == 'light'
-    assign c_bg = offwhite
-    assign c_surface = crema
-    assign c_surface_2 = offwhite
-    assign c_text = espresso
-    assign c_muted = settings.color_grau
-    assign c_footer = espresso
-    assign c_accent_hover = kupfer | color_darken: 8
-    assign text_2_alpha = 1
-    assign glow_alpha = 0.16
-  else
-    assign c_bg = deep
-    assign c_surface = espresso
-    assign c_surface_2 = settings.color_espresso_light
-    assign c_text = offwhite
-    assign c_muted = offwhite | color_modify: 'alpha', 0.6
-    assign c_footer = deep
-    assign c_accent_hover = kupfer | color_lighten: 7
-    assign text_2_alpha = 0.76
-    assign glow_alpha = 0.26
-  endif
+  assign ink = settings.color_espresso
+  assign cream = settings.color_crema
+  assign copper = settings.color_kupfer
+  assign paper = settings.color_offwhite
+  assign frame = settings.color_espresso_deep
 -%}
 <style>
   @font-face {
@@ -68,53 +46,50 @@
 
   :root {
     /* CI-Palette */
-    --c-espresso: {{ espresso }};
-    --c-crema: {{ crema }};
-    --c-offwhite: {{ offwhite }};
-    --c-offwhite-rgb: {{ offwhite | color_extract: 'red' }}, {{ offwhite | color_extract: 'green' }}, {{ offwhite | color_extract: 'blue' }};
-    --c-deep: {{ deep }};
+    --frame: {{ frame }};
+    --frame-rgb: {{ frame | color_extract: 'red' }}, {{ frame | color_extract: 'green' }}, {{ frame | color_extract: 'blue' }};
+    --ink: {{ ink }};
+    --ink-rgb: {{ ink | color_extract: 'red' }}, {{ ink | color_extract: 'green' }}, {{ ink | color_extract: 'blue' }};
+    --paper: {{ paper }};
+    --paper-rgb: {{ paper | color_extract: 'red' }}, {{ paper | color_extract: 'green' }}, {{ paper | color_extract: 'blue' }};
+    --cream: {{ cream }};
+    --cream-rgb: {{ cream | color_extract: 'red' }}, {{ cream | color_extract: 'green' }}, {{ cream | color_extract: 'blue' }};
+    --copper: {{ copper }};
+    --copper-rgb: {{ copper | color_extract: 'red' }}, {{ copper | color_extract: 'green' }}, {{ copper | color_extract: 'blue' }};
+    --copper-deep: {{ copper | color_darken: 10 }};
+    --stone: {{ settings.color_grau }};
 
-    /* Rollen (je nach Farbmodus) */
-    --c-bg: {{ c_bg }};
-    --c-bg-rgb: {{ c_bg | color_extract: 'red' }}, {{ c_bg | color_extract: 'green' }}, {{ c_bg | color_extract: 'blue' }};
-    --c-surface: {{ c_surface }};
-    --c-surface-2: {{ c_surface_2 }};
-    --c-text: {{ c_text }};
-    --c-text-rgb: {{ c_text | color_extract: 'red' }}, {{ c_text | color_extract: 'green' }}, {{ c_text | color_extract: 'blue' }};
-    --c-text-2: rgba(var(--c-text-rgb), {{ text_2_alpha }});
-    --c-muted: {{ c_muted }};
-    --c-line: rgba(var(--c-text-rgb), .12);
-    --c-line-strong: rgba(var(--c-text-rgb), .24);
-    --c-accent: {{ kupfer }};
-    --c-accent-rgb: {{ kupfer | color_extract: 'red' }}, {{ kupfer | color_extract: 'green' }}, {{ kupfer | color_extract: 'blue' }};
-    --c-accent-hover: {{ c_accent_hover }};
-    --c-on-accent: {{ offwhite }};
-    --c-tile: {{ crema }};
-    --c-on-tile: {{ espresso }};
-    --c-panel: {{ espresso }};
-    --c-on-panel: {{ offwhite }};
-    --c-footer: {{ c_footer }};
-    --c-glow: rgba(var(--c-accent-rgb), {{ glow_alpha }});
-    --grain: url({{ 'grain.png' | asset_url }});
+    /* Rollen */
+    --text: var(--ink);
+    --text-2: rgba(var(--ink-rgb), .74);
+    --line: rgba(var(--ink-rgb), .12);
+    --line-strong: rgba(var(--ink-rgb), .24);
+    --on-dark: var(--paper);
+    --on-dark-2: rgba(var(--paper-rgb), .72);
+    --line-dark: rgba(var(--paper-rgb), .14);
+    --accent-soft: color-mix(in srgb, var(--copper) 62%, var(--cream));
+    --accent-ink: color-mix(in srgb, var(--copper) 78%, var(--ink));
 
-    /* Typografie – CI: H1 56/1.05 · H2 40/1.1 · H3 24/1.2 · Body 17/1.65 · Klein 14 · Label 12 */
+    /* Typografie – CI: Space Grotesk / Inter */
     --f-heading: 'Space Grotesk', system-ui, sans-serif;
     --f-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-    --fs-display: clamp(2.5rem, 1rem + 4.4vw, 4.75rem);
-    --fs-display-xl: clamp(2.5rem, 1rem + 5.4vw, 5.75rem);
+    --fw-display: {{ settings.display_weight }};
+    --fs-display: clamp(2.75rem, 1rem + 5.6vw, 6rem);
     --fs-h1: clamp(2.5rem, 1.6rem + 2.8vw, 3.5rem);
-    --fs-h2: clamp(2rem, 1.5rem + 1.6vw, 2.5rem);
+    --fs-h2: clamp(2rem, 1.4rem + 2vw, 2.75rem);
     --fs-h3: clamp(1.25rem, 1.1rem + .5vw, 1.5rem);
     --fs-body: 1.0625rem;
     --fs-small: .875rem;
     --fs-label: .75rem;
     --ls-label: .18em;
 
-    /* Gestaltung – 8er-Raster, Ecken, Linien, Bewegung */
-    --radius: {{ settings.corner_radius }}px;
+    /* Form – Karten, Abstände, Bewegung */
+    --radius-card: {{ settings.card_radius }}px;
+    --radius: calc({{ settings.card_radius }}px * .72);
+    --gap: clamp(6px, 1vw, 12px);
     --page-width: {{ settings.page_width }}px;
-    --space-section: clamp(4rem, 8vw, 7.5rem);
-    --line: 1px solid var(--c-accent);
-    --ease: cubic-bezier(.2, .7, .2, 1);
+    --space-section: clamp(4rem, 8vw, 7rem);
+    --ease: cubic-bezier(.22, .61, .36, 1);
+    --ease-soft: cubic-bezier(.33, 0, .2, 1);
   }
 </style>

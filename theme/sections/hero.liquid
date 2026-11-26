@@ -1,127 +1,80 @@
 {%- liquid
   assign knowledge_url = blogs['werkwissen'].url | default: routes.collections_url
-  assign layout = section.settings.layout
-  assign visual = section.settings.visual
-  if visual == 'image' and section.settings.image == blank
-    assign visual = 'animation'
-  endif
-  if visual == 'video' and section.settings.video == blank
-    assign visual = 'animation'
-  endif
   assign words = section.settings.heading | split: ' '
   assign accent_words = section.settings.heading_accent | split: ' '
   assign word_count = words.size
-  assign strength = section.settings.bg_strength | divided_by: 100.0
+  assign light = section.settings.light_strength | divided_by: 100.0
   assign overlay = section.settings.overlay | divided_by: 100.0
+  assign values = section.settings.values | split: '·'
 -%}
-<section class="hero hero--{{ section.settings.height }} hero--{{ visual }} hero--{{ layout }}" style="--bg-strength: {{ strength }}; --overlay: {{ overlay }};" data-hero>
-  {%- if layout == 'background' -%}
-    {%- case visual -%}
-      {%- when 'image' -%}
-        <div class="hero-bg hero-bg--media" aria-hidden="true">
-          {{ section.settings.image | image_url: width: 2800 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '750, 1100, 1500, 2000, 2800', sizes: '100vw', class: 'hero-bg__media', alt: '' }}
-        </div>
-      {%- when 'video' -%}
-        <div class="hero-bg hero-bg--media" aria-hidden="true">
-          {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, class: 'hero-bg__media', image_size: '1600x' }}
-        </div>
-      {%- else -%}
-        {%- if section.settings.bg_style != 'rings' -%}
-          {% render 'hero-noise' %}
-        {%- endif -%}
-        {%- if section.settings.bg_style != 'noise' -%}
-          {%- assign over_noise = false -%}
-          {%- if section.settings.bg_style == 'noise_rings' -%}{%- assign over_noise = true -%}{%- endif -%}
-          {% render 'hero-rings', uid: section.id, over_noise: over_noise %}
-        {%- endif -%}
-    {%- endcase -%}
-  {%- else -%}
-    <div class="hero__backdrop" aria-hidden="true"></div>
-  {%- endif -%}
-
-  <div class="container hero__grid">
-    <div class="hero__content">
-      {%- if section.settings.kicker != blank -%}<p class="kicker hero__kicker">{{ section.settings.kicker }}</p>{%- endif -%}
-      {%- if section.settings.heading != blank or section.settings.heading_accent != blank -%}
-        <h1 class="hero__heading">
-          {%- for word in words -%}
-            <span class="hero__word"><span style="--i: {{ forloop.index0 }};">{{ word }}</span></span>{% unless forloop.last %} {% endunless %}
-          {%- endfor -%}
-          {%- if section.settings.heading_accent != blank -%}
-            <span class="hero__accent">
-              {%- for word in accent_words -%}
-                <span class="hero__word"><span style="--i: {{ forloop.index0 | plus: word_count }};">{{ word }}</span></span>{% unless forloop.last %} {% endunless %}
-              {%- endfor -%}
-            </span>
-          {%- endif -%}
-        </h1>
-      {%- endif -%}
-      {%- if section.settings.text != blank -%}<div class="hero__text rte">{{ section.settings.text }}</div>{%- endif -%}
-      <div class="btn-row hero__buttons">
-        {%- if section.settings.button_label != blank -%}
-          <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn btn--accent btn--icon">{{ section.settings.button_label }}<span class="btn__icon">{% render 'icon', name: 'arrow' %}</span></a>
-        {%- endif -%}
-        {%- if section.settings.button2_label != blank -%}
-          <a href="{{ section.settings.button2_link | default: knowledge_url }}" class="btn btn--outline">{{ section.settings.button2_label }}</a>
-        {%- endif -%}
-      </div>
+<section class="hero{% if section.settings.image != blank %} hero--photo{% endif %}" style="--light: {{ light }}; --overlay: {{ overlay }};" data-hero>
+  {%- if section.settings.image != blank -%}
+    <div class="hero__photo" aria-hidden="true">
+      {{ section.settings.image | image_url: width: 2800 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '750, 1100, 1500, 2000, 2800', sizes: '100vw', alt: '' }}
     </div>
-
-    {%- unless layout == 'background' -%}
-      <div class="hero__visual">
-        {%- case visual -%}
-          {%- when 'image' -%}
-            <div class="hero__frame">
-              {{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600, 900, 1200, 1600, 2000', sizes: '(min-width: 990px) 50vw, 100vw', class: 'hero__media' }}
-            </div>
-          {%- when 'video' -%}
-            <div class="hero__frame">
-              {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, class: 'hero__media', image_size: '1600x' }}
-            </div>
-          {%- else -%}
-            {% render 'hero-puck', uid: section.id %}
-        {%- endcase -%}
-      </div>
-    {%- endunless -%}
+  {%- endif -%}
+  <div class="hero__light" aria-hidden="true">
+    <span class="hl hl--1"></span>
+    <span class="hl hl--2"></span>
+    <span class="hl hl--3"></span>
+    <span class="hl hl--beam"></span>
   </div>
 
-  {%- if section.settings.show_scroll -%}
-    <button type="button" class="hero__scroll" data-scroll-next aria-label="Weiter nach unten scrollen">
-      <span>Scrollen</span><i aria-hidden="true"></i>
-    </button>
-  {%- endif -%}
+  <div class="hero__inner">
+    {%- if section.settings.pill_text != blank -%}
+      <a class="hero__pill" href="{{ section.settings.pill_link | default: routes.all_products_collection_url }}">
+        <span class="hero__dot" aria-hidden="true"></span>{{ section.settings.pill_text }}{% render 'icon', name: 'arrow' %}
+      </a>
+    {%- endif -%}
+    {%- if section.settings.heading != blank or section.settings.heading_accent != blank -%}
+      <h1 class="hero__title">
+        {%- for word in words -%}
+          <span class="hero__w" style="--i: {{ forloop.index0 }};">{{ word }}</span>{% unless forloop.last %} {% endunless %}
+        {%- endfor -%}
+        {%- if section.settings.heading_accent != blank -%}
+          <span class="hero__accent">
+            {%- for word in accent_words -%}
+              <span class="hero__w" style="--i: {{ forloop.index0 | plus: word_count }};">{{ word }}</span>{% unless forloop.last %} {% endunless %}
+            {%- endfor -%}
+          </span>
+        {%- endif -%}
+      </h1>
+    {%- endif -%}
+    {%- if section.settings.text != blank -%}<div class="hero__text">{{ section.settings.text }}</div>{%- endif -%}
+    <div class="btn-row hero__buttons">
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn btn--accent btn--icon">{{ section.settings.button_label }}<span class="btn__icon">{% render 'icon', name: 'arrow' %}</span></a>
+      {%- endif -%}
+      {%- if section.settings.button2_label != blank -%}
+        <a href="{{ section.settings.button2_link | default: knowledge_url }}" class="btn btn--ghost-light">{{ section.settings.button2_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="hero__foot">
+    {%- if values.size > 0 and section.settings.values != blank -%}
+      <ul class="hero__values">
+        {%- for v in values -%}<li>{{ v | strip }}</li>{%- endfor -%}
+      </ul>
+    {%- endif -%}
+    {%- if section.settings.show_scroll -%}
+      <button type="button" class="hero__scroll" data-scroll-next aria-label="Weiter nach unten scrollen"><span></span></button>
+    {%- endif -%}
+  </div>
 </section>
 
 {% schema %}
 {
-  "name": "Hero",
+  "name": "Hero „Morgenlicht“",
   "class": "section-hero",
   "settings": [
-    { "type": "select", "id": "layout", "label": "Layout", "options": [
-      { "value": "background", "label": "Hintergrund – Überschrift mittig darüber" },
-      { "value": "split", "label": "Geteilt – Text links, Visual rechts" },
-      { "value": "split-reverse", "label": "Geteilt – Visual links, Text rechts" }
-    ], "default": "background" },
-    { "type": "select", "id": "visual", "label": "Visual", "options": [
-      { "value": "animation", "label": "Animation (Puck)" },
-      { "value": "image", "label": "Bild" },
-      { "value": "video", "label": "Video" }
-    ], "default": "animation" },
-    { "type": "select", "id": "bg_style", "label": "Hintergrund-Animation", "options": [
-      { "value": "noise", "label": "Braunes Rauschen" },
-      { "value": "noise_rings", "label": "Braunes Rauschen + feine Linien" },
-      { "value": "rings", "label": "Feine Linien (Bildzeichen)" }
-    ], "default": "noise", "info": "Nur bei Layout „Hintergrund“ mit Visual „Animation“." },
-    { "type": "range", "id": "bg_strength", "label": "Stärke der Hintergrund-Animation", "min": 20, "max": 100, "step": 10, "unit": "%", "default": 70 },
-    { "type": "image_picker", "id": "image", "label": "Bild", "info": "CI-Bildstil: warmes Seitenlicht, dunkle Flächen." },
-    { "type": "video", "id": "video", "label": "Video", "info": "Ideal: ruhige Slow-Motion-Aufnahme ohne Ton, 5–15 Sek." },
-    { "type": "range", "id": "overlay", "label": "Abdunklung über Bild/Video", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 55, "info": "Nur bei Layout „Hintergrund“ – hält die Überschrift lesbar." },
-    { "type": "select", "id": "height", "label": "Höhe", "options": [
-      { "value": "full", "label": "Bildschirmhöhe" },
-      { "value": "auto", "label": "Nach Inhalt" }
-    ], "default": "full" },
-    { "type": "header", "content": "Text" },
-    { "type": "text", "id": "kicker", "label": "Dachzeile", "default": "Werkzeug für Home-Baristas" },
+    { "type": "paragraph", "content": "Weiches, warmes Licht wandert langsam über den dunklen Grund – wie Morgensonne auf einer Wand." },
+    { "type": "range", "id": "light_strength", "label": "Stärke des Lichts", "min": 20, "max": 100, "step": 10, "unit": "%", "default": 70 },
+    { "type": "image_picker", "id": "image", "label": "Foto (optional)", "info": "Ersetzt die Lichtstimmung durch ein Foto im CI-Bildstil; das Licht liegt dann weich darüber." },
+    { "type": "range", "id": "overlay", "label": "Abdunklung über dem Foto", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 50 },
+    { "type": "header", "content": "Inhalt" },
+    { "type": "text", "id": "pill_text", "label": "Plakette über der Überschrift", "default": "Neu im Werk: Tamper 58,5" },
+    { "type": "url", "id": "pill_link", "label": "Plakette – Link" },
     { "type": "text", "id": "heading", "label": "Überschrift", "default": "Dein Espresso." },
     { "type": "text", "id": "heading_accent", "label": "Überschrift – Fortsetzung (Kupferton)", "default": "Endlich so gut wie im Café." },
     { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Präzises Siebträger-Zubehör aus Edelstahl, Holz und Kupfer. Gemacht für jeden Morgen.</p>" },
@@ -129,8 +82,9 @@
     { "type": "url", "id": "button_link", "label": "Button 1 Link", "info": "Leer = alle Produkte" },
     { "type": "text", "id": "button2_label", "label": "Button 2 Text", "default": "Werkwissen" },
     { "type": "url", "id": "button2_link", "label": "Button 2 Link", "info": "Leer = Blog mit dem Handle „werkwissen“" },
+    { "type": "text", "id": "values", "label": "Werte unten (mit · trennen)", "default": "Präzision · Ehrlichkeit · Handwerk" },
     { "type": "checkbox", "id": "show_scroll", "label": "Scroll-Hinweis anzeigen", "default": true }
   ],
-  "presets": [ { "name": "Hero" } ]
+  "presets": [ { "name": "Hero „Morgenlicht“" } ]
 }
 {% endschema %}

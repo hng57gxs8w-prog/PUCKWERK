@@ -4,7 +4,15 @@
     {%- for block in section.blocks -%}
       {%- case block.type -%}
         {%- when 'kicker' -%}<p class="kicker" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
-        {%- when 'heading' -%}<h2 class="{{ block.settings.size }}" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h2>
+        {%- when 'heading' -%}
+          {%- if section.settings.highlight -%}
+            {%- assign hwords = block.settings.heading | split: ' ' -%}
+            <h2 class="{{ block.settings.size }} statement" data-statement {{ block.shopify_attributes }}>
+              {%- for w in hwords -%}<span class="statement__w">{{ w }}</span>{% unless forloop.last %} {% endunless %}{%- endfor -%}
+            </h2>
+          {%- else -%}
+            <h2 class="{{ block.settings.size }}" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h2>
+          {%- endif -%}
         {%- when 'text' -%}<div class="rte" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
         {%- when 'button' -%}
           <a href="{{ block.settings.link | default: knowledge_url }}" class="btn btn--accent" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
@@ -19,15 +27,16 @@
   "class": "section-richtext",
   "settings": [
     { "type": "select", "id": "style", "label": "Stil", "options": [
-      { "value": "light", "label": "Fläche (Espresso bzw. Crema)" }, { "value": "plain", "label": "Ohne Fläche" }, { "value": "dark", "label": "Espresso-Fläche" }
-    ], "default": "light" }
+      { "value": "light", "label": "Crema-Karte" }, { "value": "plain", "label": "Off-White-Karte" }, { "value": "dark", "label": "Espresso-Karte" }
+    ], "default": "light" },
+    { "type": "checkbox", "id": "highlight", "label": "Überschrift hellt sich beim Scrollen Wort für Wort auf", "default": true }
   ],
   "blocks": [
     { "type": "kicker", "name": "Dachzeile", "limit": 1, "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "Unser Versprechen" } ] },
     { "type": "heading", "name": "Überschrift", "settings": [
       { "type": "text", "id": "heading", "label": "Überschrift", "default": "Kein Zauber. Nur gutes Werkzeug und ein bisschen Übung." },
       { "type": "select", "id": "size", "label": "Größe", "options": [
-        { "value": "h2", "label": "H2 (40 px)" }, { "value": "display", "label": "H1 (56 px)" }
+        { "value": "h2", "label": "Groß" }, { "value": "display", "label": "Sehr groß" }
       ], "default": "h2" }
     ] },
     { "type": "text", "name": "Text", "settings": [ { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Ein gleichmäßiger Puck ist die halbe Miete. Wir zeigen dir, wie – kurz, ehrlich, ohne Fachchinesisch.</p>" } ] },

@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "PUCKWERK",
-    "theme_version": "2.2.0",
+    "theme_version": "3.0.0",
     "theme_author": "PUCKWERK",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://help.shopify.com/"
@@ -11,39 +11,19 @@
     "name": "Farben",
     "settings": [
       {
-        "type": "select",
-        "id": "color_scheme",
-        "label": "Farbmodus",
-        "options": [
-          {
-            "value": "dark",
-            "label": "Dunkel – modern (Espresso)"
-          },
-          {
-            "value": "light",
-            "label": "Hell – klassisch (Off-White)"
-          }
-        ],
-        "default": "dark"
-      },
-      {
         "type": "paragraph",
-        "content": "Die Farben unten sind die PUCKWERK-CI-Palette. Der Farbmodus verteilt sie automatisch auf Hintergrund, Flächen, Text und Akzente."
-      },
-      {
-        "type": "header",
-        "content": "CI-Palette"
+        "content": "PUCKWERK-CI-Palette. Das Design „Morgenlicht“ legt helle Karten auf einen dunklen Espresso-Rahmen; Navigation und Footer bleiben dunkel, damit das Logo weiß steht."
       },
       {
         "type": "color",
         "id": "color_espresso",
-        "label": "Espresso-Braun (Hauptfarbe)",
+        "label": "Espresso-Braun (Text, dunkle Karten)",
         "default": "#2B1D16"
       },
       {
         "type": "color",
         "id": "color_crema",
-        "label": "Crema-Beige",
+        "label": "Crema-Beige (Flächen)",
         "default": "#F3E9DC"
       },
       {
@@ -61,65 +41,61 @@
       {
         "type": "color",
         "id": "color_offwhite",
-        "label": "Off-White",
+        "label": "Off-White (Karten, Logo)",
         "default": "#FBF8F4"
-      },
-      {
-        "type": "header",
-        "content": "Dunkle Stufen (aus Espresso abgeleitet)"
       },
       {
         "type": "color",
         "id": "color_espresso_deep",
-        "label": "Espresso tief – Seitenhintergrund im dunklen Modus",
+        "label": "Rahmen (Espresso tief)",
         "default": "#17100C"
+      }
+    ]
+  },
+  {
+    "name": "Typografie & Layout",
+    "settings": [
+      {
+        "type": "select",
+        "id": "display_weight",
+        "label": "Große Überschriften",
+        "options": [
+          {
+            "value": "500",
+            "label": "Space Grotesk Medium – weicher"
+          },
+          {
+            "value": "700",
+            "label": "Space Grotesk Bold – wie CI-Handbuch"
+          }
+        ],
+        "default": "500"
       },
       {
-        "type": "color",
-        "id": "color_espresso_light",
-        "label": "Espresso hell – Eingabefelder, Hover",
-        "default": "#3A2A21"
+        "type": "range",
+        "id": "card_radius",
+        "label": "Rundung der Karten",
+        "min": 0,
+        "max": 40,
+        "step": 4,
+        "unit": "px",
+        "default": 28
       },
       {
-        "type": "header",
-        "content": "Effekte"
-      },
-      {
-        "type": "checkbox",
-        "id": "grain",
-        "label": "Feine Körnung über der Seite (Film-Look)",
-        "default": true
+        "type": "range",
+        "id": "page_width",
+        "label": "Inhaltsbreite",
+        "min": 1040,
+        "max": 1600,
+        "step": 40,
+        "unit": "px",
+        "default": 1280
       },
       {
         "type": "checkbox",
         "id": "reveal",
         "label": "Inhalte beim Scrollen sanft einblenden",
         "default": true
-      }
-    ]
-  },
-  {
-    "name": "Layout",
-    "settings": [
-      {
-        "type": "range",
-        "id": "corner_radius",
-        "label": "Eckenradius Karten & Bilder",
-        "min": 0,
-        "max": 32,
-        "step": 2,
-        "unit": "px",
-        "default": 20
-      },
-      {
-        "type": "range",
-        "id": "page_width",
-        "label": "Seitenbreite",
-        "min": 1040,
-        "max": 1600,
-        "step": 40,
-        "unit": "px",
-        "default": 1280
       }
     ]
   },

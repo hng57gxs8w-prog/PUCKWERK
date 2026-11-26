@@ -1,139 +1,70 @@
-/* PUCKWERK Theme JS – kein Framework, keine Abhängigkeiten */
+/* PUCKWERK Theme „Morgenlicht“ – kein Framework, keine Abhängigkeiten. Bewegung nur weich und dezent. */
 (function () {
   'use strict';
   document.documentElement.classList.remove('no-js');
 
-
-  /* ---------- Bewegung: Grundlagen ---------- */
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var designMode = !!(window.Shopify && window.Shopify.designMode);
 
-  /* ---------- Hero: Höhe unter Header, Neigen mit der Maus, Drehen beim Scrollen ---------- */
-  function setHeaderOffset() {
-    var header = document.querySelector('[data-header]');
+  /* ---------- Navigation: Höhe der Ankündigung, Zustand beim Scrollen ---------- */
+  function setOffsets() {
     var ann = document.querySelector('.announcement');
-    var h = (header ? header.offsetHeight : 0) + (ann ? ann.offsetHeight : 0);
-    document.documentElement.style.setProperty('--header-offset', h + 'px');
+    document.documentElement.style.setProperty('--ann-h', (ann ? ann.offsetHeight : 0) + 'px');
+  }
+  function initNavState() {
+    var ticking = false;
+    function update() {
+      document.body.classList.toggle('is-scrolled', window.pageYOffset > 24);
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    }, { passive: true });
+    update();
   }
 
-  /* ---------- Hero-Hintergrund „Braunes Rauschen“ (WebGL) ---------- */
-  var NOISE_FS = [
-    '#ifdef GL_FRAGMENT_PRECISION_HIGH', 'precision highp float;', '#else', 'precision mediump float;', '#endif',
-    'uniform vec2 u_res; uniform float u_time; uniform vec2 u_mouse; uniform float u_strength;',
-    'uniform vec3 u_c0; uniform vec3 u_c1; uniform vec3 u_c2; uniform vec3 u_c3; uniform vec3 u_c4;',
-    'float hash(vec2 p){ p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }',
-    'float noise(vec2 p){ vec2 i = floor(p); vec2 f = fract(p); vec2 u = f * f * (3.0 - 2.0 * f);',
-    '  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y); }',
-    'float fbm(vec2 p){ float v = 0.0; float a = 0.5; mat2 m = mat2(1.6, 1.2, -1.2, 1.6);',
-    '  for (int i = 0; i < 5; i++) { v += a * noise(p); p = m * p; a *= 0.5; } return v; }',
-    'void main(){',
-    '  vec2 p = (gl_FragCoord.xy - 0.5 * u_res) / u_res.y;',
-    '  float t = u_time * 0.075;',
-    '  p += u_mouse * 0.05;',
-    // Domain Warping: Rauschen wird durch Rauschen verschoben → fließende Schwaden
-    '  vec2 q = vec2(fbm(p * 1.5 + vec2(0.0, t)), fbm(p * 1.5 + vec2(5.2, 1.3) - t * 0.8));',
-    '  vec2 r = vec2(fbm(p * 1.5 + 3.0 * q + vec2(1.7, 9.2) + t * 0.6), fbm(p * 1.5 + 3.0 * q + vec2(8.3, 2.8) - t * 0.5));',
-    '  float f = fbm(p * 1.5 + 3.2 * r);',
-    '  vec3 col = mix(u_c0, u_c1, smoothstep(0.06, 0.42, f));',
-    '  col = mix(col, u_c2, smoothstep(0.32, 0.74, f));',
-    '  col = mix(col, u_c3, smoothstep(0.62, 0.98, f * (0.8 + 0.4 * length(q))) * 0.6);',
-    '  col = mix(col, u_c4, smoothstep(0.92, 1.15, f + 0.25 * length(r)) * 0.14);',
-    '  float vig = smoothstep(1.35, 0.15, length(p * vec2(0.85, 1.1)));',
-    '  col = mix(u_c0, col, mix(0.6, 1.0, vig));',
-    '  col = mix(u_c0, col, u_strength);',
-    '  col += (hash(gl_FragCoord.xy + fract(u_time * 7.0) * 113.0) - 0.5) * 0.035;',
-    '  gl_FragColor = vec4(col, 1.0);',
-    '}'
-  ].join('\n');
-
-  function hexToRgb(v) {
-    v = (v || '').trim().replace('#', '');
-    if (v.length === 3) v = v.replace(/(.)/g, '$1$1');
-    var n = parseInt(v.slice(0, 6), 16);
-    if (isNaN(n)) return [0, 0, 0];
-    return [(n >> 16 & 255) / 255, (n >> 8 & 255) / 255, (n & 255) / 255];
+  /* ---------- Menü (Handy): ruhiges Vollbild-Menü ---------- */
+  function initMenu() {
+    var toggle = document.querySelector('[data-menu-toggle]');
+    var menu = document.querySelector('[data-menu]');
+    if (!toggle || !menu) return;
+    function set(open) {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+      document.body.classList.toggle('menu-open', open);
+      if (open) {
+        menu.hidden = false;
+        requestAnimationFrame(function () { menu.classList.add('is-open'); });
+      } else {
+        menu.classList.remove('is-open');
+        setTimeout(function () { if (!menu.classList.contains('is-open')) menu.hidden = true; }, reduceMotion ? 0 : 450);
+      }
+    }
+    toggle.addEventListener('click', function () { set(toggle.getAttribute('aria-expanded') !== 'true'); });
+    menu.addEventListener('click', function (e) { if (e.target.closest('a')) set(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') { set(false); toggle.focus(); } });
   }
 
-  function initNoise(hero, wrap) {
-    if (wrap.dataset.noiseReady) return;
-    wrap.dataset.noiseReady = '1';
-    var canvas = wrap.querySelector('canvas');
-    if (!canvas) return;
-    var gl = canvas.getContext('webgl', { alpha: false, antialias: false, depth: false, stencil: false, powerPreference: 'low-power' });
-    if (!gl) return; // CSS-Rückfallebene bleibt sichtbar
-
-    function shader(type, src) {
-      var sh = gl.createShader(type);
-      gl.shaderSource(sh, src); gl.compileShader(sh);
-      return gl.getShaderParameter(sh, gl.COMPILE_STATUS) ? sh : null;
+  /* ---------- Suche: weiches Feld unter der Navigation ---------- */
+  function initSearch() {
+    var panel = document.querySelector('[data-search]');
+    if (!panel) return;
+    var toggles = document.querySelectorAll('[data-search-toggle]');
+    function set(open) {
+      panel.hidden = !open;
+      toggles.forEach(function (t) { t.setAttribute('aria-expanded', String(open)); });
+      if (open) { var input = panel.querySelector('input[type="search"]'); if (input) input.focus(); }
     }
-    var vs = shader(gl.VERTEX_SHADER, 'attribute vec2 a; void main(){ gl_Position = vec4(a, 0.0, 1.0); }');
-    var fs = shader(gl.FRAGMENT_SHADER, NOISE_FS);
-    if (!vs || !fs) return;
-    var prog = gl.createProgram();
-    gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
-    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
-    gl.useProgram(prog);
-    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-    var aLoc = gl.getAttribLocation(prog, 'a');
-    gl.enableVertexAttribArray(aLoc);
-    gl.vertexAttribPointer(aLoc, 2, gl.FLOAT, false, 0, 0);
-    var U = {};
-    ['u_res', 'u_time', 'u_mouse', 'u_strength', 'u_c0', 'u_c1', 'u_c2', 'u_c3', 'u_c4'].forEach(function (n) { U[n] = gl.getUniformLocation(prog, n); });
-
-    // Farben aus der CI (Farbmodus-abhängig): Grund → Fläche → Kaffeebraun → Kupfer → seltene Lichter
-    var cs = getComputedStyle(document.documentElement);
-    var c0 = hexToRgb(cs.getPropertyValue('--c-bg'));
-    var c1 = hexToRgb(cs.getPropertyValue('--c-surface'));
-    var acc = hexToRgb(cs.getPropertyValue('--c-accent'));
-    var c4 = hexToRgb(cs.getPropertyValue('--c-text'));
-    var c2 = [0, 1, 2].map(function (i) { return c1[i] * 0.62 + acc[i] * 0.38; });
-    gl.uniform3fv(U.u_c0, c0); gl.uniform3fv(U.u_c1, c1); gl.uniform3fv(U.u_c2, c2);
-    gl.uniform3fv(U.u_c3, acc); gl.uniform3fv(U.u_c4, c4);
-    var strength = parseFloat(getComputedStyle(hero).getPropertyValue('--bg-strength')) || 0.7;
-    gl.uniform1f(U.u_strength, Math.max(0.2, Math.min(1, strength)));
-
-    var scale = window.innerWidth < 750 ? 0.45 : 0.6; // weiches Rauschen braucht keine volle Auflösung
-    function resize() {
-      var w = Math.max(1, Math.round(wrap.clientWidth * scale));
-      var h = Math.max(1, Math.round(wrap.clientHeight * scale));
-      if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; gl.viewport(0, 0, w, h); }
-      gl.uniform2f(U.u_res, w, h);
-    }
-    var mx = 0, my = 0, tx = 0, ty = 0;
-    if (!reduceMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-      hero.addEventListener('pointermove', function (e) {
-        var r = hero.getBoundingClientRect();
-        tx = (e.clientX - r.left) / r.width * 2 - 1;
-        ty = (e.clientY - r.top) / r.height * 2 - 1;
-      });
-      hero.addEventListener('pointerleave', function () { tx = 0; ty = 0; });
-    }
-    function render(t) {
-      resize();
-      mx += (tx - mx) * 0.05; my += (ty - my) * 0.05;
-      gl.uniform2f(U.u_mouse, mx, -my);
-      gl.uniform1f(U.u_time, t);
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
-    }
-    canvas.__pwRender = render; // für Vorschau und Tests
-    canvas.addEventListener('webglcontextlost', function (e) { e.preventDefault(); wrap.classList.remove('is-live'); });
-
-    render(0);
-    wrap.classList.add('is-live');
-    if (reduceMotion) return; // Standbild
-
-    var start = performance.now(), last = 0;
-    (function loop(now) {
-      if (!canvas.isConnected) return;          // Sektion entfernt (Theme-Editor)
-      requestAnimationFrame(loop);
-      if (hero.classList.contains('is-paused') || now - last < 33) return; // max. ~30 fps, Pause außer Sicht
-      last = now;
-      render((now - start) / 1000);
-    })(start);
+    toggles.forEach(function (btn) { btn.addEventListener('click', function () { set(panel.hidden); }); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) set(false); });
+    document.addEventListener('click', function (e) {
+      if (!panel.hidden && !e.target.closest('[data-search]') && !e.target.closest('[data-search-toggle]')) set(false);
+    });
   }
 
+  /* ---------- Hero: Scroll-Hinweis, Text gleitet beim Scrollen, Licht pausiert außer Sicht ---------- */
   function initHero(scope) {
     (scope || document).querySelectorAll('[data-hero]').forEach(function (hero) {
       if (hero.dataset.heroReady) return;
@@ -142,75 +73,32 @@
       if (next) next.addEventListener('click', function () {
         var section = hero.closest('.shopify-section') || hero.closest('[id^="shopify-section"]') || hero;
         var target = section.nextElementSibling || hero.nextElementSibling;
-        var header = document.querySelector('[data-header]');
         if (!target) return;
-        var top = target.getBoundingClientRect().top + window.pageYOffset - (header ? header.offsetHeight : 0);
+        var top = target.getBoundingClientRect().top + window.pageYOffset - 96;
         window.scrollTo({ top: top, behavior: reduceMotion ? 'auto' : 'smooth' });
       });
-
-      var puck = hero.querySelector('.puck-anim__svg');        // Layout „Geteilt“
-      var rings = hero.querySelector('.hero-bg__svg');          // Hintergrund: Linien
-      var noise = hero.querySelector('[data-hero-noise]');      // Hintergrund: Rauschen
-      var layers = hero.querySelectorAll('[data-hero-bg]');
-      if (noise) initNoise(hero, noise);
-      if (reduceMotion || (!puck && !layers.length)) return;
-
-      // Außer Sicht: Endlos-Animationen und Shader pausieren
-      var visible = true, ticking = false;
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (entries) {
-          visible = entries[0].isIntersecting;
-          hero.classList.toggle('is-paused', !visible);
-        }).observe(hero);
-      }
-
-      // Maus: Puck neigt sich, Linien verschieben sich leicht (das Rauschen reagiert selbst)
-      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && (puck || rings)) {
-        hero.addEventListener('pointermove', function (e) {
-          var r = hero.getBoundingClientRect();
-          var x = (e.clientX - (r.left + r.width / 2)) / r.width;
-          var y = (e.clientY - (r.top + r.height / 2)) / r.height;
-          if (puck) {
-            var pr = puck.getBoundingClientRect();
-            puck.style.setProperty('--tilt-x', (-(e.clientY - (pr.top + pr.height / 2)) / pr.height * 10).toFixed(2) + 'deg');
-            puck.style.setProperty('--tilt-y', ((e.clientX - (pr.left + pr.width / 2)) / pr.width * 10).toFixed(2) + 'deg');
-          }
-          if (rings) {
-            rings.style.setProperty('--px', (-x * 28).toFixed(1) + 'px');
-            rings.style.setProperty('--py', (-y * 28).toFixed(1) + 'px');
-          }
-        });
-        hero.addEventListener('pointerleave', function () {
-          if (puck) { puck.style.setProperty('--tilt-x', '0deg'); puck.style.setProperty('--tilt-y', '0deg'); }
-          if (rings) { rings.style.setProperty('--px', '0px'); rings.style.setProperty('--py', '0px'); }
-        });
-      }
-
-      // Scrollen: Puck dreht sich; Hintergrund blendet aus, Linien drehen/wachsen, Überschrift gleitet mit
+      if (reduceMotion) return;
+      // Der Hero bleibt stehen, die Karten gleiten darüber. Sobald er ganz verdeckt ist,
+      // pausiert das Licht (spart Akku) – das lässt sich nur über die Scrollposition erkennen.
+      var ticking = false;
       function update() {
+        var h = Math.max(1, hero.offsetHeight);
         var y = window.pageYOffset;
-        if (puck) puck.style.setProperty('--spin', (y * 0.12).toFixed(1) + 'deg');
-        if (layers.length) {
-          var p = Math.max(0, Math.min(1, y / Math.max(1, hero.offsetHeight)));
-          hero.style.setProperty('--hp', p.toFixed(3));
-          layers.forEach(function (l) { l.style.setProperty('--hb-fade', (1 - p * 0.6).toFixed(3)); });
-          if (rings) {
-            rings.style.setProperty('--hb-rot', (p * 30).toFixed(2) + 'deg');
-            rings.style.setProperty('--hb-scale', (1 + p * 0.12).toFixed(3));
-          }
-        }
+        hero.style.setProperty('--hp', Math.max(0, Math.min(1, y / h)).toFixed(3));
+        hero.classList.toggle('is-paused', y > h + 24);
         ticking = false;
       }
       window.addEventListener('scroll', function () {
-        if (!visible || ticking) return;
+        if (ticking) return;
         ticking = true;
         requestAnimationFrame(update);
       }, { passive: true });
+      update();
     });
   }
 
-  /* ---------- Inhalte beim Scrollen einblenden ---------- */
-  var REVEAL = '.section-head, .divider-row, .cats .divider, .cat, .card, .iwt__grid, .richtext__inner > *, .usp__item, .newsletter__box, .value, .values__heading, .values__intro, .page-hero__inner > *, .footer__grid > *, .post-card, .account__card, .product__media-item';
+  /* ---------- Weiches Einblenden beim Scrollen ---------- */
+  var REVEAL = '.sec-head, .bento__tile, .products__track, .ritual__head, .ritual__step, .iwt__grid, .richtext__inner > *, .usp__item, .newsletter__box, .values__heading, .values__intro, .value, .page-hero__inner > *, .footer__top, .footer__grid > *, .post-card, .account__card, .product__media-item';
   var revealObserver = null;
   function initReveal(scope) {
     if (!document.body.classList.contains('has-reveal') || reduceMotion || designMode || !('IntersectionObserver' in window)) return;
@@ -220,7 +108,7 @@
         entries.forEach(function (entry) {
           if (entry.isIntersecting) { entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target); }
         });
-      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
     }
     (scope || document).querySelectorAll(REVEAL).forEach(function (el) {
       if (el.closest('[data-hero]') || el.hasAttribute('data-reveal')) return;
@@ -231,40 +119,60 @@
     });
   }
 
-  /* ---------- Mobile Menü ---------- */
-  function initMenu() {
-    var toggle = document.querySelector('[data-menu-toggle]');
-    var menu = document.querySelector('[data-menu]');
-    var header = document.querySelector('[data-header]');
-    if (!toggle || !menu) return;
-    toggle.addEventListener('click', function () {
-      var open = toggle.getAttribute('aria-expanded') === 'true';
-      if (header) {
-        document.documentElement.style.setProperty('--header-bottom', header.getBoundingClientRect().bottom + 'px');
+  /* ---------- Produktreihe: Blättern mit Pfeilen, Wischen auf dem Handy ---------- */
+  function initSliders(scope) {
+    (scope || document).querySelectorAll('[data-slider]').forEach(function (root) {
+      if (root.dataset.sliderReady) return;
+      root.dataset.sliderReady = '1';
+      var track = root.querySelector('[data-slider-track]');
+      var prev = root.querySelector('[data-slider-prev]');
+      var next = root.querySelector('[data-slider-next]');
+      if (!track) return;
+      function step() {
+        var slide = track.querySelector(':scope > *');
+        if (!slide) return track.clientWidth * 0.8;
+        var gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 16;
+        return slide.getBoundingClientRect().width + gap;
       }
-      toggle.setAttribute('aria-expanded', String(!open));
-      toggle.setAttribute('aria-label', open ? 'Menü öffnen' : 'Menü schließen');
-      menu.classList.toggle('is-open', !open);
-      document.body.style.overflow = open ? '' : 'hidden';
+      function state() {
+        var max = track.scrollWidth - track.clientWidth - 2;
+        if (prev) prev.disabled = track.scrollLeft <= 2;
+        if (next) next.disabled = track.scrollLeft >= max;
+        root.classList.toggle('is-static', max <= 0);
+      }
+      if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: reduceMotion ? 'auto' : 'smooth' }); });
+      if (next) next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: reduceMotion ? 'auto' : 'smooth' }); });
+      track.addEventListener('scroll', function () { requestAnimationFrame(state); }, { passive: true });
+      window.addEventListener('resize', state);
+      state();
     });
   }
 
-  /* ---------- Suche ---------- */
-  function initSearch() {
-    var panel = document.querySelector('[data-search]');
-    if (!panel) return;
-    document.querySelectorAll('[data-search-toggle]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        panel.hidden = !panel.hidden;
-        if (!panel.hidden) {
-          var input = panel.querySelector('input[type="search"]');
-          if (input) input.focus();
-        }
+  /* ---------- Leitsatz: Wörter hellen sich beim Scrollen nacheinander auf ---------- */
+  function initStatements(scope) {
+    var items = (scope || document).querySelectorAll('[data-statement]');
+    if (!items.length || reduceMotion) return;
+    document.documentElement.classList.add('statement-on');
+    var list = Array.prototype.map.call(items, function (el) { return { el: el, words: el.querySelectorAll('.statement__w') }; });
+    var ticking = false;
+    function update() {
+      var vh = window.innerHeight;
+      list.forEach(function (it) {
+        var r = it.el.getBoundingClientRect();
+        var p = (vh * 0.88 - r.top) / (vh * 0.5 + r.height);
+        p = Math.max(0, Math.min(1, p));
+        var lit = Math.round(p * it.words.length);
+        it.words.forEach(function (w, i) { w.classList.toggle('is-lit', i < lit); });
       });
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && !panel.hidden) panel.hidden = true;
-    });
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    }, { passive: true });
+    window.addEventListener('resize', update);
+    update();
   }
 
   /* ---------- Ankündigungsleiste ---------- */
@@ -534,13 +442,15 @@
   }
 
   function init() {
-    setHeaderOffset();
-    initMenu(); initSearch(); initAnnouncement(); initQty(); initSort();
+    setOffsets();
+    initNavState(); initMenu(); initSearch(); initAnnouncement(); initQty(); initSort();
     initProduct(); initRecommendations(); initRecover(); initAddresses(); initCartAutoUpdate(); initMotion();
-    initHero(); initReveal();
-    window.addEventListener('resize', setHeaderOffset);
+    initHero(); initReveal(); initSliders(); initStatements();
+    window.addEventListener('resize', setOffsets);
     // Theme-Editor: neu geladene Sektionen wieder initialisieren
-    document.addEventListener('shopify:section:load', function (e) { setHeaderOffset(); initHero(e.target); initReveal(e.target); });
+    document.addEventListener('shopify:section:load', function (e) {
+      setOffsets(); initHero(e.target); initReveal(e.target); initSliders(e.target); initStatements(e.target);
+    });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();

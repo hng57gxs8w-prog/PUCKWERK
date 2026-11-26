@@ -3,14 +3,7 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "layout": "background",
-        "visual": "animation",
-        "bg_strength": 70,
-        "height": "full",
-        "show_scroll": true,
-        "heading": "Dein Espresso.",
-        "heading_accent": "Endlich so gut wie im Café.",
-        "bg_style": "noise"
+        "light_strength": 70
       }
     },
     "cats": {
@@ -19,25 +12,29 @@
         "t1": {
           "type": "tile",
           "settings": {
-            "label": "Tamper"
+            "label": "Tamper",
+            "text": "Plan und gleichmäßig"
           }
         },
         "t2": {
           "type": "tile",
           "settings": {
-            "label": "Verteiler"
+            "label": "Verteiler",
+            "text": "Keine Klümpchen mehr"
           }
         },
         "t3": {
           "type": "tile",
           "settings": {
-            "label": "Tassen"
+            "label": "Tassen",
+            "text": "Für die Crema"
           }
         },
         "t4": {
           "type": "tile",
           "settings": {
-            "label": "Tamping-Stationen"
+            "label": "Stationen",
+            "text": "Ordnung am Morgen"
           }
         }
       },
@@ -47,29 +44,54 @@
         "t3",
         "t4"
       ],
-      "settings": {
-        "heading": "Kategorien"
-      }
+      "settings": {}
     },
     "featured": {
       "type": "featured-collection",
       "settings": {
-        "heading_style": "divider",
-        "kicker": "Beliebt im Werk",
-        "limit": 4,
-        "columns": "4",
-        "show_link": true
+        "limit": 6
       }
+    },
+    "ritual": {
+      "type": "ritual",
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "icon": "bean",
+            "title": "Mahlen",
+            "text": "<p>Frisch und fein: Der Mahlgrad bestimmt, wie schnell das Wasser durchläuft.</p>"
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "icon": "hand",
+            "title": "Verteilen",
+            "text": "<p>Mit dem Verteiler lösen sich Klümpchen – das Mehl liegt gleichmäßig im Sieb.</p>"
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "icon": "mark",
+            "title": "Tampen",
+            "text": "<p>Plan und gleichmäßig drücken. Dann findet das Wasser keine Abkürzung.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "settings": {}
     },
     "iwt": {
       "type": "image-with-text",
       "settings": {
         "style": "box",
-        "image_right": true,
-        "kicker": "Das Werk",
-        "heading": "Präzision, die man in der Hand spürt.",
-        "text": "<p>Wir testen jedes Werkzeug jeden Morgen selbst. Was nicht besser macht, kommt nicht ins Sortiment.</p>",
-        "button_label": "Über uns"
+        "image_right": true
       }
     },
     "statement": {
@@ -78,20 +100,14 @@
         "k": {
           "type": "kicker",
           "settings": {
-            "text": "Werkwissen"
+            "text": "Unser Versprechen"
           }
         },
         "h": {
           "type": "heading",
           "settings": {
-            "heading": "Kein Zauber. Nur gutes Werkzeug und ein bisschen Übung.",
+            "heading": "Ehrliches Werkzeug, das jeden Morgen ein kleines bisschen besser macht.",
             "size": "h2"
-          }
-        },
-        "t": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Ein gleichmäßiger Puck ist die halbe Miete. Wir zeigen dir, wie – kurz, ehrlich, ohne Fachchinesisch.</p>"
           }
         },
         "b": {
@@ -104,11 +120,11 @@
       "block_order": [
         "k",
         "h",
-        "t",
         "b"
       ],
       "settings": {
-        "style": "light"
+        "style": "plain",
+        "highlight": true
       }
     },
     "usp": {
@@ -164,6 +180,7 @@
     "hero",
     "cats",
     "featured",
+    "ritual",
     "iwt",
     "statement",
     "usp",

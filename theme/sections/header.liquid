@@ -1,27 +1,23 @@
-<header class="header{% if section.settings.sticky %} header--sticky{% endif %}" data-header>
-  <div class="container header__inner">
-    <button type="button" class="header__burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="HeaderNav" data-menu-toggle>
-      <span></span><span></span><span></span>
-    </button>
-
-    <a href="{{ routes.root_url }}" class="header__logo" style="--logo-w: {{ section.settings.logo_width }}px;">
+<div class="nav-shell" data-header>
+  <header class="navbar">
+    <a href="{{ routes.root_url }}" class="navbar__logo" style="--logo-w: {{ section.settings.logo_width }}px;">
       {%- if section.settings.logo != blank -%}
         {%- assign logo_w2 = section.settings.logo_width | times: 2 -%}
         {%- assign logo_style = 'width: ' | append: section.settings.logo_width | append: 'px' -%}
-        {{ section.settings.logo | image_url: width: logo_w2 | image_tag: alt: shop.name, style: logo_style, class: 'header__logo-img', loading: 'eager' }}
+        {{ section.settings.logo | image_url: width: logo_w2 | image_tag: alt: shop.name, style: logo_style, class: 'navbar__logo-img', loading: 'eager' }}
       {%- else -%}
-        {% render 'logo', variant: 'horizontal', class: 'header__logo-svg' %}
+        {% render 'logo', variant: 'horizontal', class: 'navbar__logo-svg' %}
         <span class="visually-hidden">{{ shop.name }}</span>
       {%- endif -%}
     </a>
 
-    <nav class="header__nav" id="HeaderNav" aria-label="Hauptnavigation" data-menu>
-      <ul class="nav">
+    <nav class="navbar__nav" aria-label="Hauptnavigation">
+      <ul class="navbar__list">
         {%- for link in section.settings.menu.links -%}
-          <li class="nav__item{% if link.links != blank %} nav__item--has-sub{% endif %}">
-            <a href="{{ link.url }}" class="nav__link"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a>
+          <li class="navbar__item{% if link.links != blank %} has-sub{% endif %}">
+            <a href="{{ link.url }}" class="navbar__link"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a>
             {%- if link.links != blank -%}
-              <ul class="nav__sub">
+              <ul class="navbar__sub">
                 {%- for child in link.links -%}
                   <li><a href="{{ child.url }}"{% if child.current %} aria-current="page"{% endif %}>{{ child.title }}</a></li>
                 {%- endfor -%}
@@ -32,40 +28,62 @@
       </ul>
     </nav>
 
-    <div class="header__icons">
-      <button type="button" class="header__icon" aria-label="Suche öffnen" data-search-toggle>{% render 'icon', name: 'search' %}</button>
+    <div class="navbar__actions">
+      <button type="button" class="navbar__icon" aria-label="Suche öffnen" aria-expanded="false" aria-controls="NavSearch" data-search-toggle>{% render 'icon', name: 'search' %}</button>
       {%- if shop.customer_accounts_enabled -%}
-        <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="header__icon header__icon--account" aria-label="Konto">{% render 'icon', name: 'account' %}</a>
+        <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="navbar__icon navbar__icon--account" aria-label="Konto">{% render 'icon', name: 'account' %}</a>
       {%- endif -%}
-      <a href="{{ routes.cart_url }}" class="header__icon header__cart" aria-label="Warenkorb">
+      <a href="{{ routes.cart_url }}" class="navbar__cart" aria-label="Warenkorb, {{ cart.item_count }} Artikel">
         {% render 'icon', name: 'cart' %}
-        <span class="header__count{% if cart.item_count == 0 %} is-empty{% endif %}" data-cart-count>{{ cart.item_count }}</span>
+        <span class="navbar__count{% if cart.item_count == 0 %} is-empty{% endif %}" data-cart-count>{{ cart.item_count }}</span>
       </a>
+      <button type="button" class="navbar__burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="NavMenu" data-menu-toggle>
+        <span></span><span></span>
+      </button>
     </div>
-  </div>
+  </header>
 
-  <div class="header__search" hidden data-search>
-    <form action="{{ routes.search_url }}" method="get" role="search" class="container search-form">
+  <div class="nav-search" id="NavSearch" hidden data-search>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="nav-search__form">
       <input type="hidden" name="type" value="product">
-      <label for="HeaderSearch" class="visually-hidden">Suche</label>
-      <input id="HeaderSearch" type="search" name="q" value="{{ search.terms | escape }}" placeholder="Tamper, Verteiler, Siebe …" autocomplete="off">
-      <button type="submit" class="btn btn--accent">Suchen</button>
-      <button type="button" class="header__icon" aria-label="Suche schließen" data-search-toggle>{% render 'icon', name: 'close' %}</button>
+      <label for="NavSearchInput" class="visually-hidden">Suche</label>
+      {% render 'icon', name: 'search' %}
+      <input id="NavSearchInput" type="search" name="q" value="{{ search.terms | escape }}" placeholder="Tamper, Verteiler, Siebe …" autocomplete="off">
+      <button type="submit" class="btn btn--accent btn--sm">Suchen</button>
     </form>
   </div>
-</header>
+
+  <div class="nav-menu" id="NavMenu" data-menu hidden>
+    <ul class="nav-menu__list">
+      {%- for link in section.settings.menu.links -%}
+        <li style="--i: {{ forloop.index0 }};">
+          <a href="{{ link.url }}" class="nav-menu__link">{{ link.title }}</a>
+          {%- if link.links != blank -%}
+            <ul class="nav-menu__sub">
+              {%- for child in link.links -%}<li><a href="{{ child.url }}">{{ child.title }}</a></li>{%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+    <div class="nav-menu__foot">
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="btn btn--ghost-light">Mein Konto</a>
+      {%- endif -%}
+      <a href="{{ routes.cart_url }}" class="btn btn--accent">Warenkorb</a>
+    </div>
+  </div>
+</div>
 
 {% schema %}
 {
-  "name": "Header",
+  "name": "Navigation",
   "class": "section-header",
   "settings": [
-    { "type": "image_picker", "id": "logo", "label": "Logo" },
-    { "type": "paragraph", "content": "Ohne eigenes Bild wird das PUCKWERK-Logo (horizontal) als Vektor angezeigt." },
-    { "type": "range", "id": "logo_width", "label": "Logo-Breite", "min": 120, "max": 260, "step": 10, "unit": "px", "default": 170, "info": "CI-Mindestbreite horizontal: 120 px" },
-    { "type": "header", "content": "Navigation" },
-    { "type": "link_list", "id": "menu", "label": "Menü", "default": "main-menu" },
-    { "type": "checkbox", "id": "sticky", "label": "Header beim Scrollen fixieren", "default": true }
+    { "type": "paragraph", "content": "Die Navigation schwebt als dunkle Leiste über der Seite – das PUCKWERK-Logo steht dort immer weiß." },
+    { "type": "image_picker", "id": "logo", "label": "Eigenes Logo (optional)", "info": "Leer = PUCKWERK-Logo als Vektor in Weiß. Eigene Datei bitte in Weiß/hell hochladen." },
+    { "type": "range", "id": "logo_width", "label": "Logo-Breite", "min": 120, "max": 220, "step": 10, "unit": "px", "default": 150, "info": "CI-Mindestbreite horizontal: 120 px" },
+    { "type": "link_list", "id": "menu", "label": "Menü", "default": "main-menu" }
   ]
 }
 {% endschema %}

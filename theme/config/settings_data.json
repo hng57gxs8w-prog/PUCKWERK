@@ -2,18 +2,16 @@
   "current": "PUCKWERK",
   "presets": {
     "PUCKWERK": {
-      "color_scheme": "dark",
       "color_espresso": "#2B1D16",
       "color_crema": "#F3E9DC",
       "color_kupfer": "#B87333",
       "color_grau": "#8A817C",
       "color_offwhite": "#FBF8F4",
       "color_espresso_deep": "#17100C",
-      "color_espresso_light": "#3A2A21",
-      "grain": true,
-      "reveal": true,
-      "corner_radius": 20,
-      "page_width": 1280
+      "display_weight": "500",
+      "card_radius": 28,
+      "page_width": 1280,
+      "reveal": true
     }
   }
 }

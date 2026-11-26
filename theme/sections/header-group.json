@@ -5,17 +5,45 @@
     "announcement": {
       "type": "announcement-bar",
       "blocks": {
-        "msg1": { "type": "message", "settings": { "text": "Ab 49 € versandkostenfrei" } },
-        "msg2": { "type": "message", "settings": { "text": "Heute bestellt, morgen unterwegs" } },
-        "msg3": { "type": "message", "settings": { "text": "30 Tage Rückgabe – ehrlich ohne Haken" } }
+        "msg1": {
+          "type": "message",
+          "settings": {
+            "text": "Ab 49 € versandkostenfrei"
+          }
+        },
+        "msg2": {
+          "type": "message",
+          "settings": {
+            "text": "Heute bestellt, morgen unterwegs"
+          }
+        },
+        "msg3": {
+          "type": "message",
+          "settings": {
+            "text": "30 Tage Rückgabe – ehrlich ohne Haken"
+          }
+        }
       },
-      "block_order": ["msg1", "msg2", "msg3"],
-      "settings": { "bg": "#2B1D16", "fg": "#F3E9DC" }
+      "block_order": [
+        "msg1",
+        "msg2",
+        "msg3"
+      ],
+      "settings": {
+        "bg": "#17100C",
+        "fg": "#F3E9DC"
+      }
     },
     "header": {
       "type": "header",
-      "settings": { "logo_width": 170, "menu": "main-menu", "sticky": true }
+      "settings": {
+        "logo_width": 150,
+        "menu": "main-menu"
+      }
     }
   },
-  "order": ["announcement", "header"]
+  "order": [
+    "announcement",
+    "header"
+  ]
 }

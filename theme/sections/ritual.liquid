@@ -1,0 +1,56 @@
+<section class="section-pad ritual">
+  <div class="container">
+    <div class="ritual__head">
+      {%- if section.settings.kicker != blank -%}<p class="eyebrow">{{ section.settings.kicker }}</p>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h2 class="h2">{{ section.settings.heading }}</h2>{%- endif -%}
+      {%- if section.settings.text != blank -%}<div class="rte">{{ section.settings.text }}</div>{%- endif -%}
+    </div>
+    <ol class="ritual__steps">
+      {%- for block in section.blocks -%}
+        <li class="ritual__step" {{ block.shopify_attributes }}>
+          <span class="ritual__icon">{% render 'icon', name: block.settings.icon %}</span>
+          <span class="ritual__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          <h3 class="h3">{{ block.settings.title }}</h3>
+          <div class="rte">{{ block.settings.text }}</div>
+        </li>
+      {%- endfor -%}
+    </ol>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Das Ritual (Schritte)",
+  "class": "section-ritual",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Dachzeile", "default": "Das Ritual" },
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Drei Schritte zu besserem Espresso." },
+    { "type": "richtext", "id": "text", "label": "Einleitung", "default": "<p>Kein Zauber, nur gutes Werkzeug und ein bisschen Übung. So bekommst du jeden Morgen einen gleichmäßigen Puck.</p>" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Schritt",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Symbol", "options": [
+          { "value": "bean", "label": "Bohne" }, { "value": "hand", "label": "Präzision" }, { "value": "mark", "label": "Puck" },
+          { "value": "chat", "label": "Beratung" }, { "value": "truck", "label": "Versand" }, { "value": "shield", "label": "Schutz" }
+        ], "default": "bean" },
+        { "type": "text", "id": "title", "label": "Titel", "default": "Mahlen" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Frisch und fein: Der Mahlgrad bestimmt, wie schnell das Wasser durchläuft.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Das Ritual (Schritte)",
+      "blocks": [
+        { "type": "step", "settings": { "icon": "bean", "title": "Mahlen", "text": "<p>Frisch und fein: Der Mahlgrad bestimmt, wie schnell das Wasser durchläuft.</p>" } },
+        { "type": "step", "settings": { "icon": "hand", "title": "Verteilen", "text": "<p>Mit dem Verteiler lösen sich Klümpchen – das Mehl liegt gleichmäßig im Sieb.</p>" } },
+        { "type": "step", "settings": { "icon": "mark", "title": "Tampen", "text": "<p>Plan und gleichmäßig drücken. Dann findet das Wasser keine Abkürzung.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

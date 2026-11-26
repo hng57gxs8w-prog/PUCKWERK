@@ -5,10 +5,8 @@ Siebträger-Zubehör für Home-Baristas. *Dein Espresso. Endlich so gut wie im C
 ## Inhalt
 | Datei / Ordner | Was |
 |---|---|
-| `PUCKWERK-Shopify-Theme.zip` | Shopify-Theme 2.0 (dunkel & modern, mit Hero-Animation), fertig zum Hochladen |
-| `ci/puckwerk-hero-rauschen.mp4` | Video: Startseite mit braunem Rauschen im Hintergrund (Standard ab 2.2) |
-| `ci/puckwerk-hero-hintergrund.mp4` | Video: Hintergrund mit feinen Linien (Option) |
-| `ci/puckwerk-hero-animation.mp4` | Video: Layout „Geteilt“ mit großem Puck (Option) |
+| `PUCKWERK-Shopify-Theme.zip` | Shopify-Theme 3.0 „Morgenlicht“, fertig zum Hochladen |
+| `ci/puckwerk-morgenlicht.mp4` | Video: Startseite mit weichem Licht und Karten, die beim Scrollen über den Kopfbereich gleiten |
 | `theme/` | Quellcode des Themes (Online Store 2.0) |
 | `PUCKWERK-CI.zip` | CI-Handbuch + alle Logo-Dateien zum Weitergeben |
 | `ci/PUCKWERK-CI-Handbuch.html` | Corporate-Design-Handbuch (im Browser öffnen, als PDF druckbar) |
@@ -23,33 +21,21 @@ Siebträger-Zubehör für Home-Baristas. *Dein Espresso. Endlich so gut wie im C
 5. Im Theme-Editor: Kollektionen für die vier runden Kategorien und „Beliebt im Werk“ auswählen, Fotos/Slow-Motion-Video im CI-Bildstil einsetzen.
 6. **Beispieltexte prüfen:** Versandgrenze (49 €), „Heute bestellt, morgen unterwegs“, 30 Tage Rückgabe usw. sind Platzhalter – an die echten Shop-Bedingungen anpassen.
 
-## Neu in Version 2.2
-- **Hintergrund „Braunes Rauschen“ (Standard):** fließende, körnige Schwaden in Espresso-, Kaffee- und Kupfertönen (WebGL-Shader, Farben automatisch aus der CI) mit flimmerndem Filmkorn – wie Crema oder Dampf im Morgenlicht
-- Wählbar: *Braunes Rauschen*, *Rauschen + feine Linien*, *Feine Linien*; Stärke per Regler
-- Läuft mit max. 30 Bildern/s in reduzierter Auflösung, pausiert außer Sicht; ohne WebGL weiche braune CSS-Verläufe mit Korn; bei „Bewegung reduzieren“ Standbild
-- Kupferton der Überschrift im hellen Modus dunkler (Kontrast 4,7 : 1)
-
-## Neu in Version 2.1
-- **Hero-Layout „Hintergrund“ (Standard):** Das Bildzeichen liegt als große, feine Linienzeichnung im Hintergrund – Ringe zeichnen sich, die Messskala dreht ganz langsam, Wellen laufen wie auf einer Crema nach außen, Partikel schweben im Licht. Die Überschrift steht mittig darüber.
-- Regler **„Stärke der Hintergrund-Animation“** (20–100 %), Bild oder Video als Hintergrund mit einstellbarer Abdunklung
-- Überschrift zweiteilig: erste Zeile Off-White, Fortsetzung im weichen Kupferton
-- Ringe bewegen sich leicht gegen die Maus (Tiefe); beim Scrollen drehen sie sich und blenden aus, die Überschrift gleitet mit
-- Das bisherige Layout mit großem Puck bleibt wählbar („Geteilt“)
-
-## Neu in Version 2.0
-- **Farbmodus** (Theme-Einstellungen → Farben): *Dunkel – modern* (Standard) oder *Hell – klassisch* (Version 1.1)
-- **Hero-Animation**: Das Bildzeichen entsteht – Siebrand, Kaffeemehl, Tamper-Druck mit Kupferwelle, zwei Rillen, Messskala, Partikel im Licht. Der Puck neigt sich mit der Maus und dreht sich beim Scrollen. Alternativ Bild oder Video.
-- Überschrift baut sich Wort für Wort auf; Inhalte blenden beim Scrollen sanft ein (abschaltbar)
-- Glas-Navigation, feine Körnung (abschaltbar), Kupfer-Leuchten, großes PUCKWERK-Wasserzeichen im Footer
-- Bei „Bewegung reduzieren“ (Systemeinstellung) steht alles still im Endzustand; außer Sicht pausiert die Animation
+## Version 3.0 „Morgenlicht“ (komplettes Makeover)
+- **Karten-Stapel:** helle, weich gerundete Karten auf einem dunklen Espresso-Rahmen; beim Scrollen gleiten sie sanft über den Kopfbereich
+- **Schwebende Navigation:** dunkle, abgerundete Leiste – das PUCKWERK-Logo steht immer weiß (auch im Footer und auf der Passwortseite)
+- **Kopfbereich:** warmes, weiches Licht wandert ganz langsam über den dunklen Grund (nur CSS, kein Korn, kein 3D); Überschrift wird beim Laden weich scharf; Neuheiten-Plakette, Werte, Scroll-Hinweis; optional eigenes Foto
+- **Neue Sektionen:** Kategorien als Kachel-Raster, Produkte als wischbare Reihe mit Pfeilen, „Das Ritual“ (Mahlen · Verteilen · Tampen), Leitsatz, der sich beim Scrollen Wort für Wort aufhellt
+- **Bewegung nur weich:** sanftes Einblenden mit leichter Unschärfe, ruhige Hover-Effekte; bei „Bewegung reduzieren“ steht alles still, ohne JavaScript ist alles sichtbar
+- Große Überschriften wahlweise Space Grotesk Medium (weicher, Standard) oder Bold (wie CI-Handbuch)
 
 ## Was das Theme aus der CI umsetzt
-- Die fünf CI-Farben (Espresso, Crema, Kupfer, Warmes Grau, Off-White) plus zwei aus Espresso abgeleitete dunkle Stufen
-- Space Grotesk Bold / Inter Regular, **lokal im Theme** (keine Verbindung zu Google-Servern)
-- Typo-Hierarchie H1 56 · H2 40 · H3 24 · Text 17 · Klein 14 · Label 12 (+18 %, Versal)
-- Kontrastregeln: Fließtext Espresso, Grau erst ab 14 px, Off-White auf Kupfer nur auf Buttons
-- Runde Formen, 1-px-Kupferlinien, Ecken 20 px, 8er-Raster, Sektionsabstand ≥ 96 px
-- Logo als Vektor (horizontal im Header/Footer, gestapelt auf Passwortseite), Favicon aus dem Bildzeichen
+- Die fünf CI-Farben (Espresso, Crema, Kupfer, Warmes Grau, Off-White) plus „Espresso tief“ als Rahmen
+- Space Grotesk / Inter, **lokal im Theme** (keine Verbindung zu Google-Servern)
+- Große Überschriften Space Grotesk Medium (umstellbar auf Bold laut CI), Text Inter Regular 17 px, Labels 12 px Versal +18 %
+- Kontrast: Fließtext Espresso; Off-White auf Kupfer nur auf Buttons (15 px Bold)
+- Runde Formen: Karten 28 px, Kacheln und Bilder 20 px, Buttons als Pillen, Kupfer-Punkte als Akzent
+- Logo als Vektor, immer weiß (Navigation, Footer, Passwortseite); Favicon aus dem Bildzeichen
 - Tonalität: Du-Ansprache, kurze Texte, Fehlermeldungen im CI-Ton
 
 ## Neu erzeugen
