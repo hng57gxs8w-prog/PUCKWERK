@@ -1,15 +1,16 @@
 <section class="section-pad">
   <div class="container">
     <h1 class="display">Kategorien</h1>
-    <div class="cats__grid" style="--cols: 4;">
+    <div class="cat-grid">
       {%- for collection in collections -%}
         {%- if collection.handle == 'frontpage' -%}{%- continue -%}{%- endif -%}
+        {%- assign n = forloop.index0 | modulo: 6 | plus: 1 -%}
         <a href="{{ collection.url }}" class="cat">
           <span class="cat__img">
             {%- if collection.featured_image -%}
-              {{ collection.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '300, 500, 700', sizes: '(min-width: 990px) 22vw, 45vw' }}
+              {{ collection.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '300, 500, 700', sizes: '(min-width: 750px) 22vw, 45vw' }}
             {%- else -%}
-              <span class="mood mood--grounds"></span>
+              {{ 'collection-' | append: n | placeholder_svg_tag: 'placeholder' }}
             {%- endif -%}
           </span>
           <span class="cat__title">{{ collection.title }}</span>

@@ -1,53 +1,43 @@
-/* PUCKWERK Theme „Morgenlicht“ – kein Framework, keine Abhängigkeiten. Bewegung nur weich und dezent. */
+/* PUCKWERK Theme – kein Framework, keine Abhängigkeiten. Schlicht: nur Funktion, keine Dekor-Animation. */
 (function () {
   'use strict';
   document.documentElement.classList.remove('no-js');
 
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var designMode = !!(window.Shopify && window.Shopify.designMode);
 
-  /* ---------- Navigation: Höhe der Ankündigung, Zustand beim Scrollen ---------- */
-  function setOffsets() {
-    var ann = document.querySelector('.announcement');
-    document.documentElement.style.setProperty('--ann-h', (ann ? ann.offsetHeight : 0) + 'px');
-  }
-  function initNavState() {
-    var ticking = false;
-    function update() {
-      document.body.classList.toggle('is-scrolled', window.pageYOffset > 24);
-      ticking = false;
-    }
-    window.addEventListener('scroll', function () {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(update);
-    }, { passive: true });
-    update();
-  }
-
-  /* ---------- Menü (Handy): ruhiges Vollbild-Menü ---------- */
+  /* ---------- Menü (Handy): Panel von rechts ---------- */
   function initMenu() {
-    var toggle = document.querySelector('[data-menu-toggle]');
+    var toggles = document.querySelectorAll('[data-menu-toggle]');
     var menu = document.querySelector('[data-menu]');
-    if (!toggle || !menu) return;
+    var backdrop = document.querySelector('[data-menu-backdrop]');
+    if (!toggles.length || !menu) return;
     function set(open) {
-      toggle.setAttribute('aria-expanded', String(open));
-      toggle.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+      toggles.forEach(function (t) { t.setAttribute('aria-expanded', String(open)); });
       document.body.classList.toggle('menu-open', open);
       if (open) {
         menu.hidden = false;
-        requestAnimationFrame(function () { menu.classList.add('is-open'); });
+        if (backdrop) backdrop.hidden = false;
+        requestAnimationFrame(function () {
+          menu.classList.add('is-open');
+          if (backdrop) backdrop.classList.add('is-open');
+        });
       } else {
         menu.classList.remove('is-open');
-        setTimeout(function () { if (!menu.classList.contains('is-open')) menu.hidden = true; }, reduceMotion ? 0 : 450);
+        if (backdrop) backdrop.classList.remove('is-open');
+        setTimeout(function () {
+          if (!menu.classList.contains('is-open')) { menu.hidden = true; if (backdrop) backdrop.hidden = true; }
+        }, reduceMotion ? 0 : 260);
       }
     }
-    toggle.addEventListener('click', function () { set(toggle.getAttribute('aria-expanded') !== 'true'); });
+    toggles.forEach(function (btn) { btn.addEventListener('click', function () { set(btn.getAttribute('aria-expanded') !== 'true'); }); });
+    if (backdrop) backdrop.addEventListener('click', function () { set(false); });
     menu.addEventListener('click', function (e) { if (e.target.closest('a')) set(false); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') { set(false); toggle.focus(); } });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && toggles[0].getAttribute('aria-expanded') === 'true') { set(false); toggles[0].focus(); }
+    });
   }
 
-  /* ---------- Suche: weiches Feld unter der Navigation ---------- */
+  /* ---------- Suche: Feld unter der Kopfzeile ---------- */
   function initSearch() {
     var panel = document.querySelector('[data-search]');
     if (!panel) return;
@@ -59,137 +49,20 @@
     }
     toggles.forEach(function (btn) { btn.addEventListener('click', function () { set(panel.hidden); }); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) set(false); });
-    document.addEventListener('click', function (e) {
-      if (!panel.hidden && !e.target.closest('[data-search]') && !e.target.closest('[data-search-toggle]')) set(false);
-    });
   }
 
-  /* ---------- Hero: Scroll-Hinweis, Text gleitet beim Scrollen, Licht pausiert außer Sicht ---------- */
-  function initHero(scope) {
-    (scope || document).querySelectorAll('[data-hero]').forEach(function (hero) {
-      if (hero.dataset.heroReady) return;
-      hero.dataset.heroReady = '1';
-      var next = hero.querySelector('[data-scroll-next]');
-      if (next) next.addEventListener('click', function () {
-        var section = hero.closest('.shopify-section') || hero.closest('[id^="shopify-section"]') || hero;
-        var target = section.nextElementSibling || hero.nextElementSibling;
-        if (!target) return;
-        var top = target.getBoundingClientRect().top + window.pageYOffset - 96;
-        window.scrollTo({ top: top, behavior: reduceMotion ? 'auto' : 'smooth' });
-      });
-      if (reduceMotion) return;
-      // Der Hero bleibt stehen, die Karten gleiten darüber. Sobald er ganz verdeckt ist,
-      // pausiert das Licht (spart Akku) – das lässt sich nur über die Scrollposition erkennen.
-      var ticking = false;
-      function update() {
-        var h = Math.max(1, hero.offsetHeight);
-        var y = window.pageYOffset;
-        hero.style.setProperty('--hp', Math.max(0, Math.min(1, y / h)).toFixed(3));
-        hero.classList.toggle('is-paused', y > h + 24);
-        ticking = false;
-      }
-      window.addEventListener('scroll', function () {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(update);
-      }, { passive: true });
-      update();
-    });
-  }
-
-  /* ---------- Weiches Einblenden beim Scrollen ---------- */
-  var REVEAL = '.sec-head, .bento__tile, .products__track, .ritual__head, .ritual__step, .iwt__grid, .richtext__inner > *, .usp__item, .newsletter__box, .values__heading, .values__intro, .value, .page-hero__inner > *, .footer__top, .footer__grid > *, .post-card, .account__card, .product__media-item';
-  var revealObserver = null;
-  function initReveal(scope) {
-    if (!document.body.classList.contains('has-reveal') || reduceMotion || designMode || !('IntersectionObserver' in window)) return;
-    document.documentElement.classList.add('reveal-on');
-    if (!revealObserver) {
-      revealObserver = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) { entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target); }
-        });
-      }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
-    }
-    (scope || document).querySelectorAll(REVEAL).forEach(function (el) {
-      if (el.closest('[data-hero]') || el.hasAttribute('data-reveal')) return;
-      var siblings = Array.prototype.filter.call(el.parentElement.children, function (c) { return c.matches(REVEAL); });
-      el.style.setProperty('--ri', Math.min(siblings.indexOf(el), 6));
-      el.setAttribute('data-reveal', '');
-      revealObserver.observe(el);
-    });
-  }
-
-  /* ---------- Produktreihe: Blättern mit Pfeilen, Wischen auf dem Handy ---------- */
-  function initSliders(scope) {
-    (scope || document).querySelectorAll('[data-slider]').forEach(function (root) {
-      if (root.dataset.sliderReady) return;
-      root.dataset.sliderReady = '1';
-      var track = root.querySelector('[data-slider-track]');
-      var prev = root.querySelector('[data-slider-prev]');
-      var next = root.querySelector('[data-slider-next]');
-      if (!track) return;
-      function step() {
-        var slide = track.querySelector(':scope > *');
-        if (!slide) return track.clientWidth * 0.8;
-        var gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 16;
-        return slide.getBoundingClientRect().width + gap;
-      }
-      function state() {
-        var max = track.scrollWidth - track.clientWidth - 2;
-        if (prev) prev.disabled = track.scrollLeft <= 2;
-        if (next) next.disabled = track.scrollLeft >= max;
-        root.classList.toggle('is-static', max <= 0);
-      }
-      if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: reduceMotion ? 'auto' : 'smooth' }); });
-      if (next) next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: reduceMotion ? 'auto' : 'smooth' }); });
-      track.addEventListener('scroll', function () { requestAnimationFrame(state); }, { passive: true });
-      window.addEventListener('resize', state);
-      state();
-    });
-  }
-
-  /* ---------- Leitsatz: Wörter hellen sich beim Scrollen nacheinander auf ---------- */
-  function initStatements(scope) {
-    var items = (scope || document).querySelectorAll('[data-statement]');
-    if (!items.length || reduceMotion) return;
-    document.documentElement.classList.add('statement-on');
-    var list = Array.prototype.map.call(items, function (el) { return { el: el, words: el.querySelectorAll('.statement__w') }; });
-    var ticking = false;
-    function update() {
-      var vh = window.innerHeight;
-      list.forEach(function (it) {
-        var r = it.el.getBoundingClientRect();
-        var p = (vh * 0.88 - r.top) / (vh * 0.5 + r.height);
-        p = Math.max(0, Math.min(1, p));
-        var lit = Math.round(p * it.words.length);
-        it.words.forEach(function (w, i) { w.classList.toggle('is-lit', i < lit); });
-      });
-      ticking = false;
-    }
-    window.addEventListener('scroll', function () {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(update);
-    }, { passive: true });
-    window.addEventListener('resize', update);
-    update();
-  }
-
-  /* ---------- Ankündigungsleiste ---------- */
+  /* ---------- Ankündigungsleiste: Nachrichten im Wechsel ---------- */
   function initAnnouncement() {
     var track = document.querySelector('[data-announcement]');
-    if (!track) return;
+    if (!track || track.dataset.ready) return;
+    track.dataset.ready = '1';
     var items = track.querySelectorAll('.announcement__item');
     if (items.length < 2) return;
     var i = 0;
     setInterval(function () {
-      var cur = items[i];
+      items[i].classList.remove('is-active');
       i = (i + 1) % items.length;
-      cur.classList.remove('is-active');
-      cur.classList.add('is-leaving');
-      items[i].classList.remove('is-leaving');
       items[i].classList.add('is-active');
-      setTimeout(function () { cur.classList.remove('is-leaving'); }, 450);
     }, 4500);
   }
 
@@ -217,12 +90,6 @@
       clearTimeout(timer);
       timer = setTimeout(function () { form.submit(); }, 700);
     });
-  }
-
-  /* ---------- Videos: Rücksicht auf „Bewegung reduzieren“ ---------- */
-  function initMotion() {
-    if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    document.querySelectorAll('video[autoplay]').forEach(function (v) { v.removeAttribute('autoplay'); v.pause(); v.controls = true; });
   }
 
   /* ---------- Sortierung ---------- */
@@ -279,13 +146,10 @@
       var addBtn = root.querySelector('[data-add-button]');
       var addLabel = root.querySelector('[data-add-label]');
 
-      // Radios mit aktueller Variante synchronisieren
       var current = variants.find(function (v) { return String(v.id) === String(idInput.value); }) || variants[0];
       if (current) {
         fieldsets.forEach(function (fs, idx) {
-          fs.querySelectorAll('input').forEach(function (inp) {
-            inp.checked = inp.value === current.options[idx];
-          });
+          fs.querySelectorAll('input').forEach(function (inp) { inp.checked = inp.value === current.options[idx]; });
         });
       }
 
@@ -300,9 +164,7 @@
         fieldsets.forEach(function (fs, idx) {
           fs.querySelectorAll('input').forEach(function (inp) {
             var test = sel.slice(); test[idx] = inp.value;
-            var ok = variants.some(function (v) {
-              return v.available && v.options.every(function (o, i) { return o === test[i]; });
-            });
+            var ok = variants.some(function (v) { return v.available && v.options.every(function (o, i) { return o === test[i]; }); });
             var label = fs.querySelector('label[for="' + inp.id + '"]');
             if (label) label.classList.toggle('is-unavailable', !ok);
           });
@@ -311,9 +173,7 @@
 
       function update() {
         var sel = selected();
-        var variant = variants.find(function (v) {
-          return v.options.every(function (o, i) { return o === sel[i]; });
-        });
+        var variant = variants.find(function (v) { return v.options.every(function (o, i) { return o === sel[i]; }); });
         fieldsets.forEach(function (fs, idx) {
           var out = fs.querySelector('[data-option-value]');
           if (out) out.textContent = sel[idx] || '';
@@ -351,7 +211,6 @@
       fieldsets.forEach(function (fs) { fs.addEventListener('change', update); });
       if (fieldsets.length) markAvailability(selected());
 
-      // Ajax Add-to-Cart – Rückmeldung im CI-Ton direkt am Button
       var form = root.querySelector('form[action*="/cart/add"]');
       var msg = root.querySelector('[data-form-message]');
       function say(text, isError) {
@@ -423,7 +282,7 @@
     if (link) link.addEventListener('click', function (e) {
       e.preventDefault();
       box.classList.toggle('is-open');
-      if (box.classList.contains('is-open')) box.scrollIntoView({ behavior: 'smooth' });
+      if (box.classList.contains('is-open')) box.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
     });
     if (box.querySelector('.form-success, .form-error')) box.classList.add('is-open');
   }
@@ -442,14 +301,11 @@
   }
 
   function init() {
-    setOffsets();
-    initNavState(); initMenu(); initSearch(); initAnnouncement(); initQty(); initSort();
-    initProduct(); initRecommendations(); initRecover(); initAddresses(); initCartAutoUpdate(); initMotion();
-    initHero(); initReveal(); initSliders(); initStatements();
-    window.addEventListener('resize', setOffsets);
-    // Theme-Editor: neu geladene Sektionen wieder initialisieren
-    document.addEventListener('shopify:section:load', function (e) {
-      setOffsets(); initHero(e.target); initReveal(e.target); initSliders(e.target); initStatements(e.target);
+    initMenu(); initSearch(); initAnnouncement(); initQty(); initSort();
+    initProduct(); initRecommendations(); initRecover(); initAddresses(); initCartAutoUpdate();
+    // Theme-Editor: Live-Vorschau beim Bearbeiten einer Sektion neu verdrahten
+    document.addEventListener('shopify:section:load', function () {
+      initAnnouncement(); initProduct(); initRecommendations();
     });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

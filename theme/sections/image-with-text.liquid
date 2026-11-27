@@ -2,21 +2,23 @@
   assign style = section.settings.style
   assign fallback_url = pages['ueber-uns'].url | default: routes.root_url
   assign btn_class = 'btn--accent'
-  if style == 'box' or style == 'dark'
+  if style == 'dark'
     assign btn_class = 'btn--light'
   endif
+  assign has_image = false
+  if section.settings.image != blank
+    assign has_image = true
+  endif
 -%}
-<section class="section-pad iwt iwt--{{ style }}">
+<section class="section-pad iwt iwt--{{ style }}{% unless has_image %} iwt--text-only{% endunless %}">
   <div class="container">
     <div class="iwt__grid{% if section.settings.image_right %} iwt__grid--image-right{% endif %}">
+      {%- if has_image -%}
       <div class="iwt__media">
-        {%- if section.settings.image != blank -%}
-          {{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 50vw, 100vw', class: 'iwt__img' }}
-        {%- else -%}
-          <span class="iwt__img mood mood--wood" aria-hidden="true"></span>
-        {%- endif -%}
+        {{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 50vw, 100vw', class: 'iwt__img' }}
         {%- if section.settings.badge != blank -%}<span class="iwt__badge">{{ section.settings.badge }}</span>{%- endif -%}
       </div>
+      {%- endif -%}
       <div class="iwt__content">
         {%- if section.settings.kicker != blank -%}<p class="kicker">{{ section.settings.kicker }}</p>{%- endif -%}
         <h2 class="h2">{{ section.settings.heading }}</h2>
@@ -35,11 +37,11 @@
   "class": "section-iwt",
   "settings": [
     { "type": "select", "id": "style", "label": "Stil", "options": [
-      { "value": "box", "label": "Espresso-Karte" },
-      { "value": "dark", "label": "Espresso-Karte, Bild mit Rand" },
-      { "value": "light", "label": "Crema-Karte" }
-    ], "default": "box" },
-    { "type": "image_picker", "id": "image", "label": "Bild", "info": "CI-Bildstil: warmes Seitenlicht, Holz, Stein, Hände." },
+      { "value": "light", "label": "Hell (Crema)" },
+      { "value": "dark", "label": "Dunkel (Espresso)" }
+    ], "default": "light" },
+    { "type": "paragraph", "content": "Ohne Bild erscheint nur der Text, einspaltig. Nur ein echtes Produkt- oder Werkfoto einsetzen." },
+    { "type": "image_picker", "id": "image", "label": "Bild (optional)" },
     { "type": "checkbox", "id": "image_right", "label": "Bild rechts", "default": true },
     { "type": "text", "id": "badge", "label": "Runder Stempel auf dem Bild (optional)", "info": "Nur verwenden, wenn die Aussage stimmt – z. B. „Made in Germany“." },
     { "type": "text", "id": "kicker", "label": "Dachzeile", "default": "Das Werk" },

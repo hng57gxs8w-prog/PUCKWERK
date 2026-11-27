@@ -2,188 +2,35 @@
   "sections": {
     "hero": {
       "type": "hero",
-      "settings": {
-        "light_strength": 70
-      }
-    },
-    "cats": {
-      "type": "collection-tiles",
-      "blocks": {
-        "t1": {
-          "type": "tile",
-          "settings": {
-            "label": "Tamper",
-            "text": "Plan und gleichmäßig"
-          }
-        },
-        "t2": {
-          "type": "tile",
-          "settings": {
-            "label": "Verteiler",
-            "text": "Keine Klümpchen mehr"
-          }
-        },
-        "t3": {
-          "type": "tile",
-          "settings": {
-            "label": "Tassen",
-            "text": "Für die Crema"
-          }
-        },
-        "t4": {
-          "type": "tile",
-          "settings": {
-            "label": "Stationen",
-            "text": "Ordnung am Morgen"
-          }
-        }
-      },
-      "block_order": [
-        "t1",
-        "t2",
-        "t3",
-        "t4"
-      ],
       "settings": {}
     },
     "featured": {
       "type": "featured-collection",
-      "settings": {
-        "limit": 6
-      }
+      "settings": { "limit": 8, "columns": "4" }
     },
-    "ritual": {
-      "type": "ritual",
+    "cats": {
+      "type": "collection-tiles",
       "blocks": {
-        "s1": {
-          "type": "step",
-          "settings": {
-            "icon": "bean",
-            "title": "Mahlen",
-            "text": "<p>Frisch und fein: Der Mahlgrad bestimmt, wie schnell das Wasser durchläuft.</p>"
-          }
-        },
-        "s2": {
-          "type": "step",
-          "settings": {
-            "icon": "hand",
-            "title": "Verteilen",
-            "text": "<p>Mit dem Verteiler lösen sich Klümpchen – das Mehl liegt gleichmäßig im Sieb.</p>"
-          }
-        },
-        "s3": {
-          "type": "step",
-          "settings": {
-            "icon": "mark",
-            "title": "Tampen",
-            "text": "<p>Plan und gleichmäßig drücken. Dann findet das Wasser keine Abkürzung.</p>"
-          }
-        }
+        "t1": { "type": "tile", "settings": { "label": "Tamper" } },
+        "t2": { "type": "tile", "settings": { "label": "Verteiler" } },
+        "t3": { "type": "tile", "settings": { "label": "Tassen" } },
+        "t4": { "type": "tile", "settings": { "label": "Stationen" } }
       },
-      "block_order": [
-        "s1",
-        "s2",
-        "s3"
-      ],
+      "block_order": ["t1", "t2", "t3", "t4"],
       "settings": {}
-    },
-    "iwt": {
-      "type": "image-with-text",
-      "settings": {
-        "style": "box",
-        "image_right": true
-      }
-    },
-    "statement": {
-      "type": "rich-text",
-      "blocks": {
-        "k": {
-          "type": "kicker",
-          "settings": {
-            "text": "Unser Versprechen"
-          }
-        },
-        "h": {
-          "type": "heading",
-          "settings": {
-            "heading": "Ehrliches Werkzeug, das jeden Morgen ein kleines bisschen besser macht.",
-            "size": "h2"
-          }
-        },
-        "b": {
-          "type": "button",
-          "settings": {
-            "label": "Zum Werkwissen"
-          }
-        }
-      },
-      "block_order": [
-        "k",
-        "h",
-        "b"
-      ],
-      "settings": {
-        "style": "plain",
-        "highlight": true
-      }
     },
     "usp": {
       "type": "usp-bar",
       "blocks": {
-        "u1": {
-          "type": "usp",
-          "settings": {
-            "icon": "truck",
-            "title": "Heute bestellt",
-            "text": "Morgen unterwegs"
-          }
-        },
-        "u2": {
-          "type": "usp",
-          "settings": {
-            "icon": "return",
-            "title": "30 Tage Rückgabe",
-            "text": "Ehrlich ohne Haken"
-          }
-        },
-        "u3": {
-          "type": "usp",
-          "settings": {
-            "icon": "hand",
-            "title": "Präzise gefertigt",
-            "text": "Auf den Zehntelmillimeter"
-          }
-        },
-        "u4": {
-          "type": "usp",
-          "settings": {
-            "icon": "chat",
-            "title": "Echte Beratung",
-            "text": "Von Baristas, nicht vom Bot"
-          }
-        }
+        "u1": { "type": "usp", "settings": { "icon": "truck", "title": "Heute bestellt", "text": "Morgen unterwegs" } },
+        "u2": { "type": "usp", "settings": { "icon": "return", "title": "30 Tage Rückgabe", "text": "Ehrlich ohne Haken" } },
+        "u3": { "type": "usp", "settings": { "icon": "hand", "title": "Präzise gefertigt", "text": "Auf den Zehntelmillimeter" } },
+        "u4": { "type": "usp", "settings": { "icon": "chat", "title": "Echte Beratung", "text": "Von Baristas, nicht vom Bot" } }
       },
-      "block_order": [
-        "u1",
-        "u2",
-        "u3",
-        "u4"
-      ],
+      "block_order": ["u1", "u2", "u3", "u4"],
       "settings": {}
     },
-    "newsletter": {
-      "type": "newsletter",
-      "settings": {}
-    }
+    "newsletter": { "type": "newsletter", "settings": {} }
   },
-  "order": [
-    "hero",
-    "cats",
-    "featured",
-    "ritual",
-    "iwt",
-    "statement",
-    "usp",
-    "newsletter"
-  ]
+  "order": ["hero", "featured", "cats", "usp", "newsletter"]
 }

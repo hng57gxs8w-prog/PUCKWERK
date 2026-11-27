@@ -2,49 +2,22 @@
   "sections": {
     "main": {
       "type": "main-page",
-      "settings": {
-        "width": "wide"
-      }
+      "settings": { "width": "wide" }
     },
     "values": {
       "type": "brand-values",
       "blocks": {
-        "v1": {
-          "type": "value",
-          "settings": {
-            "title": "Präzision",
-            "text": "<p>Jedes Zehntel zählt. Wir fertigen genau und sagen dir, warum es darauf ankommt – ohne Fachchinesisch.</p>"
-          }
-        },
-        "v2": {
-          "type": "value",
-          "settings": {
-            "title": "Ehrlichkeit",
-            "text": "<p>Keine Heilsversprechen, keine Fake-Rabatte. Wir zeigen, was ein Produkt kann – und was nicht.</p>"
-          }
-        },
-        "v3": {
-          "type": "value",
-          "settings": {
-            "title": "Handwerk",
-            "text": "<p>Edelstahl, Holz, Kupfer. Gemacht, um jahrelang benutzt zu werden – und mit jedem Shot schöner zu werden.</p>"
-          }
-        }
+        "v1": { "type": "value", "settings": { "title": "Präzision", "text": "<p>Jedes Zehntel zählt. Wir fertigen genau und sagen dir, warum es darauf ankommt – ohne Fachchinesisch.</p>" } },
+        "v2": { "type": "value", "settings": { "title": "Ehrlichkeit", "text": "<p>Keine Heilsversprechen, keine Fake-Rabatte. Wir zeigen, was ein Produkt kann – und was nicht.</p>" } },
+        "v3": { "type": "value", "settings": { "title": "Handwerk", "text": "<p>Edelstahl, Holz, Kupfer. Gemacht, um jahrelang benutzt zu werden – und mit jedem Shot schöner zu werden.</p>" } }
       },
-      "block_order": [
-        "v1",
-        "v2",
-        "v3"
-      ],
-      "settings": {
-        "style": "crema"
-      }
+      "block_order": ["v1", "v2", "v3"],
+      "settings": { "style": "crema" }
     },
     "story": {
       "type": "image-with-text",
       "settings": {
-        "style": "box",
-        "image_right": false,
+        "style": "dark",
         "kicker": "Wie wir arbeiten",
         "heading": "Jeden Morgen selbst getestet.",
         "text": "<p>Bevor ein Werkzeug in den Shop kommt, steht es wochenlang an unserer eigenen Maschine. Was den Espresso nicht besser macht, fliegt raus.</p>",
@@ -52,15 +25,7 @@
         "button_link": "shopify://collections/all"
       }
     },
-    "newsletter": {
-      "type": "newsletter",
-      "settings": {}
-    }
+    "newsletter": { "type": "newsletter", "settings": {} }
   },
-  "order": [
-    "main",
-    "values",
-    "story",
-    "newsletter"
-  ]
+  "order": ["main", "values", "story", "newsletter"]
 }

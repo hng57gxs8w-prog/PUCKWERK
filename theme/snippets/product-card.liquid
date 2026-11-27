@@ -23,7 +23,6 @@
       {%- if on_sale -%}<span class="badge">Reduziert</span>{%- endif -%}
       {%- unless product.available -%}<span class="badge badge--muted">Ausverkauft</span>{%- endunless -%}
     </span>
-    <span class="card__cta">{% render 'icon', name: 'arrow' %}</span>
   </a>
   <div class="card__info">
     {%- if settings.card_show_vendor and product.vendor != blank -%}

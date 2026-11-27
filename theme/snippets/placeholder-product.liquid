@@ -1,37 +1,14 @@
 {%- comment -%}
-  Beispielkarte aus dem CI-Shop-Entwurf – erscheint nur, solange im Shop noch keine Produkte veröffentlicht sind.
-  Parameter: index (1–4)
+  Platzhalterkarte: erscheint nur, solange in der gewählten Kollektion noch keine
+  Produkte veröffentlicht sind. Zeigt Shopifys neutrales Platzhalter-Symbol statt
+  eines erfundenen Produkts.
+  Parameter: index
 {%- endcomment -%}
-{%- liquid
-  assign i = index | modulo: 4
-  case i
-    when 1
-      assign art = 'tamper'
-      assign title = 'Tamper 58,5'
-      assign meta = 'Edelstahl · Nussbaum'
-      assign price = '89,00 €'
-    when 2
-      assign art = 'dist'
-      assign title = 'WDT-Verteiler'
-      assign meta = '0,3 mm Nadeln'
-      assign price = '34,00 €'
-    when 3
-      assign art = 'screen'
-      assign title = 'Puck Screen'
-      assign meta = '1,7 mm · 58 mm'
-      assign price = '19,00 €'
-    else
-      assign art = 'cup'
-      assign title = 'Espressotasse'
-      assign meta = 'Steinzeug · 80 ml'
-      assign price = '24,00 €'
-  endcase
--%}
+{%- assign n = index | modulo: 6 | plus: 1 -%}
 <article class="card card--placeholder">
-  <span class="card__media ratio--square"><span class="mini mini--{{ art }}" aria-hidden="true"></span></span>
+  <span class="card__media ratio--square">{{ 'product-' | append: n | placeholder_svg_tag: 'card__img placeholder' }}</span>
   <div class="card__info">
-    <h3 class="card__title">{{ title }}</h3>
-    <p class="card__meta">{{ meta }}</p>
-    <div class="price"><span class="price__current">{{ price }}</span></div>
+    <h3 class="card__title">Produktname</h3>
+    <div class="price"><span class="price__current">0,00 €</span></div>
   </div>
 </article>

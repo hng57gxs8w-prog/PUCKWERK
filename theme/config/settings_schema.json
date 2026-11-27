@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "PUCKWERK",
-    "theme_version": "3.0.2",
+    "theme_version": "4.0.0",
     "theme_author": "PUCKWERK",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://help.shopify.com/"
@@ -10,181 +10,49 @@
   {
     "name": "Farben",
     "settings": [
-      {
-        "type": "paragraph",
-        "content": "PUCKWERK-CI-Palette. Das Design „Morgenlicht“ legt helle Karten auf einen dunklen Espresso-Rahmen; Navigation und Footer bleiben dunkel, damit das Logo weiß steht."
-      },
-      {
-        "type": "color",
-        "id": "color_logo",
-        "label": "Logo-Farbe (Navigation, Footer, Passwortseite)",
-        "default": "#FFFFFF",
-        "info": "Standard: reines Weiß."
-      },
-      {
-        "type": "color",
-        "id": "color_espresso",
-        "label": "Espresso-Braun (Text, dunkle Karten)",
-        "default": "#2B1D16"
-      },
-      {
-        "type": "color",
-        "id": "color_crema",
-        "label": "Crema-Beige (Flächen)",
-        "default": "#F3E9DC"
-      },
-      {
-        "type": "color",
-        "id": "color_kupfer",
-        "label": "Kupfer (Akzent, Buttons)",
-        "default": "#B87333"
-      },
-      {
-        "type": "color",
-        "id": "color_grau",
-        "label": "Warmes Grau (Nebentext)",
-        "default": "#8A817C"
-      },
-      {
-        "type": "color",
-        "id": "color_offwhite",
-        "label": "Off-White (Karten, Logo)",
-        "default": "#FBF8F4"
-      },
-      {
-        "type": "color",
-        "id": "color_espresso_deep",
-        "label": "Rahmen (Espresso tief)",
-        "default": "#17100C"
-      }
+      { "type": "paragraph", "content": "PUCKWERK-CI-Palette. Schlichtes, helles Design: Der Inhalt ist hell, damit die Produkte wirken. Kopf- und Fußzeile bleiben dunkel mit weißem Logo." },
+      { "type": "color", "id": "color_offwhite", "label": "Hintergrund (Off-White)", "default": "#FBF8F4" },
+      { "type": "color", "id": "color_crema", "label": "Flächen (Crema-Beige)", "default": "#F3E9DC" },
+      { "type": "color", "id": "color_espresso", "label": "Text (Espresso-Braun)", "default": "#2B1D16" },
+      { "type": "color", "id": "color_grau", "label": "Nebentext (Warmes Grau)", "default": "#8A817C" },
+      { "type": "color", "id": "color_kupfer", "label": "Akzent (Kupfer) – Buttons, Links, Sale", "default": "#B87333" },
+      { "type": "color", "id": "color_espresso_deep", "label": "Kopf- & Fußzeile (Espresso tief)", "default": "#17100C" },
+      { "type": "color", "id": "color_logo", "label": "Logo-Farbe in Kopf- & Fußzeile", "default": "#FFFFFF", "info": "Standard: reines Weiß." }
     ]
   },
   {
-    "name": "Typografie & Layout",
+    "name": "Layout",
     "settings": [
-      {
-        "type": "select",
-        "id": "display_weight",
-        "label": "Große Überschriften",
-        "options": [
-          {
-            "value": "500",
-            "label": "Space Grotesk Medium – weicher"
-          },
-          {
-            "value": "700",
-            "label": "Space Grotesk Bold – wie CI-Handbuch"
-          }
-        ],
-        "default": "500"
-      },
-      {
-        "type": "range",
-        "id": "card_radius",
-        "label": "Rundung der Karten",
-        "min": 0,
-        "max": 40,
-        "step": 4,
-        "unit": "px",
-        "default": 28
-      },
-      {
-        "type": "range",
-        "id": "page_width",
-        "label": "Inhaltsbreite",
-        "min": 1040,
-        "max": 1600,
-        "step": 40,
-        "unit": "px",
-        "default": 1280
-      },
-      {
-        "type": "checkbox",
-        "id": "reveal",
-        "label": "Inhalte beim Scrollen sanft einblenden",
-        "default": true
-      }
+      { "type": "range", "id": "page_width", "label": "Inhaltsbreite", "min": 1000, "max": 1400, "step": 40, "unit": "px", "default": 1200 },
+      { "type": "range", "id": "card_radius", "label": "Eckenradius", "min": 0, "max": 20, "step": 2, "unit": "px", "default": 6, "info": "Gilt für Buttons, Karten, Bilder und Eingabefelder." }
     ]
   },
   {
     "name": "Favicon",
     "settings": [
-      {
-        "type": "image_picker",
-        "id": "favicon",
-        "label": "Favicon",
-        "info": "Wird auf 64 x 64 px skaliert"
-      }
+      { "type": "image_picker", "id": "favicon", "label": "Favicon", "info": "Wird auf 64 x 64 px skaliert" }
     ]
   },
   {
     "name": "Produktkarten",
     "settings": [
-      {
-        "type": "select",
-        "id": "card_ratio",
-        "label": "Bildformat",
-        "options": [
-          {
-            "value": "square",
-            "label": "Quadratisch"
-          },
-          {
-            "value": "portrait",
-            "label": "Hochformat"
-          },
-          {
-            "value": "natural",
-            "label": "Original"
-          }
-        ],
-        "default": "square"
-      },
-      {
-        "type": "checkbox",
-        "id": "card_hover_image",
-        "label": "Zweites Bild beim Hover zeigen",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "card_show_type",
-        "label": "Produkttyp unter dem Namen zeigen",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "card_show_vendor",
-        "label": "Hersteller anzeigen",
-        "info": "Bei reinen PUCKWERK-Produkten nicht nötig.",
-        "default": false
-      }
+      { "type": "select", "id": "card_ratio", "label": "Bildformat", "options": [
+        { "value": "square", "label": "Quadratisch" },
+        { "value": "portrait", "label": "Hochformat" },
+        { "value": "natural", "label": "Original" }
+      ], "default": "square" },
+      { "type": "checkbox", "id": "card_hover_image", "label": "Zweites Bild beim Hover zeigen", "default": true },
+      { "type": "checkbox", "id": "card_show_type", "label": "Produkttyp unter dem Namen zeigen", "default": true },
+      { "type": "checkbox", "id": "card_show_vendor", "label": "Hersteller anzeigen", "info": "Bei reinen PUCKWERK-Produkten nicht nötig.", "default": false }
     ]
   },
   {
     "name": "Social Media",
     "settings": [
-      {
-        "type": "text",
-        "id": "social_instagram",
-        "label": "Instagram-URL",
-        "default": "https://instagram.com/puckwerk"
-      },
-      {
-        "type": "text",
-        "id": "social_tiktok",
-        "label": "TikTok-URL"
-      },
-      {
-        "type": "text",
-        "id": "social_youtube",
-        "label": "YouTube-URL"
-      },
-      {
-        "type": "text",
-        "id": "social_facebook",
-        "label": "Facebook-URL"
-      }
+      { "type": "text", "id": "social_instagram", "label": "Instagram-URL", "default": "https://instagram.com/puckwerk" },
+      { "type": "text", "id": "social_tiktok", "label": "TikTok-URL" },
+      { "type": "text", "id": "social_youtube", "label": "YouTube-URL" },
+      { "type": "text", "id": "social_facebook", "label": "Facebook-URL" }
     ]
   }
 ]

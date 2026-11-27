@@ -1,38 +1,32 @@
-<section class="section-pad bento">
+<section class="section-pad">
   <div class="container">
-    <div class="sec-head">
+    <div class="section-head">
       <div>
-        {%- if section.settings.kicker != blank -%}<p class="eyebrow">{{ section.settings.kicker }}</p>{%- endif -%}
+        {%- if section.settings.kicker != blank -%}<p class="kicker">{{ section.settings.kicker }}</p>{%- endif -%}
         {%- if section.settings.heading != blank -%}<h2 class="h2">{{ section.settings.heading }}</h2>{%- endif -%}
       </div>
       {%- if section.settings.link_label != blank -%}
         <a href="{{ routes.collections_url }}" class="link-arrow">{{ section.settings.link_label }} {% render 'icon', name: 'arrow' %}</a>
       {%- endif -%}
     </div>
-    <div class="bento__grid bento__grid--{{ section.blocks.size }}">
+    <div class="cat-grid">
       {%- for block in section.blocks -%}
         {%- liquid
           assign c = block.settings.collection
           assign img = block.settings.image | default: c.featured_image
           assign label = block.settings.label | default: c.title
-          assign mood_index = forloop.index0 | modulo: 4
-          assign moods = 'tamp,grounds,crema,wood' | split: ','
+          assign n = forloop.index0 | modulo: 6 | plus: 1
         -%}
-        <a href="{{ c.url | default: routes.collections_url }}" class="bento__tile" {{ block.shopify_attributes }}>
-          <span class="bento__media">
+        <a href="{{ c.url | default: routes.collections_url }}" class="cat" {{ block.shopify_attributes }}>
+          <span class="cat__img">
             {%- if img != blank -%}
-              {{ img | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '400, 700, 1000, 1400', sizes: '(min-width: 990px) 50vw, 100vw', alt: '' }}
+              {{ img | image_url: width: 700 | image_tag: loading: 'lazy', widths: '300, 500, 700', sizes: '(min-width: 750px) 22vw, 45vw' }}
             {%- else -%}
-              <span class="mood mood--{{ moods[mood_index] }}"></span>
+              {{ 'collection-' | append: n | placeholder_svg_tag: 'placeholder' }}
             {%- endif -%}
           </span>
-          <span class="bento__label">
-            <span>
-              <span class="bento__title">{{ label }}</span>
-              {%- if block.settings.text != blank -%}<span class="bento__text">{{ block.settings.text }}</span>{%- endif -%}
-            </span>
-            <span class="bento__arrow">{% render 'icon', name: 'arrow' %}</span>
-          </span>
+          <span class="cat__title">{{ label }}</span>
+          {%- if c.products_count -%}<span class="cat__count">{{ c.products_count }} Produkte</span>{%- endif -%}
         </a>
       {%- endfor -%}
     </div>
@@ -41,8 +35,8 @@
 
 {% schema %}
 {
-  "name": "Kategorien (Kacheln)",
-  "class": "section-bento",
+  "name": "Kategorien",
+  "class": "section-cats",
   "max_blocks": 6,
   "settings": [
     { "type": "text", "id": "kicker", "label": "Dachzeile", "default": "Kategorien" },
@@ -52,23 +46,22 @@
   "blocks": [
     {
       "type": "tile",
-      "name": "Kachel",
+      "name": "Kategorie",
       "settings": [
         { "type": "collection", "id": "collection", "label": "Kollektion" },
-        { "type": "image_picker", "id": "image", "label": "Bild (optional)" },
-        { "type": "text", "id": "label", "label": "Titel (optional)" },
-        { "type": "text", "id": "text", "label": "Kurztext (optional)" }
+        { "type": "image_picker", "id": "image", "label": "Bild (optional)", "info": "Leer = Kollektionsbild oder neutrales Platzhalter-Symbol" },
+        { "type": "text", "id": "label", "label": "Titel (optional)" }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Kategorien (Kacheln)",
+      "name": "Kategorien",
       "blocks": [
-        { "type": "tile", "settings": { "label": "Tamper", "text": "Plan und gleichmäßig" } },
-        { "type": "tile", "settings": { "label": "Verteiler", "text": "Keine Klümpchen mehr" } },
-        { "type": "tile", "settings": { "label": "Tassen", "text": "Für die Crema" } },
-        { "type": "tile", "settings": { "label": "Stationen", "text": "Ordnung am Morgen" } }
+        { "type": "tile", "settings": { "label": "Tamper" } },
+        { "type": "tile", "settings": { "label": "Verteiler" } },
+        { "type": "tile", "settings": { "label": "Tassen" } },
+        { "type": "tile", "settings": { "label": "Stationen" } }
       ]
     }
   ]
