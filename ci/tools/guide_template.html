@@ -271,40 +271,42 @@ nav.toc .mk{width:26px;height:26px;color:var(--espresso);flex:0 0 auto}
 .browser__url{margin-left:14px;flex:0 1 340px;height:22px;border-radius:999px;background:var(--offwhite);font:400 11px/22px var(--fb);color:var(--grau);padding:0 12px}
 .shop{font-size:14px}
 .shop__ann{background:var(--espresso);color:var(--crema);text-align:center;font:500 10.5px/30px var(--fh);letter-spacing:.16em;text-transform:uppercase}
-.shop__head{display:flex;align-items:center;gap:32px;padding:18px 40px;border-bottom:1px solid rgba(184,115,51,.35)}
-.shop__head .lk--h{width:150px;color:var(--espresso)}
-.shop__nav{display:flex;gap:24px;font:500 13px var(--fh);flex:1}
-.shop__icons{display:flex;gap:16px;color:var(--espresso)}
+.shop__head{display:flex;align-items:center;gap:32px;padding:18px 40px;background:var(--espresso);color:var(--offwhite)}
+.shop__head .lk--h{width:150px;color:var(--offwhite)}
+.shop__nav{display:flex;gap:24px;font:500 13px var(--fh);flex:1;opacity:.9}
+.shop__icons{display:flex;gap:16px;color:var(--offwhite)}
 .shop__icons span{width:18px;height:18px;border:1.6px solid currentColor;border-radius:50%}
-.shop__hero{display:grid;grid-template-columns:1fr 1fr;min-height:420px}
-.shop__hero-copy{padding:64px 40px;display:flex;flex-direction:column;justify-content:center}
-.shop__hero-copy h2{font-size:46px;line-height:1.02;margin:0 0 16px}
-.shop__hero-copy .eyebrow{white-space:nowrap}
-.shop__hero-copy p{color:var(--espresso);max-width:36ch}
-.shop__hero-img{position:relative;overflow:hidden;border-radius:20px;margin:24px 40px 24px 0}
-.shop__divider{display:flex;align-items:center;gap:16px;padding:0 40px;margin:56px 0 28px;font:500 10.5px var(--fh);letter-spacing:.22em;text-transform:uppercase;color:var(--kupfer)}
+.shop__hero{padding:56px 40px;background:var(--crema);text-align:center}
+.shop__hero .eyebrow{justify-content:center;white-space:nowrap}
+.shop__hero h2{font-size:34px;line-height:1.08;margin:0 auto 14px;max-width:16ch}
+.shop__hero p:not(.eyebrow){color:var(--espresso);max-width:40ch;margin:0 auto 20px}
+.shop__hero .btn{display:inline-flex}
+.shop__divider{display:flex;align-items:center;gap:16px;padding:0 40px;margin:48px 0 24px;font:500 10.5px var(--fh);letter-spacing:.22em;text-transform:uppercase;color:var(--kupfer)}
 .shop__divider::after{content:"";flex:1;height:1px;background:var(--kupfer)}
-.shop__cats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:0 40px}
+.shop__cats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:0 40px}
 .shop__cat{text-align:center;font:700 14px var(--fh)}
-.shop__cat div{aspect-ratio:1;border-radius:50%;margin-bottom:12px;position:relative;overflow:hidden}
+.shop__cat div{aspect-ratio:1;border-radius:8px;margin-bottom:10px;position:relative;overflow:hidden}
 .shop__products{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:0 40px}
 .shop__p{background:transparent}
-.shop__p-img{aspect-ratio:1;background:var(--crema);border-radius:20px;display:grid;place-items:center;position:relative}
-.shop__p-info{padding:14px 2px 0}
+.shop__p-img{aspect-ratio:1;border-radius:8px;position:relative;overflow:hidden}
+.shop__p-info{padding:12px 2px 0}
 .shop__p-info b{display:block;font:700 14px var(--fh);margin-bottom:2px}
 .shop__p-info span{color:var(--grau);font-size:12.5px}
-.shop__p-info em{font-style:normal;display:block;margin-top:8px;font-weight:600}
-.shop__story{margin:64px 40px 0;border-radius:20px;background:var(--espresso);color:var(--offwhite);display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
-.shop__story-copy{padding:48px}
-.shop__story-copy h3{font-size:32px}
-.shop__story-copy p{opacity:.75}
-.shop__foot{margin-top:64px;background:var(--espresso);color:var(--crema);padding:40px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.shop__p-info em{font-style:normal;display:block;margin-top:6px;font-weight:600}
+.shop__ph{background:var(--crema)}
+.shop__ph::after{content:"";position:absolute;left:50%;top:50%;width:32%;aspect-ratio:1;border-radius:50%;background:rgba(43,29,22,.16);transform:translate(-50%,-50%)}
+.shop__usp{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:40px;margin-top:48px;border-top:1px solid rgba(43,29,22,.12)}
+.shop__usp-item{display:flex;gap:10px;align-items:center}
+.shop__usp-item b{display:block;font:700 12.5px var(--fh)}
+.shop__usp-item span{color:var(--grau);font-size:11.5px}
+.shop__usp-ico{width:30px;height:30px;border-radius:50%;background:var(--crema);flex-shrink:0}
+.shop__news{margin:0 40px 40px;padding:28px 36px;border-radius:8px;background:var(--crema);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.shop__news h3{font-size:20px;margin:4px 0 0}
+.shop__news-form{display:flex;gap:8px}
+.shop__news-form span{width:170px;height:38px;border:1px solid rgba(43,29,22,.25);border-radius:6px;background:var(--offwhite)}
+.shop .btn{border-radius:6px}
+.shop__foot{background:var(--espresso);color:var(--crema);padding:40px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
 .shop__foot .lk--h{width:140px;color:var(--offwhite)}
-.mini-tamper{width:46%;aspect-ratio:1;border-radius:50%;background:conic-gradient(from 30deg,#d6d3ce,#9e9b96,#efede9,#8d8a85,#d6d3ce);box-shadow:0 14px 24px rgba(43,29,22,.25);position:relative}
-.mini-tamper::after{content:"";position:absolute;inset:36%;border-radius:50%;border:2px solid rgba(80,76,72,.5)}
-.mini-dist{width:52%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#3b2a20 0 30%,#5c3e2c 31% 60%,#2b1d16 61%);box-shadow:0 14px 24px rgba(43,29,22,.25)}
-.mini-screen{width:46%;aspect-ratio:1;border-radius:50%;background:repeating-radial-gradient(circle,#b9b6b1 0 1px,#8f8c87 2px 3px);box-shadow:0 10px 20px rgba(43,29,22,.2)}
-.mini-cup{width:48%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#c88a52 0 30%,#8a4f26 50%,#f3e9dc 52% 66%,#fff 67%);box-shadow:0 14px 24px rgba(43,29,22,.25)}
 
 .downloads{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:40px}
 .dl{border:1px solid rgba(251,248,244,.2);border-radius:20px;padding:24px}
@@ -319,7 +321,7 @@ footer.end{padding:48px 0;text-align:center;font-size:13px;color:var(--grau)}
 <header class="cover">
   <div>
     {{LOGO_S}}
-    <p class="cover__meta">Corporate Design Handbuch · Version 1.0 · 2026</p>
+    <p class="cover__meta">Corporate Design Handbuch · Version 1.1 · 2026</p>
     <p class="cover__claim">Dein Espresso. Endlich so gut wie im Café.</p>
   </div>
 </header>
@@ -454,12 +456,12 @@ footer.end{padding:48px 0;text-align:center;font-size:13px;color:var(--grau)}
 <section class="chapter" id="elemente"><div class="wrap">
   <p class="eyebrow">05 · Gestaltungselemente</p>
   <h2 class="ch-title">Weißraum, Linien, Kreise.</h2>
-  <p class="lead">Wir lassen Dinge atmen. Runde Formen erinnern an den Puck, dünne Kupferlinien ordnen und trennen. Nichts ist laut, alles ist genau gesetzt.</p>
+  <p class="lead">Wir lassen Dinge atmen. Runde Formen erinnern an den Puck, dünne Kupferlinien ordnen und trennen. Nichts ist laut, alles ist genau gesetzt. Wie rund oder eckig das im Einzelfall wird, richtet sich nach der Anwendung – der Online-Shop ist bewusst der zurückhaltendste Auftritt, damit die Produkte wirken.</p>
   <div class="elements">
     <div class="el"><div class="el__art"><div class="rings"><i></i><i></i><i></i><b></b></div></div><div><b style="font-family:var(--fh)">Kreise & Ringe</b><p class="muted" style="font-size:14px;margin:4px 0 0">Bildausschnitte rund, Ringe als Hintergrundmotiv – immer 1 px Kupfer.</p></div></div>
     <div class="el"><div class="el__art"><div class="divider-demo"><hr><span>Neu im Werk</span><hr style="width:48px"></div></div><div><b style="font-family:var(--fh)">Kupferlinien</b><p class="muted" style="font-size:14px;margin:4px 0 0">1 px, Kupfer, als Trenner und Akzent. Nie dicker, nie farbig gefüllt.</p></div></div>
-    <div class="el"><div class="el__art" style="display:flex;flex-direction:column;gap:12px;align-items:flex-start"><a class="btn btn--copper">In den Warenkorb</a><a class="btn btn--outline">Mehr erfahren</a></div><div><b style="font-family:var(--fh)">Buttons</b><p class="muted" style="font-size:14px;margin:4px 0 0">Pillenform, Space Grotesk Bold. Kupfer = Hauptaktion, Outline = Nebenaktion.</p></div></div>
-    <div class="el"><div class="el__art"><div class="space-demo"><div style="height:8px"></div><div style="height:16px">16</div><div style="height:24px">24</div><div style="height:40px">40</div><div style="height:64px">64</div><div style="height:96px">96+</div></div></div><div><b style="font-family:var(--fh)">Raster & Weißraum</b><p class="muted" style="font-size:14px;margin:4px 0 0">8er-Raster. Sektionen ab 96 px Abstand. Ecken 20 px, Bilder rund oder 20 px.</p></div></div>
+    <div class="el"><div class="el__art" style="display:flex;flex-direction:column;gap:12px;align-items:flex-start"><a class="btn btn--copper">In den Warenkorb</a><a class="btn btn--outline">Mehr erfahren</a></div><div><b style="font-family:var(--fh)">Buttons</b><p class="muted" style="font-size:14px;margin:4px 0 0">Pillenform für Verpackung, Gravur und Social Media. Im Online-Shop bewusst schlicht gerundet (6–8 px), damit die Produkte im Vordergrund stehen. Immer Space Grotesk Bold; Kupfer = Hauptaktion, Outline = Nebenaktion.</p></div></div>
+    <div class="el"><div class="el__art"><div class="space-demo"><div style="height:8px"></div><div style="height:16px">16</div><div style="height:24px">24</div><div style="height:40px">40</div><div style="height:64px">64</div><div style="height:96px">96+</div></div></div><div><b style="font-family:var(--fh)">Raster & Weißraum</b><p class="muted" style="font-size:14px;margin:4px 0 0">8er-Raster, großzügiger Weißraum. Ecken je nach Auftritt: großzügig rund in Verpackung und Social Media, im Online-Shop schlicht (6–8 px).</p></div></div>
   </div>
 </div></section>
 
@@ -614,38 +616,41 @@ footer.end{padding:48px 0;text-align:center;font-size:13px;color:var(--grau)}
   <div style="margin-top:96px">
     <span class="label">Shop-Startseite</span>
     <h3 style="font-size:32px;margin-top:10px">Online-Shop</h3>
-    <p class="muted" style="max-width:60ch">Viel Weißraum, ein ruhiger Hero mit Claim, runde Kategorie-Bilder, Produktkarten auf Crema, Kupfer nur für Kaufaktionen. Umgesetzt im Shopify-Theme „PUCKWERK“.</p>
+    <p class="muted" style="max-width:62ch">Schlicht und produktorientiert: Kopf- und Fußzeile dunkel mit weißem Logo, der restliche Inhalt hell. Produkte stehen direkt nach dem Hero. Fehlt ein Foto, erscheint ein neutrales Platzhalter-Symbol – nie eine gezeichnete Grafik. Umgesetzt im Shopify-Theme „PUCKWERK“.</p>
     <div class="browser">
       <div class="browser__bar"><i></i><i></i><i></i><span class="browser__url">puckwerk.de</span></div>
       <div class="shop">
         <div class="shop__ann">Ab 49 € versandkostenfrei · Heute bestellt, morgen unterwegs</div>
         <div class="shop__head">{{LOGO_H}}<nav class="shop__nav"><span>Tamper</span><span>Verteiler</span><span>Siebe</span><span>Zubehör</span><span>Werkwissen</span></nav><div class="shop__icons"><span></span><span></span><span></span></div></div>
         <div class="shop__hero">
-          <div class="shop__hero-copy">
-            <p class="eyebrow" style="margin-bottom:18px">Werkzeug für Home-Baristas</p>
-            <h2>Dein Espresso. Endlich so gut wie im Café.</h2>
-            <p>Präzises Siebträger-Zubehör aus Edelstahl, Holz und Kupfer. Gemacht für jeden Morgen.</p>
-            <div style="display:flex;gap:12px;margin-top:12px"><a class="btn btn--copper">Zum Shop</a><a class="btn btn--outline">Werkwissen</a></div>
-          </div>
-          <div class="shop__hero-img"><div class="art art--light"></div></div>
-        </div>
-        <div class="shop__divider">Kategorien</div>
-        <div class="shop__cats">
-          <div class="shop__cat"><div><span class="art art--tamp"></span></div>Tamper</div>
-          <div class="shop__cat"><div><span class="art art--grounds"></span></div>Verteiler</div>
-          <div class="shop__cat"><div><span class="art art--crema"></span></div>Tassen</div>
-          <div class="shop__cat"><div><span class="art art--wood"></span></div>Tamping-Stationen</div>
+          <p class="eyebrow">Werkzeug für Home-Baristas</p>
+          <h2>Dein Espresso. Endlich so gut wie im Café.</h2>
+          <p>Präzises Siebträger-Zubehör aus Edelstahl, Holz und Kupfer. Gemacht für jeden Morgen.</p>
+          <a class="btn btn--copper">Zum Shop</a>
         </div>
         <div class="shop__divider">Beliebt im Werk</div>
         <div class="shop__products">
-          <div class="shop__p"><div class="shop__p-img"><div class="mini-tamper"></div></div><div class="shop__p-info"><b>Tamper 58,5</b><span>Edelstahl · Nussbaum</span><em>89,00 €</em></div></div>
-          <div class="shop__p"><div class="shop__p-img"><div class="mini-dist"></div></div><div class="shop__p-info"><b>WDT-Verteiler</b><span>0,3 mm Nadeln</span><em>34,00 €</em></div></div>
-          <div class="shop__p"><div class="shop__p-img"><div class="mini-screen"></div></div><div class="shop__p-info"><b>Puck Screen</b><span>1,7 mm · 58 mm</span><em>19,00 €</em></div></div>
-          <div class="shop__p"><div class="shop__p-img"><div class="mini-cup"></div></div><div class="shop__p-info"><b>Espressotasse</b><span>Steinzeug · 80 ml</span><em>24,00 €</em></div></div>
+          <div class="shop__p"><div class="shop__p-img shop__ph"></div><div class="shop__p-info"><b>Tamper 58,5</b><span>Edelstahl · Nussbaum</span><em>89,00 €</em></div></div>
+          <div class="shop__p"><div class="shop__p-img shop__ph"></div><div class="shop__p-info"><b>WDT-Verteiler</b><span>0,3 mm Nadeln</span><em>34,00 €</em></div></div>
+          <div class="shop__p"><div class="shop__p-img shop__ph"></div><div class="shop__p-info"><b>Puck Screen</b><span>1,7 mm · 58 mm</span><em>19,00 €</em></div></div>
+          <div class="shop__p"><div class="shop__p-img shop__ph"></div><div class="shop__p-info"><b>Espressotasse</b><span>Steinzeug · 80 ml</span><em>24,00 €</em></div></div>
         </div>
-        <div class="shop__story">
-          <div class="shop__story-copy"><p class="eyebrow">Das Werk</p><h3>Präzision, die man in der Hand spürt.</h3><p>Wir testen jedes Werkzeug jeden Morgen selbst. Was nicht besser macht, kommt nicht ins Sortiment.</p><a class="btn btn--light">Über uns</a></div>
-          <div style="position:relative;min-height:300px"><div class="art art--wood"></div></div>
+        <div class="shop__divider">Kategorien</div>
+        <div class="shop__cats">
+          <div class="shop__cat"><div class="shop__ph"></div>Tamper</div>
+          <div class="shop__cat"><div class="shop__ph"></div>Verteiler</div>
+          <div class="shop__cat"><div class="shop__ph"></div>Tassen</div>
+          <div class="shop__cat"><div class="shop__ph"></div>Stationen</div>
+        </div>
+        <div class="shop__usp">
+          <div class="shop__usp-item"><span class="shop__usp-ico"></span><div><b>Heute bestellt</b><span>Morgen unterwegs</span></div></div>
+          <div class="shop__usp-item"><span class="shop__usp-ico"></span><div><b>30 Tage Rückgabe</b><span>Ehrlich ohne Haken</span></div></div>
+          <div class="shop__usp-item"><span class="shop__usp-ico"></span><div><b>Präzise gefertigt</b><span>Zehntelmillimeter</span></div></div>
+          <div class="shop__usp-item"><span class="shop__usp-ico"></span><div><b>Echte Beratung</b><span>Von Baristas, nicht vom Bot</span></div></div>
+        </div>
+        <div class="shop__news">
+          <div><p class="eyebrow" style="margin-bottom:6px">Newsletter</p><h3>Ein Tipp pro Monat. Für bessere Shots.</h3></div>
+          <div class="shop__news-form"><span></span><a class="btn btn--copper">Anmelden</a></div>
         </div>
         <div class="shop__foot">{{LOGO_H}}<span>Impressum · Datenschutz · Versand · Kontakt</span></div>
       </div>
@@ -663,6 +668,6 @@ footer.end{padding:48px 0;text-align:center;font-size:13px;color:var(--grau)}
     <div class="dl"><b>Shopify-Theme</b><span>PUCKWERK-Shopify-Theme.zip – Startseite, Produkt, Kollektion, Warenkorb, Konto, Werkwissen und „Über uns“ nach dieser CI</span></div>
   </div>
 </div></section>
-<footer class="end">PUCKWERK · Corporate Design Handbuch 1.0 · 2026</footer>
+<footer class="end">PUCKWERK · Corporate Design Handbuch 1.1 · 2026 · Kapitel 08 „Shop-Startseite“ an Theme 4.0 angepasst</footer>
 </body>
 </html>

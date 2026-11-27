@@ -9,7 +9,7 @@ Siebträger-Zubehör für Home-Baristas. *Dein Espresso. Endlich so gut wie im C
 | `theme/` | Quellcode des Themes (Online Store 2.0) |
 | `ci/vorschau-shop-startseite.png` | Vorschau der Startseite mit Beispielprodukten |
 | `PUCKWERK-CI.zip` | CI-Handbuch + alle Logo-Dateien zum Weitergeben |
-| `ci/PUCKWERK-CI-Handbuch.html` | Corporate-Design-Handbuch (im Browser öffnen, als PDF druckbar). **Hinweis:** Die Anwendungsbeispiele darin (Hero-Animation, Kachel-Raster) zeigen eine frühere Gestaltungsrichtung. Farben, Logo, Schrift und Tonalität gelten weiter; für den aktuellen Seitenaufbau ist das Theme selbst maßgeblich. |
+| `ci/PUCKWERK-CI-Handbuch.html` | Corporate-Design-Handbuch (im Browser öffnen, als PDF druckbar). Kapitel 08 „Shop-Startseite" zeigt den aktuellen, schlichten Seitenaufbau von Theme 4.0. |
 | `ci/logos/` | Logos als SVG (Schrift in Pfade umgewandelt) und PNG; `…-gravur-schwarz.svg` für Lasergravur |
 | `ci/tools/` | Skripte, die Logos und Handbuch erzeugen |
 
