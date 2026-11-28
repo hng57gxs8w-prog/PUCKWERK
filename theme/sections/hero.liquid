@@ -5,6 +5,7 @@
   endif
 -%}
 <section class="hero{% if has_image %} hero--split{% endif %}{% if section.settings.image_position == 'left' %} hero--reverse{% endif %}">
+  {%- unless has_image -%}<div class="hero__rings" aria-hidden="true"><span></span><span></span><span></span></div>{%- endunless -%}
   <div class="container hero__grid">
     <div class="hero__content">
       {%- if section.settings.kicker != blank -%}<p class="kicker">{{ section.settings.kicker }}</p>{%- endif -%}

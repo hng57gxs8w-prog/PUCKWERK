@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "PUCKWERK",
-    "theme_version": "4.0.0",
+    "theme_version": "5.0.0",
     "theme_author": "PUCKWERK",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://help.shopify.com/"
@@ -24,7 +24,7 @@
     "name": "Layout",
     "settings": [
       { "type": "range", "id": "page_width", "label": "Inhaltsbreite", "min": 1000, "max": 1400, "step": 40, "unit": "px", "default": 1200 },
-      { "type": "range", "id": "card_radius", "label": "Eckenradius", "min": 0, "max": 20, "step": 2, "unit": "px", "default": 6, "info": "Gilt für Buttons, Karten, Bilder und Eingabefelder." }
+      { "type": "range", "id": "card_radius", "label": "Eckenradius", "min": 0, "max": 20, "step": 2, "unit": "px", "default": 16, "info": "Gilt für Karten, Bilder und Eingabefelder. Buttons und Kategorie-Bilder sind immer rund (CI-Vorgabe)." }
     ]
   },
   {

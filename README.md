@@ -5,11 +5,11 @@ Siebträger-Zubehör für Home-Baristas. *Dein Espresso. Endlich so gut wie im C
 ## Inhalt
 | Datei / Ordner | Was |
 |---|---|
-| `PUCKWERK-Shopify-Theme.zip` | Shopify-Theme 4.0, fertig zum Hochladen |
+| `PUCKWERK-Shopify-Theme.zip` | Shopify-Theme 5.0, fertig zum Hochladen |
 | `theme/` | Quellcode des Themes (Online Store 2.0) |
 | `ci/vorschau-shop-startseite.png` | Vorschau der Startseite mit Beispielprodukten |
 | `PUCKWERK-CI.zip` | CI-Handbuch + alle Logo-Dateien zum Weitergeben |
-| `ci/PUCKWERK-CI-Handbuch.html` | Corporate-Design-Handbuch (im Browser öffnen, als PDF druckbar). Kapitel 08 „Shop-Startseite" zeigt den aktuellen, schlichten Seitenaufbau von Theme 4.0. |
+| `ci/PUCKWERK-CI-Handbuch.html` | Corporate-Design-Handbuch (im Browser öffnen, als PDF druckbar). Kapitel 08 „Shop-Startseite" zeigt den aktuellen Seitenaufbau von Theme 5.0. |
 | `ci/logos/` | Logos als SVG (Schrift in Pfade umgewandelt) und PNG; `…-gravur-schwarz.svg` für Lasergravur |
 | `ci/tools/` | Skripte, die Logos und Handbuch erzeugen |
 
@@ -20,6 +20,14 @@ Siebträger-Zubehör für Home-Baristas. *Dein Espresso. Endlich so gut wie im C
 4. **Seite „Über uns“** mit dem Handle `ueber-uns` anlegen und als Vorlage `page.ueber-uns` wählen.
 5. Im Theme-Editor: Kollektionen für „Beliebt im Werk“ und die vier Kategorie-Kacheln auswählen, Produktfotos hinterlegen. Ohne eigenes Foto zeigt die Kategorie-Kachel automatisch Shopifys neutrales Platzhalter-Symbol.
 6. **Beispieltexte prüfen:** Versandgrenze (49 €), „Heute bestellt, morgen unterwegs“, 30 Tage Rückgabe usw. sind Platzhalter – an die echten Shop-Bedingungen anpassen.
+
+## Version 5.0 (näher am vollen CI: Kreise, Kupferlinien, Pillen-Buttons)
+- **Kategorie-Bilder jetzt rund** mit 1 px Kupferring, genau wie im CI-Handbuch beschrieben („Bildausschnitte rund, Ringe als Hintergrundmotiv“). Ohne eigenes Bild erscheint weiterhin nur Shopifys neutrales Platzhalter-Symbol, jetzt im Kreis statt im Quadrat.
+- **Buttons in Pillenform, Space Grotesk Bold** – wie bisher schon auf Verpackung, Gravur und Social Media, jetzt auch im Shop.
+- **Dachzeilen in Kupfer mit Linie**: das „KICKER —“-Muster aus dem Handbuch zieht sich jetzt durch alle Abschnitte der Startseite.
+- **Dezentes Ring-Motiv im Hero**: feine, sehr blasse konzentrische Kreise als Hintergrund hinter Überschrift und Text – rein abstrakt, kein Foto, keine Animation.
+- Eckenradius von Karten, Bildern und Eingabefeldern großzügiger (Standard jetzt 16 statt 6 px).
+- Unverändert aus Theme 4.0: keine gezeichneten/erfundenen Fotos, Produkte direkt nach dem Hero, keine Scroll-Animationen, volle Funktion ohne JavaScript und bei „Bewegung reduzieren“.
 
 ## Version 4.0 (komplettes Makeover: schlicht & produktorientiert)
 - **Kein gezeichnetes Foto mehr:** die bisherigen CSS-Kaffeeflecken/Holz-Verläufe und erfundenen Produktnamen sind raus. Fehlt ein Bild, erscheint entweder gar keins (Hero, Bild-mit-Text) oder Shopifys eigenes neutrales Platzhalter-Symbol (Kategorien, Produktkarten) – nie eine Fantasie-Grafik.
